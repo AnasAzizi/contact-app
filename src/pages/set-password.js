@@ -3,15 +3,15 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/700.css";
 import Image from "next/image";
 import Box from "@mui/material/Box";
-import SignInForm from "@/components/SignInForm";
+import SetPasswordForm from "@/components/SetPasswordForm";
 import Head from "next/head";
 import Footer from '@/components/Footer'
 
-const SignIn = () => {
+const SetPassword = () => {
   return (
     <>
       <Head>
-        <title>Sign in</title>
+        <title>Set Password</title>
       </Head>
       <Box
         component="div"
@@ -45,12 +45,12 @@ const SignIn = () => {
             width: "37%",
           }}
         >
-          <SignInForm />
+          <SetPasswordForm />
         </Box>
       </Box>
       <Footer width="60%" />
     </>
-  );
-};
+  )
+}
 
-export default SignIn;
+export default SetPassword
