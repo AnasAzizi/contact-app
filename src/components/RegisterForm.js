@@ -184,36 +184,6 @@ const RegisterForm = () => {
           </Grid>
         </Grid>
       </Grid>
-
-      {/* <Grid container flex direction="column" alignItems="center">
-          <Grid item="true">
-            <FormControlLabel
-              sx={{ color: "#212529", mb: "46px" }}
-              control={<Checkbox defaultChecked />}
-              label="I agree to the website terms and conditions"
-            />
-          </Grid>
-          <Grid item="true">
-            <Button
-              sx={{
-                bgcolor: "#4E73DF",
-                textTransform: "none",
-                mb: "30px",
-              }}
-              variant="contained"
-            >
-              Register
-            </Button>
-          </Grid>
-          <Grid item="true">
-            <Link
-              href="/auth/sign-in"
-              style={{ textDecoration: "underline", color: "#4E73DF" }}
-            >
-              Sign in instead
-            </Link>
-          </Grid>
-        </Grid> */}
     </>
   );
 };
