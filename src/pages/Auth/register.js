@@ -12,9 +12,9 @@ const register = () => {
       <Head>
         <title>Register</title>
       </Head>
-      <Grid container sx={{ bgcolor: "#ffffff" }} columnSpacing={{md:20,xs:0}}>
+      <Grid size={12} container sx={{ bgcolor: "#ffffff" }} >
         {/* background image */}
-        <Grid item="true" size={{xs:0,md:5.1}} >
+        <Grid item="true" size={{xs:0,md:4.55}} >
           <Box
             component="div"
             sx={{
@@ -33,8 +33,7 @@ const register = () => {
           </Box>
         </Grid>
         {/* sign in form */}
-        <Grid item="true" display="flex" justifyContent="center"  size={{xs:12,md:4.2}}>
-
+        <Grid item="true" size={{xs:12,md:7.45}}>
             <RegisterForm />
         </Grid>
       </Grid>
