@@ -1,0 +1,56 @@
+[
+  {
+    "id": "0001",
+    "firstName": "Adam",
+    "lastName": "Smith",
+    "email": "well@contact_book.com",
+    "phone": "+49 5658 564 613",
+    "status": "Pending",
+    "imageUrl": "https://randomuser.me/api/portraits/men/1.jpg"
+  },
+  {
+    "id": "0002",
+    "firstName": "John",
+    "lastName": "Wellson",
+    "email": "john@contact_book.com",
+    "phone": "+49 5658 564 613",
+    "status": "Active",
+    "imageUrl": "https://randomuser.me/api/portraits/men/2.jpg"
+  },
+  {
+    "id": "0003",
+    "firstName": "Richard",
+    "lastName": "Volant",
+    "email": "richard@contact_book.com",
+    "phone": "+49 5658 564 613",
+    "status": "Locked",
+    "imageUrl": "https://randomuser.me/api/portraits/men/3.jpg"
+  },
+  {
+    "id": "0004",
+    "firstName": "Ricardo",
+    "lastName": "Smith",
+    "email": "ricardo@contact_book.com",
+    "phone": "+49 5658 564 613",
+    "status": "Pending",
+    "imageUrl": "https://randomuser.me/api/portraits/men/4.jpg"
+  },
+  {
+    "id": "0005",
+    "firstName": "Adam",
+    "lastName": "Milos",
+    "email": "adam@contact_book.com",
+    "phone": "+49 5658 564 613",
+    "status": "Active",
+    "imageUrl": "https://randomuser.me/api/portraits/men/5.jpg"
+  },
+  {
+    "id": "0006",
+    "firstName": "Adam",
+    "lastName": "Smith",
+    "email": "adam@contact_book.com",
+    "phone": "+49 5658 564 613",
+    "status": "Locked",
+    "imageUrl": "https://randomuser.me/api/portraits/men/6.jpg"
+  }
+]

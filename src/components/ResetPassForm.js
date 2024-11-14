@@ -1,58 +1,99 @@
 import React, { useState } from "react";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
-import FormGroup from "@mui/material/FormGroup";
-import { Button, Typography } from "@mui/material";
-import Box from "@mui/material/Box";
+import Link from "next/link";
+import Image from "next/image";
+import {
+  Box,
+  Button,
+  Typography,
+  OutlinedInput,
+  InputLabel,
+  FormControl,
+} from "@mui/material";
+import Grid from "@mui/material/Grid2";
 
 const ResetPassForm = () => {
   return (
     <>
-      <Box component="div" sx={{ width: "49%" }}>
+      <Grid
+        container
+        direction="column"
+        display="flex"
+        justifyContent="center"
+        sx={{ minHeight: "100vh" }}
+      >
+        <Box
+          component="div"
+          sx={{
+            display: { xs: "flex", md: "none" },
+            justifyContent: "center",
+            mb: "68px",
+          }}
+        >
+          <Image
+            src="/Logo_Vertical.svg"
+            alt="background"
+            quality={100}
+            width={150}
+            height={145}
+          />
+        </Box>
         <Typography
           sx={{
-            mb: "46px",
+            display: { xs: "none", md: "block" },
+            mb: "41px",
             fontWeight: "bold",
             color: "#212529",
             fontSize: "42px",
           }}
           align="left"
-          variant="h4"
         >
           Change Password
         </Typography>
-        <FormGroup>
-          <FormControl size="small" variant="outlined">
-            <InputLabel sx={{
-              color: "#868E96",
-            }}>Enter your email address</InputLabel>
-            <OutlinedInput label="Enter your email address" type="email" />
+        <Grid
+          item="true"
+          display="flex"
+          justifyContent={{ xs: "center", md: "left" }}
+          alignItems="center"
+        >
+          <FormControl
+            size="medium"
+            sx={{
+              minWidth: { xs: "306px", md: "371px" },
+            }}
+            variant="outlined"
+          >
+            <InputLabel sx={{ color: "#868E96" }}>
+              Enter your email address
+            </InputLabel>
+            <OutlinedInput label="Enter your email address" type="text" />
           </FormControl>
-          <Box align="center" component="div" sx={{
-            width: 1,
-            mt: "46px",
-            mb: "57px"
-          }}>
-            <Button
-              variant="contained"
-              sx={{
-                bgcolor: "#4E73DF",
-                width: 1, //full width
-                textTransform: "none", //to lowercase
-                fontSize: "20px",
-              }}
-            >
-              <Typography variant="h6">Send</Typography>
-            </Button>
-          </Box>
-        </FormGroup>
-        <Typography variant="h6" align="center" color="#4E73DF"
-          sx={{
-            textDecoration: 'underline',
-            cursor: "pointer"
-          }} >Back to login</Typography>
-      </Box>
+        </Grid>
+        <Grid item="true" size={{ sx: "0px", md: 12 }}>
+          <Button
+            variant="contained"
+            sx={{
+              bgcolor: "#4E73DF",
+              textTransform: "none",
+              mt: "37px",
+              fontSize: "20px",
+              minWidth: { xs: "306px", md: "370px" },
+            }}
+          >
+            Reset Password
+          </Button>
+        </Grid>
+
+        <Grid 
+        item="true"
+         display="flex" 
+        justifyContent="center"
+         mt="57px" size={12} 
+         sx={{color:"#4E73DF", textDecoration: "underline",fontSize:"20px"}}>
+          <Link href="/auth/sign-in">
+          Back to login
+          </Link>
+        </Grid>
+      </Grid>
     </>
   );
 };

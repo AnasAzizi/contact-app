@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
 import Divider from '@mui/material/Divider';
 
-const Footer = ({ width }) => {
+
+const Footer = ({ width, show,color }) => {
+  const [showText, setShowText] = useState(show)
   return (
     <>
       <Box
@@ -11,7 +13,7 @@ const Footer = ({ width }) => {
         component="footer"
         sx={{
           width: "100%",
-          color: "#D9D9D9",
+          color: color,
           position: "fixed"
         }}>
         <Divider sx={{
@@ -24,15 +26,17 @@ const Footer = ({ width }) => {
           sx={{
             width: width,
             display: "flex",
-            justifyContent: "space-around"
+            justifyContent: showText ? "space-around" : "start",
+            opacity: "60%",
+            pl: showText? "0px":"102px"
           }}
         >
           <Typography>
             Copyright © ITM Development | Contact Book | 2022
           </Typography>
-          <Typography>
+          {showText && <Typography>
             Privacy Policy - Terms & Conditions
-          </Typography>
+          </Typography>}
         </Box>
 
       </Box>
