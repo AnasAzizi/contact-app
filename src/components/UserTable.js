@@ -30,7 +30,6 @@ const UserTable = ({ data, favorite }) => {
   const [page, setPage] = useState(1);
   const rowsPerPage = 5;
   const [selectedStar, setSelectedStar] = useState();
-
   const paginatedData = data.slice(
     (page - 1) * rowsPerPage,
     page * rowsPerPage
