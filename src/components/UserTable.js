@@ -12,12 +12,17 @@ import {
   Paper,
   Pagination,
   Box,
+  Card,
+  CardContent,
+  Divider,
+  Typography,
 } from "@mui/material";
 import { styled } from "@mui/system";
 import FeedIcon from "@mui/icons-material/Feed";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
 import Avatar from "@mui/material/Avatar";
+import Grid from "@mui/material/Grid2";
 
 const StatusChip = styled(Chip)(({ statuscolor }) => ({
   backgroundColor: statuscolor,
@@ -56,7 +61,81 @@ const UserTable = ({ data, favorite }) => {
 
   return (
     <>
-      <TableContainer component={Paper}>
+      {data.map((row, index) => (
+        <Card key={index} sx={{ display: { xs: "block", md: "none" } }}>
+          <CardContent>
+            <Grid container size={12} justifyContent="space-between">
+              <Grid item="true">
+                <Checkbox />
+              </Grid>
+              <Grid item="true">
+                <StarBorderOutlinedIcon
+                  sx={{ fontSize: "30px", color: "#707070" }}
+                />
+              </Grid>
+            </Grid>
+            <Divider />
+            <Grid
+              container
+              size={12}
+              display="flex"
+              direction="row"
+              justifyContent="space-between"
+              sx={{ mx: "10px" }}
+              mt="20px"
+            >
+              <Grid item="true">
+                <StatusChip label={`#${row.id}`} />
+              </Grid>
+              <Grid item="true">
+                <Avatar
+                  alt={`${row.firstName} ${row.lastName}`}
+                  src={row.imageUrl}
+                  sx={{ width: 80, height: 80 }}
+                />
+              </Grid>
+              <Grid item="true">
+                <StatusChip
+                  label={row.status}
+                  statuscolor={getStatusColor(row.status)}
+                />
+              </Grid>
+            </Grid>
+            <Grid
+              container
+              direction="column"
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Grid item="true">
+                <Typography fontSize="24px" fontWeight="bold">
+                  {row.firstName}
+                  {row.lastName}
+                </Typography>
+              </Grid>
+              <Grid item="true" size={12}>
+                <Divider orientation="horizontal" />
+              </Grid>
+              <Grid item="true">
+                <Typography fontSize="18px" color="#808080">
+                  {row.email}
+                </Typography>
+              </Grid>
+              <Grid item="true">
+                <Typography fontSize="18px" color="#808080">
+                  {row.phone}
+                </Typography>
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
+      ))}
+
+      <TableContainer
+        component={Paper}
+        sx={{ display: { xs: "none", md: "block" } }}
+      >
         <Table>
           <TableHead>
             <TableRow>
@@ -242,14 +321,33 @@ const UserTable = ({ data, favorite }) => {
       </TableContainer>
 
       {/* Pagination Component */}
-      <Box component="div" sx={{ display: "flex", justifyContent: "flex-end" }}>
+      <Box
+        component="div"
+        sx={{ display: { xs: "none", md: "flex" }, justifyContent: "flex-end" }}
+      >
         <Pagination
           count={Math.ceil(data.length / rowsPerPage)}
           page={page}
           onChange={handlePageChange}
           variant="outlined"
           shape="rounded"
-          sx={{ marginTop: 2 }}
+          // renderItem=""
+          sx={{
+            marginTop: 2,
+            "& .MuiPaginationItem-root": {
+              borderColor: "#DEE2E6",
+              borderRadius: 0,
+              mx: 0,
+              color: "#4E73DF",
+              height: "47px",
+              width: "51px",
+              // fontSize: "18px"
+            },
+            "& .Mui-selected": {
+              backgroundColor: "#4E73DF",
+              color: "white",
+            },
+          }}
         />
       </Box>
     </>

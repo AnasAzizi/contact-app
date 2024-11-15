@@ -54,4 +54,3 @@ SignIn.footerProps = {
 };
 
 export default SignIn;
-

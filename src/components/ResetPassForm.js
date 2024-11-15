@@ -83,15 +83,19 @@ const ResetPassForm = () => {
           </Button>
         </Grid>
 
-        <Grid 
-        item="true"
-         display="flex" 
-        justifyContent="center"
-         mt="57px" size={12} 
-         sx={{color:"#4E73DF", textDecoration: "underline",fontSize:"20px"}}>
-          <Link href="/auth/sign-in">
-          Back to login
-          </Link>
+        <Grid
+          item="true"
+          display="flex"
+          justifyContent="center"
+          mt="57px"
+          size={12}
+          sx={{
+            color: "#4E73DF",
+            textDecoration: "underline",
+            fontSize: "20px",
+          }}
+        >
+          <Link href="/auth/sign-in">Back to login</Link>
         </Grid>
       </Grid>
     </>

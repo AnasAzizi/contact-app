@@ -18,9 +18,9 @@ import Link from "next/link";
 
 const pages = [
   { name: "Home", path: "/home/home-page" },
-  { name: "Contacts", path: "/contacts/send-email" },
+  { name: "Contacts", path: "/home/contacts" },
   { name: "Company Profile", path: "/company-profile" },
-  { name: "Users", path: "/users" },
+  { name: "Users", path: "/home/users" },
 ];
 const settings = ["My Profile", "Log out"];
 

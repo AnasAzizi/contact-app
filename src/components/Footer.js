@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
-import Divider from '@mui/material/Divider';
+import Divider from "@mui/material/Divider";
 
-
-const Footer = ({ width, show,color }) => {
-  const [showText, setShowText] = useState(show)
+const Footer = ({ width, show, color }) => {
+  const [showText, setShowText] = useState(show);
   return (
     <>
       <Box
@@ -14,34 +13,36 @@ const Footer = ({ width, show,color }) => {
         sx={{
           width: "100%",
           color: color,
-          position: "fixed"
-        }}>
-        <Divider sx={{
-          bgcolor: "#D9D9D9",
-          mb: "20px"
+          position: "fixed",
         }}
+      >
+        <Divider
+          sx={{
+            bgcolor: "#D9D9D9",
+            mb: "20px",
+          }}
         />
 
-        <Box component="div"
+        <Box
+          component="div"
           sx={{
             width: width,
             display: "flex",
             justifyContent: showText ? "space-around" : "start",
             opacity: "60%",
-            pl: showText? "0px":"102px"
+            pl: showText ? "0px" : "102px",
           }}
         >
           <Typography>
             Copyright © ITM Development | Contact Book | 2022
           </Typography>
-          {showText && <Typography>
-            Privacy Policy - Terms & Conditions
-          </Typography>}
+          {showText && (
+            <Typography>Privacy Policy - Terms & Conditions</Typography>
+          )}
         </Box>
-
       </Box>
     </>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

@@ -89,26 +89,29 @@ const HomePage = () => {
                     Active
                   </Typography>
                   <Typography
-                    sx={{ opacity: "50%", display: "flex", mb: "21px",mt:"21px" }}
+                    sx={{
+                      opacity: "50%",
+                      display: "flex",
+                      mb: "21px",
+                      mt: "21px",
+                    }}
                   >
                     <NorthIcon /> 3% from last month
                   </Typography>
                 </CardContent>
               </Card>
-
             </Grid>
             <Grid size={6}>
               <Card
                 sx={{
                   minWidth: { xs: "400px", md: "0px" },
 
-
                   bgcolor: "#FC766A",
                   color: "#ffffff",
                   fontSize: "40px",
                 }}
               >
-                <CardContent  sx={{ pb: 0, "&:last-child": { pb: 0 } }}>
+                <CardContent sx={{ pb: 0, "&:last-child": { pb: 0 } }}>
                   <Box
                     component="div"
                     sx={{
@@ -127,13 +130,17 @@ const HomePage = () => {
                       opacity: "50%",
                       ml: "8px",
                       fontSize: "20px",
-
                     }}
                   >
                     Inactive
                   </Typography>
                   <Typography
-                    sx={{ opacity: "50%", display: "flex", mb: "21px",mt:"21px" }}
+                    sx={{
+                      opacity: "50%",
+                      display: "flex",
+                      mb: "21px",
+                      mt: "21px",
+                    }}
                   >
                     <NorthIcon /> 3% from last month
                   </Typography>
@@ -149,7 +156,7 @@ const HomePage = () => {
                   fontSize: "40px",
                 }}
               >
-                <CardContent  sx={{ pb: 0, "&:last-child": { pb: 0 } }}>
+                <CardContent sx={{ pb: 0, "&:last-child": { pb: 0 } }}>
                   <Box
                     component="div"
                     sx={{
@@ -173,11 +180,16 @@ const HomePage = () => {
                     With email
                   </Typography>
                   <Typography
-                    sx={{ opacity: "50%", display: "flex", mb: "21px",mt:"21px" }}
+                    sx={{
+                      opacity: "50%",
+                      display: "flex",
+                      mb: "21px",
+                      mt: "21px",
+                    }}
                   >
                     <NorthIcon /> 3% from last month
                   </Typography>
-                </CardContent >
+                </CardContent>
               </Card>
             </Grid>
             <Grid size={6}>
@@ -189,7 +201,7 @@ const HomePage = () => {
                   fontSize: "40px",
                 }}
               >
-                <CardContent  sx={{ pb: 0, "&:last-child": { pb: 0 } }}>
+                <CardContent sx={{ pb: 0, "&:last-child": { pb: 0 } }}>
                   <Box
                     component="div"
                     sx={{
@@ -208,22 +220,26 @@ const HomePage = () => {
                       opacity: "50%",
                       ml: "8px",
                       fontSize: "20px",
-
                     }}
                   >
                     Without email
                   </Typography>
                   <Typography
-                    sx={{ opacity: "50%", display: "flex", mb: "21px",mt:"21px" }}
+                    sx={{
+                      opacity: "50%",
+                      display: "flex",
+                      mb: "21px",
+                      mt: "21px",
+                    }}
                   >
                     <NorthIcon /> 3% from last month
                   </Typography>
-                </CardContent >
+                </CardContent>
               </Card>
             </Grid>
           </Grid>
 
-          <Grid item="true" size={{ xs: 12, md: 6 }} mt={{xs:"40px",md:0}}>
+          <Grid item="true" size={{ xs: 12, md: 6 }} mt={{ xs: "40px", md: 0 }}>
             <Card
               sx={{
                 height: "72px",
@@ -232,22 +248,16 @@ const HomePage = () => {
                 fontSize: "26px",
               }}
             >
-              <Typography 
-              sx={{fontSize:"26px",
-                mt:"20px",
-                ml:"40px",
-                mt:"18px"
-              }}
+              <Typography
+                sx={{ fontSize: "26px", mt: "20px", ml: "40px", mt: "18px" }}
               >
-              Latest activities
+                Latest activities
               </Typography>
             </Card>
-            <TableContainer component={Paper} sx={{px:{md:"40px"}}}>
-              <Table
-                sx={{ mt: "34px"}}
-              >
+            <TableContainer component={Paper} sx={{ px: { md: "40px" } }}>
+              <Table sx={{ mt: "18px" }}>
                 <TableBody>
-                  {Data.map((data) => (
+                  {Data.slice(0, 5).map((data) => (
                     <TableRow key={data.name} sx={{ border: "none" }}>
                       <TableCell
                         component="th"
@@ -274,7 +284,7 @@ const HomePage = () => {
                         scope="row"
                         align="right"
                         sx={{
-                          pr:"0px",
+                          pr: "0px",
                           display: "flex",
                           justifyContent: "flex-start",
                           gap: "9px",
@@ -301,7 +311,7 @@ const HomePage = () => {
                         component="th"
                         scope="row"
                         align="right"
-                        sx={{ border: "none", color: "black",pl:"0px" }}
+                        sx={{ border: "none", color: "black", pl: "0px" }}
                       >
                         <Chip
                           sx={{

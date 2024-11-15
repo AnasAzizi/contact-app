@@ -3,18 +3,17 @@ import Image from "next/image";
 import Box from "@mui/material/Box";
 import Head from "next/head";
 import Grid from "@mui/material/Grid2";
-import RegisterForm from '@/components/RegisterForm'
+import RegisterForm from "@/components/RegisterForm";
 
 const register = () => {
-
   return (
     <>
       <Head>
         <title>Register</title>
       </Head>
-      <Grid size={12} container sx={{ bgcolor: "#ffffff" }} >
+      <Grid size={12} container sx={{ bgcolor: "#ffffff" }}>
         {/* background image */}
-        <Grid item="true" size={{xs:0,md:4.55}} >
+        <Grid item="true" size={{ xs: 0, md: 4.55 }}>
           <Box
             component="div"
             sx={{
@@ -33,8 +32,8 @@ const register = () => {
           </Box>
         </Grid>
         {/* sign in form */}
-        <Grid item="true" size={{xs:12,md:7.45}}>
-            <RegisterForm />
+        <Grid item="true" size={{ xs: 12, md: 7.45 }}>
+          <RegisterForm />
         </Grid>
       </Grid>
     </>

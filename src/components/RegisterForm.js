@@ -32,7 +32,7 @@ const RegisterForm = () => {
         }}
       >
         <Grid container size={8.2}>
-          <Grid item="true" size={{xs:12,md:12}}>
+          <Grid item="true" size={{ xs: 12, md: 12 }}>
             <Typography
               color="#212529"
               fontSize="42px"
@@ -43,7 +43,7 @@ const RegisterForm = () => {
             </Typography>
           </Grid>
 
-          <Grid item="true" size={{xs:12,md:12}}>
+          <Grid item="true" size={{ xs: 12, md: 12 }}>
             <Typography
               sx={{ opacity: "40%" }}
               color="#212529"
@@ -66,33 +66,25 @@ const RegisterForm = () => {
           >
             <Grid item="true" size={{ xs: 12, md: 6 }}>
               <FormControl variant="outlined" fullWidth>
-                <InputLabel sx={{ color: "#868E96" }}>
-                  First Name
-                </InputLabel>
+                <InputLabel sx={{ color: "#868E96" }}>First Name</InputLabel>
                 <OutlinedInput label="First Name" type="text"></OutlinedInput>
               </FormControl>
             </Grid>
             <Grid item="true" size={{ xs: 12, md: 6 }}>
               <FormControl variant="outlined" fullWidth>
-                <InputLabel sx={{ color: "#868E96" }}>
-                  Last Name
-                </InputLabel>
+                <InputLabel sx={{ color: "#868E96" }}>Last Name</InputLabel>
                 <OutlinedInput label="Last Name" type="text"></OutlinedInput>
               </FormControl>
             </Grid>
             <Grid item="true" size={{ xs: 12, md: 6 }}>
               <FormControl variant="outlined" fullWidth>
-                <InputLabel sx={{ color: "#868E96" }}>
-                  Email
-                </InputLabel>
+                <InputLabel sx={{ color: "#868E96" }}>Email</InputLabel>
                 <OutlinedInput label="Email" type="email"></OutlinedInput>
               </FormControl>
             </Grid>
             <Grid item="true" size={{ xs: 12, md: 6 }}>
               <FormControl variant="outlined" fullWidth>
-                <InputLabel sx={{ color: "#868E96" }}>
-                  Password
-                </InputLabel>
+                <InputLabel sx={{ color: "#868E96" }}>Password</InputLabel>
                 <OutlinedInput
                   label="Password"
                   type={showPassword ? "text" : "password"}
@@ -133,27 +125,21 @@ const RegisterForm = () => {
           >
             <Grid size={{ xs: 12, md: 6 }}>
               <FormControl variant="outlined" fullWidth>
-                <InputLabel sx={{ color: "#868E96" }}>
-                  Company Name
-                </InputLabel>
+                <InputLabel sx={{ color: "#868E96" }}>Company Name</InputLabel>
                 <OutlinedInput label="Company Name" type="text"></OutlinedInput>
               </FormControl>
             </Grid>
 
             <Grid size={{ xs: 12, md: 6 }}>
               <FormControl variant="outlined" fullWidth>
-                <InputLabel sx={{ color: "#868E96" }}>
-                  VAT Number
-                </InputLabel>
+                <InputLabel sx={{ color: "#868E96" }}>VAT Number</InputLabel>
                 <OutlinedInput label="VAT Number" type="number"></OutlinedInput>
               </FormControl>
             </Grid>
 
             <Grid size={{ xs: 12, md: 6 }}>
               <FormControl variant="outlined" fullWidth>
-                <InputLabel sx={{ color: "#868E96" }}>
-                  Street
-                </InputLabel>
+                <InputLabel sx={{ color: "#868E96" }}>Street</InputLabel>
                 <OutlinedInput label="Street" type="text"></OutlinedInput>
               </FormControl>
             </Grid>
@@ -172,27 +158,21 @@ const RegisterForm = () => {
 
             <Grid size={{ xs: 12, md: 6 }}>
               <FormControl variant="outlined" fullWidth>
-                <InputLabel sx={{ color: "#868E96" }}>
-                  City
-                </InputLabel>
+                <InputLabel sx={{ color: "#868E96" }}>City</InputLabel>
                 <OutlinedInput label="City" type="text"></OutlinedInput>
               </FormControl>
             </Grid>
 
             <Grid size={{ xs: 12, md: 6 }}>
               <FormControl variant="outlined" fullWidth>
-                <InputLabel sx={{ color: "#868E96" }}>
-                  State
-                </InputLabel>
+                <InputLabel sx={{ color: "#868E96" }}>State</InputLabel>
                 <OutlinedInput label="State" type="text"></OutlinedInput>
               </FormControl>
             </Grid>
 
             <Grid size={{ xs: 12, md: 6 }}>
               <FormControl variant="outlined" fullWidth>
-                <InputLabel sx={{ color: "#868E96" }}>
-                  Zip
-                </InputLabel>
+                <InputLabel sx={{ color: "#868E96" }}>Zip</InputLabel>
                 <OutlinedInput label="Zip" type="number"></OutlinedInput>
               </FormControl>
             </Grid>
@@ -220,30 +200,30 @@ const RegisterForm = () => {
             alignItems="center"
           >
             <Grid size={12} item="true">
-            <FormControlLabel
-  sx={{
-    color: "#212529", 
-    mb: "20px", 
-    display: "flex", // Ensure the checkbox and label align properly
-    alignItems: "center" // Center align the checkbox and text
-  }}
-  control={
-    <Checkbox 
-      defaultChecked 
-      sx={{ marginRight: {xs:"4%",md:0} }} 
-    />
-  }
-  label="I agree to the website terms and conditions"
-/>
+              <FormControlLabel
+                sx={{
+                  color: "#212529",
+                  mb: "20px",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+                control={
+                  <Checkbox
+                    defaultChecked
+                    sx={{ marginRight: { xs: "4%", md: 0 } }}
+                  />
+                }
+                label="I agree to the website terms and conditions"
+              />
             </Grid>
 
             <Grid item="true" size={12}>
               <Button
-              fullWidth
+                fullWidth
                 sx={{
                   bgcolor: "#4E73DF",
                   textTransform: "none",
-                  fontSize:"20px",
+                  fontSize: "20px",
                   mb: "30px",
                 }}
                 variant="contained"
@@ -254,7 +234,11 @@ const RegisterForm = () => {
             <Grid item="true">
               <Link
                 href="/auth/sign-in"
-                style={{ textDecoration: "underline", color: "#4E73DF",fontSize:"20px" }}
+                style={{
+                  textDecoration: "underline",
+                  color: "#4E73DF",
+                  fontSize: "20px",
+                }}
               >
                 Sign in instead
               </Link>

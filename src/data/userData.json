@@ -1,6 +1,6 @@
 [
   {
-    "id": "0001",
+    "id": "001",
     "firstName": "Adam",
     "lastName": "Smith",
     "email": "well@contact_book.com",
@@ -9,7 +9,7 @@
     "imageUrl": "https://randomuser.me/api/portraits/men/1.jpg"
   },
   {
-    "id": "0002",
+    "id": "002",
     "firstName": "John",
     "lastName": "Wellson",
     "email": "john@contact_book.com",
@@ -18,7 +18,7 @@
     "imageUrl": "https://randomuser.me/api/portraits/men/2.jpg"
   },
   {
-    "id": "0003",
+    "id": "003",
     "firstName": "Richard",
     "lastName": "Volant",
     "email": "richard@contact_book.com",
@@ -27,7 +27,7 @@
     "imageUrl": "https://randomuser.me/api/portraits/men/3.jpg"
   },
   {
-    "id": "0004",
+    "id": "004",
     "firstName": "Ricardo",
     "lastName": "Smith",
     "email": "ricardo@contact_book.com",
@@ -36,7 +36,7 @@
     "imageUrl": "https://randomuser.me/api/portraits/men/4.jpg"
   },
   {
-    "id": "0005",
+    "id": "005",
     "firstName": "Adam",
     "lastName": "Milos",
     "email": "adam@contact_book.com",
@@ -45,7 +45,7 @@
     "imageUrl": "https://randomuser.me/api/portraits/men/5.jpg"
   },
   {
-    "id": "0006",
+    "id": "006",
     "firstName": "Adam",
     "lastName": "Smith",
     "email": "adam@contact_book.com",
