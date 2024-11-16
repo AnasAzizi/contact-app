@@ -16,12 +16,12 @@ import {
   CardContent,
   Divider,
   Typography,
+  Avatar,
 } from "@mui/material";
 import { styled } from "@mui/system";
 import FeedIcon from "@mui/icons-material/Feed";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
-import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Grid2";
 
 const StatusChip = styled(Chip)(({ statuscolor }) => ({
@@ -62,11 +62,24 @@ const UserTable = ({ data, favorite }) => {
   return (
     <>
       {data.map((row, index) => (
-        <Card key={index} sx={{ display: { xs: "block", md: "none" } }}>
-          <CardContent>
-            <Grid container size={12} justifyContent="space-between">
+        <Card
+          key={index}
+          sx={{
+            display: { xs: "block", md: "none" },
+            mb: "19px",
+            minHeight: "274px",
+          }}
+        >
+          <CardContent sx={{ px: "0px", pt: "13px" }}>
+            <Grid
+              container
+              size={12}
+              justifyContent="space-between"
+              alignItems="center"
+              sx={{ px: "18px" }}
+            >
               <Grid item="true">
-                <Checkbox />
+                <Checkbox size="medium" />
               </Grid>
               <Grid item="true">
                 <StarBorderOutlinedIcon
@@ -91,7 +104,7 @@ const UserTable = ({ data, favorite }) => {
                 <Avatar
                   alt={`${row.firstName} ${row.lastName}`}
                   src={row.imageUrl}
-                  sx={{ width: 80, height: 80 }}
+                  sx={{ width: 80, height: 80, mb: "9px" }}
                 />
               </Grid>
               <Grid item="true">
@@ -118,7 +131,7 @@ const UserTable = ({ data, favorite }) => {
                 <Divider orientation="horizontal" />
               </Grid>
               <Grid item="true">
-                <Typography fontSize="18px" color="#808080">
+                <Typography fontSize="18px" color="#808080" my="5px">
                   {row.email}
                 </Typography>
               </Grid>
@@ -173,7 +186,6 @@ const UserTable = ({ data, favorite }) => {
                   </TableCell>
                 </>
               )}
-
               <TableCell
                 sx={{
                   borderBottom: "2px solid #343A40",
@@ -254,7 +266,7 @@ const UserTable = ({ data, favorite }) => {
                       }}
                     >
                       {selectedStar ? (
-                        <StarOutlinedIcon sx={{ fontSize: "55px" }} />
+                        <StarOutlinedIcon sx={{ fontSize: "35px" }} />
                       ) : (
                         <StarBorderOutlinedIcon sx={{ fontSize: "35px" }} />
                       )}

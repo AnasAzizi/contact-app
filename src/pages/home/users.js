@@ -9,8 +9,8 @@ import {
   InputLabel,
   OutlinedInput,
   Button,
-  Box,
 } from "@mui/material";
+import Grid from "@mui/material/Grid2";
 
 const users = () => {
   return (
@@ -21,55 +21,62 @@ const users = () => {
           Home / Users
         </Typography>
         <Divider sx={{ mb: "31px" }} />
-        <Box
-          component="div"
-          sx={{
-            display: "flex",
-            flexDirection: { xs: "column", md: "row" },
-            alignItems: "center",
-            justifyContent: "space-between",
-            mb: "18px",
-          }}
-        >
-          <FormControl
-            variant="outlined"
-            sx={{ bgcolor: "white", minWidth: "391px" }}
-          >
-            <InputLabel sx={{ color: "#868E96", fontSize: "16px" }}>
-              Search
-            </InputLabel>
-            <OutlinedInput label="Search" type="text"></OutlinedInput>
-          </FormControl>
-
-          <Box
-            component="div"
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: "22px",
-              mt: { xs: 2, md: 0 },
-            }}
-          >
-            <Button
-              sx={{ fontSize: "18px", textTransform: "none" }}
-              color="error"
-              variant="contained"
-            >
-              Delete
-            </Button>
-            <Button
+        <Grid container size={12} direction="row" mb={{xs:0,md:"18px"}}>
+          <Grid item="true" size={{ xs: 12, md: 3.5 }}>
+            <FormControl
+              fullWidth
+              variant="outlined"
               sx={{
-                bgcolor: "#4E73DF",
-                fontSize: "18px",
-                width: "215px",
-                textTransform: "none",
+                bgcolor: "white",
               }}
-              variant="contained"
             >
-              Invite New User
-            </Button>
-          </Box>
-        </Box>
+              <InputLabel
+                sx={{
+                  color: "#868E96",
+                }}
+              >
+                Search
+              </InputLabel>
+              <OutlinedInput label="Search" type="text"></OutlinedInput>
+            </FormControl>
+          </Grid>
+          <Grid
+            container
+            justifyContent="flex-end"
+            alignItems="center"
+            item="true"
+            size={{ xs: 12, md: 8.5 }}
+            direction="row"
+            columnSpacing="22px"
+          >
+            <Grid item="true" size={{ xs: 6, md: 1.2 }} p={{ xs: 1, md: 0 }}>
+              <Button
+                fullWidth
+                color="error"
+                variant="contained"
+                sx={{
+                  fontSize: "18px",
+                  textTransform: "none",
+                }}
+              >
+                Delete
+              </Button>
+            </Grid>
+            <Grid item="true" size={{ xs: 6, md: 2.6 }} p={{ xs: 1, md: 0 }}>
+              <Button
+                variant="contained"
+                fullWidth
+                sx={{
+                  bgcolor: "#4E73DF",
+                  fontSize: "18px",
+                  textTransform: "none",
+                }}
+              >
+                Invite New User
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid>
         <UserTable data={userData} favorite={false} />
       </Container>
     </>
