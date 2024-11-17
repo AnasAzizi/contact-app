@@ -1,11 +1,11 @@
 import NavBar from "@/components/NavBar";
+import SecondNavBar from "@/components/SecondNavBar"
 import React from "react";
 import { useRouter } from "next/router";
 import {
   Card,
   Container,
   Typography,
-  Divider,
   Avatar,
   Button,
   TextField,
@@ -22,16 +22,13 @@ const CreateNew = () => {
     <>
       <NavBar />
       <Container maxWidth="xl">
-        <Typography mt={6} mb={1} variant="h5" color="black">
-          Home / Contacts / Create new
-        </Typography>
-        <Divider />
+      <SecondNavBar path="Home / Contacts / Create new" />
         <Card
           sx={{
             height: "72px",
             bgcolor: "#F7F7F7",
             mt: "31px",
-            boxShadow: 3
+            boxShadow: 3,
           }}
         >
           <Typography
@@ -82,7 +79,13 @@ const CreateNew = () => {
               </Button>
             </Grid>
           </Grid>
-          <Grid container item="true" size={{ xs: 12, md: 9 }} pr="32px" pl={{xs:"32px",md:0}} >
+          <Grid
+            container
+            item="true"
+            size={{ xs: 12, md: 9 }}
+            pr="32px"
+            pl={{ xs: "32px", md: 0 }}
+          >
             <Grid
               item="true"
               container
@@ -184,31 +187,37 @@ const CreateNew = () => {
                 />
               </Grid>
             </Grid>
-            <Grid container size={12} mb="47px" mt="33px" ml={{md:"27px"}} gap={{md:10}}>
-            <Grid item="true" size={{xs:6,md:2}}>
-              <Button
-                fullWidth
-                variant="contained"
-                bgcolor="#4E73DF"
-                sx={{ textTransform: "none",fontSize:"20px" }}
-              >
-                Create
-              </Button>
-            </Grid>
-            <Grid  item="true" size={{xs:6,md:2}}>
-              <Button
-              onClick={() => router.push("/home/contacts")}
-                fullWidth
-                variant="outlined"
-                bgcolor="#4E73DF"
-                sx={{ textTransform: "none",fontSize:"20px" }}
-              >
-                Back
-              </Button>
+            <Grid
+              container
+              size={12}
+              mb="47px"
+              mt="33px"
+              ml={{ md: "27px" }}
+              gap={{ md: 10 }}
+            >
+              <Grid item="true" size={{ xs: 6, md: 2 }}>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  bgcolor="#4E73DF"
+                  sx={{ textTransform: "none", fontSize: "20px" }}
+                >
+                  Create
+                </Button>
+              </Grid>
+              <Grid item="true" size={{ xs: 6, md: 2 }}>
+                <Button
+                  onClick={() => router.push("/home/contacts")}
+                  fullWidth
+                  variant="outlined"
+                  bgcolor="#4E73DF"
+                  sx={{ textTransform: "none", fontSize: "20px" }}
+                >
+                  Back
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
-          </Grid>
-
         </Grid>
       </Container>
     </>

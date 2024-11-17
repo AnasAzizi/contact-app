@@ -1,20 +1,24 @@
 import React from "react";
 import NavBar from "@/components/NavBar";
+import SecondNavBar from "@/components/SecondNavBar";
 import Data from "@/data/LatestActivitiesData.json";
 import Box from "@mui/material/Box";
-import { Container, Divider, Typography } from "@mui/material";
+import {
+  Container,
+  Typography,
+  Card,
+  CardContent,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Chip,
+  Paper,
+} from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import ArrowCircleLeftRoundedIcon from "@mui/icons-material/ArrowCircleLeftRounded";
 import NorthIcon from "@mui/icons-material/North";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper"; //! border of table like shadow
-import Chip from "@mui/material/Chip";
 
 const HomePage = () => {
   const getStatusColor = (status) => {
@@ -38,10 +42,7 @@ const HomePage = () => {
     <>
       <NavBar />
       <Container maxWidth="xl">
-        <Typography mt={6} mb={1} variant="h5" color="black">
-          Statistical Dashboard
-        </Typography>
-        <Divider />
+        <SecondNavBar path="Statistical Dashboard" />
         <Grid
           mt="50px"
           container
@@ -238,7 +239,6 @@ const HomePage = () => {
               </Card>
             </Grid>
           </Grid>
-
           <Grid item="true" size={{ xs: 12, md: 6 }} mt={{ xs: "40px", md: 0 }}>
             <Card
               sx={{

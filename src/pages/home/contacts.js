@@ -1,11 +1,10 @@
 import NavBar from "@/components/NavBar";
 import UserTable from "@/components/UserTable";
+import SecondNavBar from "@/components/SecondNavBar"
 import userData from "@/data/userData.json";
 import { useRouter } from "next/router";
 import {
   Container,
-  Divider,
-  Typography,
   FormControl,
   InputLabel,
   OutlinedInput,
@@ -16,15 +15,12 @@ import Grid from "@mui/material/Grid2";
 const contacts = () => {
   const router = useRouter();
 
-
   return (
     <>
       <NavBar />
       <Container maxWidth="xl">
-        <Typography mt={6} mb={1} variant="h5" color="black">
-          Home / Contacts
-        </Typography>
-        <Divider sx={{ mb: "31px" }} />
+        <SecondNavBar path="Home / Contacts" />
+
         <Grid
           alignItems="center"
           container
@@ -82,7 +78,7 @@ const contacts = () => {
             </Grid>
             <Grid item="true" size={{ xs: 6, md: 2.3 }} p={{ xs: 1, md: 0 }}>
               <Button
-               onClick={() => router.push("/contacts/create-new")}
+                onClick={() => router.push("/contacts/create-new")}
                 fullWidth
                 sx={{
                   bgcolor: { xs: "#4E73DF", md: "#28A745" },

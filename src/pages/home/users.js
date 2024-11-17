@@ -1,10 +1,11 @@
 import NavBar from "@/components/NavBar";
 import UserTable from "@/components/UserTable";
 import userData from "@/data/userData.json";
+import SecondNavBar from "@/components/SecondNavBar"
+import { useRouter } from "next/router";
 import {
   Container,
   Divider,
-  Typography,
   FormControl,
   InputLabel,
   OutlinedInput,
@@ -13,14 +14,13 @@ import {
 import Grid from "@mui/material/Grid2";
 
 const users = () => {
+  const router = useRouter();
+
   return (
     <>
       <NavBar />
       <Container maxWidth="xl">
-        <Typography mt={6} mb={1} variant="h5" color="black">
-          Home / Users
-        </Typography>
-        <Divider sx={{ mb: "31px" }} />
+      <SecondNavBar path="Home / Users" />
         <Grid container size={12} direction="row" mb={{xs:0,md:"18px"}}>
           <Grid item="true" size={{ xs: 12, md: 3.5 }}>
             <FormControl
@@ -64,6 +64,7 @@ const users = () => {
             </Grid>
             <Grid item="true" size={{ xs: 6, md: 2.6 }} p={{ xs: 1, md: 0 }}>
               <Button
+              onClick={() => router.push("/users/invite-new-user")}
                 variant="contained"
                 fullWidth
                 sx={{
