@@ -19,7 +19,7 @@ import Link from "next/link";
 const pages = [
   { name: "Home", path: "/home/home-page" },
   { name: "Contacts", path: "/home/contacts" },
-  { name: "Company Profile", path: "/company-profile" },
+  { name: "Company Profile", path: "/home/company-profile" },
   { name: "Users", path: "/home/users" },
 ];
 const settings = ["My Profile", "Log out"];

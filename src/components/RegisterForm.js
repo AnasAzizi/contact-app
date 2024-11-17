@@ -150,7 +150,7 @@ const RegisterForm = () => {
                   Street 2 (Optional)
                 </InputLabel>
                 <OutlinedInput
-                  label="Street 2 (Optional)555"
+                  label="Street 2 (Optional)"
                   type="text"
                 />
               </FormControl>
