@@ -1,4 +1,3 @@
-import NavBar from "@/components/NavBar";
 import UserTable from "@/components/UserTable";
 import SecondNavBar from "@/components/SecondNavBar";
 import userData from "@/data/userData.json";
@@ -17,7 +16,6 @@ const contacts = () => {
 
   return (
     <>
-      <NavBar />
       <Container maxWidth="xl">
         <SecondNavBar path="Home / Contacts" />
 
@@ -49,7 +47,11 @@ const contacts = () => {
               </Button>
             </Grid>
 
-            <Grid item="true" size={{ xs: 6, md: 1.8 }} p={{ xs: 1, md: 0 }}>
+            <Grid
+              item="true"
+              size={{ xs: 6, md: 2.5, lg: 1.7 }}
+              p={{ xs: 1, md: 0 }}
+            >
               <Button
                 onClick={() => router.push("/contacts/export-via-email")}
                 fullWidth
@@ -64,7 +66,11 @@ const contacts = () => {
               </Button>
             </Grid>
 
-            <Grid item="true" size={{ xs: 6, md: 1.8 }} p={{ xs: 1, md: 0 }}>
+            <Grid
+              item="true"
+              size={{ xs: 6, md: 3, lg: 2 }}
+              p={{ xs: 1, md: 0 }}
+            >
               <Button
                 fullWidth
                 sx={{
@@ -77,7 +83,11 @@ const contacts = () => {
                 Send Email
               </Button>
             </Grid>
-            <Grid item="true" size={{ xs: 6, md: 2.3 }} p={{ xs: 1, md: 0 }}>
+            <Grid
+              item="true"
+              size={{ xs: 6, md: 2.7, lg: 2.5 }}
+              p={{ xs: 1, md: 0 }}
+            >
               <Button
                 onClick={() => router.push("/contacts/create-new")}
                 fullWidth
@@ -92,9 +102,10 @@ const contacts = () => {
               </Button>
             </Grid>
           </Grid>
-          <Grid item="true" size={{ xs: 12, md: 3.5 }}>
+          <Grid item="true" size={{ xs: 12, md: 3, lg: 3.5 }}>
             <FormControl
               fullWidth
+              size="small"
               variant="outlined"
               sx={{
                 bgcolor: "white",

@@ -74,6 +74,7 @@ const ResetPassForm = () => {
             sx={{
               bgcolor: "#4E73DF",
               textTransform: "none",
+              boxShadow: "none",
               mt: "37px",
               fontSize: "20px",
               minWidth: { xs: "306px", md: "370px" },

@@ -1,5 +1,4 @@
-import  { useState } from "react";
-import NavBar from "@/components/NavBar";
+import { useState } from "react";
 import React from "react";
 import Data from "@/data/LatestActivitiesData.json";
 import {
@@ -49,14 +48,13 @@ const activities = () => {
 
   return (
     <>
-      <NavBar />
       <Container maxWidth="xl">
         <SecondNavBar path="Home / Activities" />
         <TableContainer component={Paper} sx={{ px: { md: "40px" } }}>
           <Table>
             <TableHead>
               <TableRow sx={{ borderBottom: "2px solid #343A40" }}>
-                <TableCell sx={{ fontWeight: "bold", fontSize: "19px" }}>
+                <TableCell sx={{ fontWeight: "bold", fontSize: "19px", pl: 0 }}>
                   Contact
                 </TableCell>
                 <TableCell
@@ -96,11 +94,12 @@ const activities = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {Data.map((data,index) => (
-                <TableRow key={index}
+              {Data.map((data, index) => (
+                <TableRow
+                  key={index}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }} //? p or m for tableRow
                 >
-                  <TableCell scope="row" sx={{ fontSize: "20px" }}>
+                  <TableCell scope="row" sx={{ fontSize: "20px", p: 0 }}>
                     {data.name}
                   </TableCell>
                   <TableCell align="left" sx={{ px: 0 }}>
@@ -128,13 +127,14 @@ const activities = () => {
                       </Typography>
                     </Box>
                   </TableCell>
-                  <TableCell align="right">
+                  <TableCell align="right" sx={{ pr: 0 }}>
                     <Chip
                       sx={{
                         borderRadius: "2px",
                         bgcolor: "#EEEEEE",
                         fontSize: "12px",
                         minWidth: "54px",
+                        maxHeight: "20px",
                       }}
                       label={data.user}
                     />
@@ -145,34 +145,37 @@ const activities = () => {
           </Table>
         </TableContainer>
         <Box
-        component="div"
-        sx={{ display: { xs: "none", md: "flex" }, justifyContent: "flex-end" }}
-      >
-        <Pagination
-          count={Math.ceil(Data.length / rowsPerPage)}
-          page={page}
-          onChange={handlePageChange}
-          variant="outlined"
-          shape="rounded"
-          // renderItem=""
+          component="div"
           sx={{
-            marginTop: 2,
-            "& .MuiPaginationItem-root": {
-              borderColor: "#DEE2E6",
-              borderRadius: 0,
-              mx: 0,
-              color: "#4E73DF",
-              height: "47px",
-              width: "51px",
-              // fontSize: "18px"
-            },
-            "& .Mui-selected": {
-              backgroundColor: "#4E73DF",
-              color: "white",
-            },
+            display: { xs: "none", md: "flex" },
+            justifyContent: "flex-end",
           }}
-        />
-      </Box>
+        >
+          <Pagination
+            count={Math.ceil(Data.length / rowsPerPage)}
+            page={page}
+            onChange={handlePageChange}
+            variant="outlined"
+            shape="rounded"
+            // renderItem=""
+            sx={{
+              marginTop: 2,
+              "& .MuiPaginationItem-root": {
+                borderColor: "#DEE2E6",
+                borderRadius: 0,
+                mx: 0,
+                color: "#4E73DF",
+                height: "47px",
+                width: "51px",
+                // fontSize: "18px"
+              },
+              "& .Mui-selected": {
+                backgroundColor: "#4E73DF",
+                color: "white",
+              },
+            }}
+          />
+        </Box>
       </Container>
     </>
   );

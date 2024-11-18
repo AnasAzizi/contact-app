@@ -1,7 +1,6 @@
-import NavBar from "@/components/NavBar";
 import UserTable from "@/components/UserTable";
 import userData from "@/data/userData.json";
-import SecondNavBar from "@/components/SecondNavBar"
+import SecondNavBar from "@/components/SecondNavBar";
 import { useRouter } from "next/router";
 import {
   Container,
@@ -18,10 +17,9 @@ const users = () => {
 
   return (
     <>
-      <NavBar />
       <Container maxWidth="xl">
-      <SecondNavBar path="Home / Users" />
-        <Grid container size={12} direction="row" mb={{xs:0,md:"18px"}}>
+        <SecondNavBar path="Home / Users" />
+        <Grid container size={12} direction="row" mb={{ xs: 0, md: "18px" }}>
           <Grid item="true" size={{ xs: 12, md: 3.5 }}>
             <FormControl
               fullWidth
@@ -64,7 +62,7 @@ const users = () => {
             </Grid>
             <Grid item="true" size={{ xs: 6, md: 2.6 }} p={{ xs: 1, md: 0 }}>
               <Button
-              onClick={() => router.push("/users/invite-new-user")}
+                onClick={() => router.push("/users/invite-new-user")}
                 variant="contained"
                 fullWidth
                 sx={{

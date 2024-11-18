@@ -1,5 +1,4 @@
 import React from "react";
-import NavBar from "@/components/NavBar";
 import Image from "next/image";
 import SecondNavBar from "@/components/SecondNavBar";
 import {
@@ -15,12 +14,11 @@ import {
   Box,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import EditOffIcon from "@mui/icons-material/EditOff";
+import EditOffOutlinedIcon from "@mui/icons-material/EditOffOutlined";
 
 const CompanyProfile = () => {
   return (
     <>
-      <NavBar />
       <Container maxWidth="xl">
         <SecondNavBar path="Home / Company Profile" />
         <Card
@@ -37,7 +35,7 @@ const CompanyProfile = () => {
               ml: "40px",
             }}
           >
-            User details
+            My Profile
           </Typography>
         </Card>
 
@@ -156,7 +154,7 @@ const CompanyProfile = () => {
                   color: "#4E73DF",
                 }}
                 variant="outlined"
-                startIcon={<EditOffIcon />}
+                startIcon={<EditOffOutlinedIcon />}
               >
                 Edit
               </Button>
@@ -165,8 +163,8 @@ const CompanyProfile = () => {
           <Grid item="true" size={4}>
             <Box
               sx={{
-                width: { md: "365px", xs: "365px" },
-                height: { md: "369px", xs: "369px" },
+                width: { lg: "365px", xs: "365px", md: "260px" },
+                height: { md: "369px", xs: "369px", sm: "369px" },
                 position: "relative",
                 mt: "40px",
               }}

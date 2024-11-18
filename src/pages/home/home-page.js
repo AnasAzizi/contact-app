@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import NavBar from "@/components/NavBar";
 import SecondNavBar from "@/components/SecondNavBar";
 import Data from "@/data/LatestActivitiesData.json";
 import Box from "@mui/material/Box";
@@ -18,7 +17,6 @@ import {
   Paper,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import ArrowCircleLeftRoundedIcon from "@mui/icons-material/ArrowCircleLeftRounded";
 import NorthIcon from "@mui/icons-material/North";
 
 const HomePage = () => {
@@ -41,7 +39,6 @@ const HomePage = () => {
 
   return (
     <>
-      <NavBar />
       <Container maxWidth="xl">
         <SecondNavBar path="Statistical Dashboard" />
         <Grid
@@ -58,10 +55,10 @@ const HomePage = () => {
             columnSpacing="72px"
             rowSpacing="68px"
           >
-            <Grid size={6}>
+            <Grid size={{ xs: 12, md: 6 }}>
               <Card
                 sx={{
-                  minWidth: { xs: "400px", md: "0px" },
+                  width: "100%",
                   bgcolor: "#1ABC9C",
                   color: "#ffffff",
                   fontSize: "40px",
@@ -106,10 +103,10 @@ const HomePage = () => {
                 </CardContent>
               </Card>
             </Grid>
-            <Grid size={6}>
+            <Grid size={{ xs: 12, md: 6 }}>
               <Card
                 sx={{
-                  minWidth: { xs: "400px", md: "0px" },
+                  width: "100%",
                   bgcolor: "#FC766A",
                   color: "#ffffff",
                   fontSize: "40px",
@@ -154,10 +151,10 @@ const HomePage = () => {
                 </CardContent>
               </Card>
             </Grid>
-            <Grid size={6}>
+            <Grid size={{ xs: 12, md: 6 }}>
               <Card
                 sx={{
-                  minWidth: { xs: "400px", md: "0px" },
+                  width: "100%",
                   bgcolor: "#2C3E50",
                   color: "#ffffff",
                   fontSize: "40px",
@@ -202,11 +199,11 @@ const HomePage = () => {
                 </CardContent>
               </Card>
             </Grid>
-            <Grid size={6}>
+            <Grid size={{ xs: 12, md: 6 }}>
               <Card
                 sx={{
-                  minWidth: { xs: "400px", md: "0px" },
                   bgcolor: "#5B84B1",
+                  width: "100%",
                   color: "#ffffff",
                   fontSize: "40px",
                 }}
@@ -276,7 +273,11 @@ const HomePage = () => {
                     >
                       <TableCell
                         scope="row"
-                        sx={{ border: "none", fontSize: "20px" }}
+                        sx={{
+                          border: "none",
+                          fontSize: { xs: "15px", md: "20px" },
+                          p: 0,
+                        }}
                       >
                         {data.name}
                       </TableCell>
@@ -319,7 +320,11 @@ const HomePage = () => {
                       </TableCell>
                       <TableCell
                         align="right"
-                        sx={{ border: "none", width: "85px", pl: 0 }}
+                        sx={{
+                          border: "none",
+                          width: "85px",
+                          pr: { xs: 2, md: 0 },
+                        }}
                       >
                         <Chip
                           sx={{
@@ -327,6 +332,7 @@ const HomePage = () => {
                             bgcolor: "#EEEEEE",
                             fontSize: "12px",
                             minWidth: "54px",
+                            maxHeight: "20px",
                           }}
                           label={data.user}
                         />

@@ -12,18 +12,18 @@ import {
   Paper,
   Pagination,
   Box,
+  Avatar,
+  TableSortLabel,
   Card,
   CardContent,
   Divider,
   Typography,
-  Avatar,
 } from "@mui/material";
 import { styled } from "@mui/system";
 import FeedIcon from "@mui/icons-material/Feed";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
 import Grid from "@mui/material/Grid2";
-// import { DataGrid } from "@mui/x-data-grid";
 
 const StatusChip = styled(Chip)(({ statuscolor }) => ({
   backgroundColor: statuscolor,
@@ -35,7 +35,9 @@ const StatusChip = styled(Chip)(({ statuscolor }) => ({
 const UserTable = ({ data, favorite }) => {
   const [page, setPage] = useState(1);
   const rowsPerPage = 5;
-  const [selectedStar, setSelectedStar] = useState();
+  const [selected, setSelected] = useState([]);
+  const [starred, setStarred] = useState({});
+
   const paginatedData = data.slice(
     (page - 1) * rowsPerPage,
     page * rowsPerPage
@@ -60,7 +62,42 @@ const UserTable = ({ data, favorite }) => {
     setPage(value);
   };
 
-  // ==================================================
+  const handleSelectAllClick = (event) => {
+    if (event.target.checked) {
+      const newSelected = paginatedData.map((n) => n.id);
+      setSelected(newSelected);
+    } else {
+      setSelected([]);
+    }
+  };
+
+  const handleCheckboxClick = (event, id) => {
+    event.stopPropagation(); // Prevent row selection when clicking checkbox
+    setSelected((prevSelected) =>
+      prevSelected.includes(id)
+        ? prevSelected.filter((item) => item !== id)
+        : [...prevSelected, id]
+    );
+  };
+
+  const handleStarClick = (id) => {
+    setStarred((prevStarred) => ({
+      ...prevStarred,
+      [id]: !prevStarred[id], // Toggle the favorite status of the clicked row
+    }));
+  };
+
+  const headCells = [
+    { id: "id", label: "ID" },
+    { id: "favorite", label: "Favorite" },
+    { id: "image", label: "Image" },
+    { id: "firstName", label: "First Name" },
+    { id: "lastName", label: "Last Name" },
+    { id: "email", label: "Email" },
+    { id: "phone", label: "Phone" },
+    { id: "status", label: "Status" },
+    { id: "action", label: "Action" },
+  ];
 
   return (
     <>
@@ -147,190 +184,130 @@ const UserTable = ({ data, favorite }) => {
           </CardContent>
         </Card>
       ))}
-
-      <TableContainer
-        component={Paper}
-        sx={{ display: { xs: "none", md: "block" } }}
-      >
+      <TableContainer component={Paper}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell sx={{ borderBottom: "2px solid #343A40" }}>
-                <Checkbox defaultChecked={false} />
+              <TableCell padding="checkbox">
+                <Checkbox
+                  color="primary"
+                  checked={selected.length === paginatedData.length}
+                  onChange={handleSelectAllClick}
+                />
               </TableCell>
-              <TableCell
-                sx={{
-                  borderBottom: "2px solid #343A40",
-                  fontWeight: "bold",
-                  fontSize: "19px",
-                }}
-              >
-                ID
-              </TableCell>
-              {favorite && (
-                <>
-                  <TableCell
-                    sx={{
-                      borderBottom: "2px solid #343A40",
-                      fontWeight: "bold",
-                      fontSize: "19px",
-                    }}
-                  >
-                    Favorite
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "2px solid #343A40",
-                      fontWeight: "bold",
-                      fontSize: "19px",
-                    }}
-                  >
-                    Image
-                  </TableCell>
-                </>
-              )}
-              <TableCell
-                sx={{
-                  borderBottom: "2px solid #343A40",
-                  fontWeight: "bold",
-                  fontSize: "19px",
-                }}
-              >
-                First Name
-              </TableCell>
-              <TableCell
-                sx={{
-                  borderBottom: "2px solid #343A40",
-                  fontWeight: "bold",
-                  fontSize: "19px",
-                }}
-              >
-                Last Name
-              </TableCell>
-              <TableCell
-                sx={{
-                  borderBottom: "2px solid #343A40",
-                  fontWeight: "bold",
-                  fontSize: "19px",
-                }}
-              >
-                Email
-              </TableCell>
-              <TableCell
-                sx={{ borderBottom: "2px solid #343A40", px: 0 }}
-              ></TableCell>
-              <TableCell
-                align="center"
-                sx={{
-                  borderBottom: "2px solid #343A40",
-                  fontWeight: "bold",
-                  fontSize: "19px",
-                }}
-              >
-                Phone
-              </TableCell>
-              <TableCell
-                align="center"
-                sx={{
-                  borderBottom: "2px solid #343A40",
-                  fontWeight: "bold",
-                  fontSize: "19px",
-                }}
-              >
-                Status
-              </TableCell>
-              <TableCell
-                sx={{
-                  borderBottom: "2px solid #343A40",
-                  fontWeight: "bold",
-                  fontSize: "19px",
-                }}
-              >
-                Action
-              </TableCell>
+              {headCells.map((headCell) => {
+                if (headCell.id === "favorite" || headCell.id === "image") {
+                  if (favorite) {
+                    return (
+                      <TableCell
+                        key={headCell.id}
+                        align={
+                          headCell.id === "email" || headCell.id === "status"
+                            ? "center"
+                            : "left"
+                        }
+                      >
+                        <TableSortLabel
+                          sx={{ fontSize: "20px", fontWeight: "bold" }}
+                        >
+                          {headCell.label}
+                        </TableSortLabel>
+                      </TableCell>
+                    );
+                  }
+                } else {
+                  return (
+                    <TableCell
+                      key={headCell.id}
+                      align={
+                        headCell.id === "email"
+                          ? "left"
+                          : "left" || headCell.id === "status"
+                          ? "center"
+                          : "left"
+                      }
+                    >
+                      <TableSortLabel
+                        sx={{ fontSize: "20px", fontWeight: "bold" }}
+                      >
+                        {headCell.label}
+                      </TableSortLabel>
+                    </TableCell>
+                  );
+                }
+              })}
             </TableRow>
           </TableHead>
+
           <TableBody>
-            {paginatedData.map((row) => (
-              <TableRow key={row.id}>
-                <TableCell sx={{ border: "none", fontSize: "19px" }}>
-                  <Checkbox defaultChecked={false} />
-                </TableCell>
-                <TableCell
-                  sx={{ border: "none", fontSize: "19px", fontWeight: "bold" }}
-                >
-                  {row.id}
-                </TableCell>
-                {favorite && (
-                  <>
-                    <TableCell
+            {paginatedData.map((row) => {
+              const isItemSelected = selected.includes(row.id);
+              return (
+                <TableRow hover key={row.id} selected={isItemSelected}>
+                  <TableCell padding="checkbox">
+                    <Checkbox
+                      checked={isItemSelected}
+                      onClick={(event) => handleCheckboxClick(event, row.id)}
+                    />
+                  </TableCell>
+                  <TableCell sx={{ fontSize: "21px", fontWeight: "bold" }}>
+                    {row.id}
+                  </TableCell>
+                  {favorite && (
+                    <>
+                      <TableCell>
+                        <Button onClick={() => handleStarClick(row.id)}>
+                          {starred[row.id] ? (
+                            <StarOutlinedIcon sx={{ fontSize: "35px" }} />
+                          ) : (
+                            <StarBorderOutlinedIcon
+                              sx={{ fontSize: "35px", color: "black" }}
+                            />
+                          )}
+                        </Button>
+                      </TableCell>
+                      <TableCell>
+                        <Avatar
+                          alt={`${row.firstName} ${row.lastName}`}
+                          src={row.imageUrl}
+                          sx={{ width: 58, height: 58 }}
+                        />
+                      </TableCell>
+                    </>
+                  )}
+                  <TableCell sx={{ fontSize: "19px" }}>
+                    {row.firstName}
+                  </TableCell>
+                  <TableCell sx={{ fontSize: "19px" }}>
+                    {row.lastName}
+                  </TableCell>
+                  <TableCell sx={{ fontSize: "19px" }}>{row.email}</TableCell>
+                  {/* <TableCell>
+                    <FeedIcon />
+                  </TableCell> */}
+                  <TableCell sx={{ fontSize: "19px" }}>{row.phone}</TableCell>
+                  <TableCell align="center">
+                    <StatusChip
+                      label={row.status}
+                      statuscolor={getStatusColor(row.status)}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                      variant="contained"
                       sx={{
-                        border: "none",
+                        bgcolor: "#4E73DF",
+                        borderRadius: "5px",
+                        textTransform: "none",
+                        fontSize: "16px",
                       }}
                     >
-                      {selectedStar ? (
-                        <StarOutlinedIcon sx={{ fontSize: "35px" }} />
-                      ) : (
-                        <StarBorderOutlinedIcon sx={{ fontSize: "35px" }} />
-                      )}
-                    </TableCell>
-                    <TableCell sx={{ border: "none", fontSize: "35px" }}>
-                      <Avatar
-                        alt={`${row.firstName} ${row.lastName}`}
-                        src={row.imageUrl}
-                        sx={{ width: 58, height: 58 }}
-                      />
-                    </TableCell>
-                  </>
-                )}
-
-                <TableCell sx={{ border: "none", fontSize: "19px" }}>
-                  {row.firstName}
-                </TableCell>
-                <TableCell sx={{ border: "none", fontSize: "19px" }}>
-                  {row.lastName}
-                </TableCell>
-                <TableCell
-                  sx={{
-                    border: "none",
-                    fontSize: "19px",
-                    px: 0,
-                    maxWidth: "200px",
-                  }}
-                >
-                  {row.email}
-                </TableCell>
-                <TableCell sx={{ border: "none", fontSize: "19px", px: 0 }}>
-                  <FeedIcon />
-                </TableCell>
-
-                <TableCell
-                  align="right"
-                  sx={{ border: "none", fontSize: "19px" }}
-                >
-                  {row.phone}
-                </TableCell>
-                <TableCell align="center" sx={{ border: "none" }}>
-                  <StatusChip
-                    label={row.status}
-                    statuscolor={getStatusColor(row.status)}
-                  />
-                </TableCell>
-                <TableCell sx={{ border: "none" }}>
-                  <Button
-                    sx={{
-                      bgcolor: "#4E73DF",
-                      borderRadius: "5px",
-                      textTransform: "none",
-                      fontSize: "16px",
-                    }}
-                    variant="contained"
-                  >
-                    View
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
+                      View
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>
@@ -338,7 +315,7 @@ const UserTable = ({ data, favorite }) => {
       {/* Pagination Component */}
       <Box
         component="div"
-        sx={{ display: { xs: "none", md: "flex" }, justifyContent: "flex-end" }}
+        sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}
       >
         <Pagination
           count={Math.ceil(data.length / rowsPerPage)}
@@ -346,9 +323,7 @@ const UserTable = ({ data, favorite }) => {
           onChange={handlePageChange}
           variant="outlined"
           shape="rounded"
-          // renderItem=""
           sx={{
-            marginTop: 2,
             "& .MuiPaginationItem-root": {
               borderColor: "#DEE2E6",
               borderRadius: 0,

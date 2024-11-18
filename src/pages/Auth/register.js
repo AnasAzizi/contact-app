@@ -44,6 +44,7 @@ register.footerProps = {
   show: false,
   width: "100%",
   color: "#D9D9D9",
+  auth: "true",
 };
 
 export default register;

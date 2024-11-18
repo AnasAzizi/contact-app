@@ -1,4 +1,5 @@
 import SecondNavBar from "@/components/SecondNavBar";
+import viewProfile from "@/data/viewProfile.json";
 import React from "react";
 import { useRouter } from "next/router";
 import {
@@ -9,18 +10,18 @@ import {
   Button,
   TextField,
   FormControl,
-  InputLabel,
   OutlinedInput,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
-const CreateNew = () => {
+const EditContact = () => {
   const router = useRouter();
-
   return (
     <>
       <Container maxWidth="xl">
-        <SecondNavBar path="Home / Contacts / Create new" />
+        <SecondNavBar
+          path={`Home / Contacts /${viewProfile.firstName} ${viewProfile.lastName}`}
+        />
         <Card
           sx={{
             height: "72px",
@@ -36,7 +37,7 @@ const CreateNew = () => {
               ml: "40px",
             }}
           >
-            Latest activities
+            Contact details
           </Typography>
         </Card>
         <Grid
@@ -50,13 +51,15 @@ const CreateNew = () => {
           <Grid
             container
             item="true"
-            size={{ xs: 12, md: 12, lg: 3 }}
+            size={{ xs: 12, md: 3 }}
             direction="column"
             alignItems="center"
-            mb="70px"
           >
             <Grid item="true" xs={12}>
-              <Avatar sx={{ width: 202, height: 202 }} />
+              <Avatar
+                src={viewProfile.imageUrl}
+                sx={{ width: 202, height: 202 }}
+              />
             </Grid>
             <Grid item="true" xs={12}>
               <Typography
@@ -81,7 +84,7 @@ const CreateNew = () => {
           <Grid
             container
             item="true"
-            size={{ xs: 12, md: 12, lg: 9 }}
+            size={{ xs: 12, md: 9 }}
             pr="32px"
             pl={{ xs: "32px", md: 0 }}
           >
@@ -97,20 +100,18 @@ const CreateNew = () => {
             >
               <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                 <Typography mb="12px" color="black" fontSize="20px">
-                  First name <span style={{ color: "#C70000" }}>*</span>
+                  First name
                 </Typography>
                 <FormControl variant="outlined" fullWidth>
-                  <InputLabel sx={{ color: "#868E96" }}>First</InputLabel>
-                  <OutlinedInput label="First" type="text" />
+                  <OutlinedInput value={viewProfile.firstName} type="text" />
                 </FormControl>
               </Grid>
               <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                 <Typography mb="12px" color="black" fontSize="20px">
-                  First name<span style={{ color: "#C70000" }}>*</span>
+                  Last name
                 </Typography>
                 <FormControl variant="outlined" fullWidth>
-                  <InputLabel sx={{ color: "#868E96" }}>Last</InputLabel>
-                  <OutlinedInput label="Last" type="text" />
+                  <OutlinedInput value={viewProfile.lastName} type="text" />
                 </FormControl>
               </Grid>
               <Grid item="true" size={{ xs: 12, md: 5.7 }}>
@@ -118,22 +119,16 @@ const CreateNew = () => {
                   Email
                 </Typography>
                 <FormControl variant="outlined" fullWidth>
-                  <InputLabel sx={{ color: "#868E96" }}>
-                    name@example.com
-                  </InputLabel>
-                  <OutlinedInput label="name@example.com" type="email" />
+                  <OutlinedInput value={viewProfile.email} type="email" />
                 </FormControl>
               </Grid>
               <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                 <Typography mb="12px" color="black" fontSize="20px">
-                  Phone <span style={{ color: "#C70000" }}>*</span>
+                  Phone
                 </Typography>
                 <FormControl variant="outlined" fullWidth>
-                  <InputLabel sx={{ color: "#868E96" }}>
-                    555-123-4567
-                  </InputLabel>
                   <OutlinedInput
-                    label="555-123-4567"
+                    value={viewProfile.phone}
                     type="number"
                   ></OutlinedInput>
                 </FormControl>
@@ -143,11 +138,8 @@ const CreateNew = () => {
                   Email 2
                 </Typography>
                 <FormControl variant="outlined" fullWidth>
-                  <InputLabel sx={{ color: "#868E96" }}>
-                    name@example.com
-                  </InputLabel>
                   <OutlinedInput
-                    label="name@example.com"
+                    value={viewProfile.email2}
                     type="text"
                   ></OutlinedInput>
                 </FormControl>
@@ -157,11 +149,8 @@ const CreateNew = () => {
                   Mobile
                 </Typography>
                 <FormControl variant="outlined" fullWidth>
-                  <InputLabel sx={{ color: "#868E96" }}>
-                    555-123-4567
-                  </InputLabel>
                   <OutlinedInput
-                    label="555-123-4567"
+                    value={viewProfile.mobile}
                     type="text"
                   ></OutlinedInput>
                 </FormControl>
@@ -175,7 +164,7 @@ const CreateNew = () => {
                   placeholder="Address"
                   multiline
                   rows={3}
-                  label="Address"
+                  value={viewProfile.address}
                 />
               </Grid>
               <Grid item="true" size={{ xs: 12, md: 5.7 }}>
@@ -183,11 +172,11 @@ const CreateNew = () => {
                   Address 2
                 </Typography>
                 <TextField
-                  label="address 2"
                   fullWidth
                   placeholder="Address 2"
                   multiline
                   rows={3}
+                  value={viewProfile.address}
                 />
               </Grid>
             </Grid>
@@ -202,16 +191,18 @@ const CreateNew = () => {
               <Grid item="true" size={{ xs: 6, md: 2 }}>
                 <Button
                   fullWidth
+                  sx={{
+                    textTransform: "none",
+                    fontSize: "20px",
+                  }}
                   variant="contained"
-                  bgcolor="#4E73DF"
-                  sx={{ textTransform: "none", fontSize: "20px" }}
                 >
-                  Create
+                  Save
                 </Button>
               </Grid>
               <Grid item="true" size={{ xs: 6, md: 2 }}>
                 <Button
-                  onClick={() => router.push("/home/contacts")}
+                  onClick={() => router.push("/contacts/view")}
                   fullWidth
                   variant="outlined"
                   bgcolor="#4E73DF"
@@ -228,4 +219,4 @@ const CreateNew = () => {
   );
 };
 
-export default CreateNew;
+export default EditContact;

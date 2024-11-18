@@ -1,4 +1,3 @@
-import NavBar from "@/components/NavBar";
 import React from "react";
 import {
   Container,
@@ -17,7 +16,6 @@ import SecondNavBar from "@/components/SecondNavBar";
 const InviteNewUser = () => {
   return (
     <>
-      <NavBar />
       <Container maxWidth="xl">
         <SecondNavBar path="Home / Users / Invite new user" />
         <Card
@@ -91,9 +89,9 @@ const InviteNewUser = () => {
             </Typography>
             <FormControl variant="outlined" fullWidth>
               <InputLabel sx={{ color: "#868E96" }}>
-                Select your country
+                Select user type
               </InputLabel>
-              <Select label="Select your country">
+              <Select label=" Select user type">
                 <MenuItem value={"Turkey"}>Turkey</MenuItem>
                 <MenuItem value={"Syria"}>Syria</MenuItem>
                 <MenuItem value={"Moroco"}>Moroco</MenuItem>

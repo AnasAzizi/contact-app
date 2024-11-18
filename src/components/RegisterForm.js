@@ -28,6 +28,7 @@ const RegisterForm = () => {
           justifyContent: "center",
           alignItems: "center",
           height: "100%",
+          mt: { xs: "20px" },
         }}
       >
         <Grid container size={8.2}>
@@ -215,6 +216,7 @@ const RegisterForm = () => {
                 sx={{
                   bgcolor: "#4E73DF",
                   textTransform: "none",
+                  boxShadow: "none",
                   fontSize: "20px",
                   mb: "30px",
                 }}

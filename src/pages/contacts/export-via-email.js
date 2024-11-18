@@ -1,4 +1,3 @@
-import NavBar from "@/components/NavBar";
 import UserTable from "@/components/UserTable";
 import userData from "@/data/userData.json";
 import {
@@ -15,7 +14,6 @@ import {
 const ExportViaEmail = () => {
   return (
     <>
-      <NavBar />
       <Container maxWidth="xl">
         <Typography mt={6} mb={1} variant="h5" color="black">
           Home / Contacts / Export via email
@@ -33,6 +31,7 @@ const ExportViaEmail = () => {
         >
           <FormControl
             variant="outlined"
+            size="small"
             sx={{ bgcolor: "white", minWidth: "391px" }}
           >
             <InputLabel sx={{ color: "#868E96", fontSize: "16px" }}>
@@ -51,6 +50,7 @@ const ExportViaEmail = () => {
           >
             <FormControl
               variant="outlined"
+              size="small"
               sx={{ bgcolor: "white", minWidth: "391px" }}
             >
               <InputLabel sx={{ color: "#868E96", fontSize: "16px" }}>
@@ -67,6 +67,7 @@ const ExportViaEmail = () => {
                 fontSize: "18px",
                 width: "142px",
                 textTransform: "none",
+                boxShadow: "none",
               }}
               variant="contained"
             >

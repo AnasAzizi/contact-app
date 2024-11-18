@@ -1,4 +1,5 @@
 import SecondNavBar from "@/components/SecondNavBar";
+import viewProfile from "@/data/viewProfile.json";
 import React from "react";
 import { useRouter } from "next/router";
 import {
@@ -9,18 +10,20 @@ import {
   Button,
   TextField,
   FormControl,
-  InputLabel,
   OutlinedInput,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
+import EditOffOutlinedIcon from "@mui/icons-material/EditOffOutlined";
 
-const CreateNew = () => {
+const View = () => {
   const router = useRouter();
 
   return (
     <>
       <Container maxWidth="xl">
-        <SecondNavBar path="Home / Contacts / Create new" />
+        <SecondNavBar
+          path={`Home / Contacts /${viewProfile.firstName} ${viewProfile.lastName}`}
+        />
         <Card
           sx={{
             height: "72px",
@@ -36,7 +39,7 @@ const CreateNew = () => {
               ml: "40px",
             }}
           >
-            Latest activities
+            Contact details
           </Typography>
         </Card>
         <Grid
@@ -50,38 +53,26 @@ const CreateNew = () => {
           <Grid
             container
             item="true"
-            size={{ xs: 12, md: 12, lg: 3 }}
+            size={{ xs: 12, md: 3 }}
             direction="column"
             alignItems="center"
-            mb="70px"
           >
             <Grid item="true" xs={12}>
-              <Avatar sx={{ width: 202, height: 202 }} />
+              <Avatar
+                src={viewProfile.imageUrl}
+                sx={{ width: 202, height: 202 }}
+              />
             </Grid>
             <Grid item="true" xs={12}>
-              <Typography
-                color="black"
-                fontSize="18px"
-                sx={{ opacity: "40%", my: "20px" }}
-              >
-                JPG or PNG no larger than 5 MB
+              <Typography color="black" fontSize="24px" sx={{ my: "20px" }}>
+                {viewProfile.firstName} {viewProfile.lastName}
               </Typography>
-            </Grid>
-            <Grid item="true" xs={12}>
-              <Button
-                size="large"
-                variant="contained"
-                bgcolor="#4E73DF"
-                sx={{ textTransform: "none" }}
-              >
-                Upload new image
-              </Button>
             </Grid>
           </Grid>
           <Grid
             container
             item="true"
-            size={{ xs: 12, md: 12, lg: 9 }}
+            size={{ xs: 12, md: 9 }}
             pr="32px"
             pl={{ xs: "32px", md: 0 }}
           >
@@ -97,20 +88,26 @@ const CreateNew = () => {
             >
               <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                 <Typography mb="12px" color="black" fontSize="20px">
-                  First name <span style={{ color: "#C70000" }}>*</span>
+                  First name
                 </Typography>
                 <FormControl variant="outlined" fullWidth>
-                  <InputLabel sx={{ color: "#868E96" }}>First</InputLabel>
-                  <OutlinedInput label="First" type="text" />
+                  <OutlinedInput
+                    value={viewProfile.firstName}
+                    readOnly
+                    type="text"
+                  />
                 </FormControl>
               </Grid>
               <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                 <Typography mb="12px" color="black" fontSize="20px">
-                  First name<span style={{ color: "#C70000" }}>*</span>
+                  Last name
                 </Typography>
                 <FormControl variant="outlined" fullWidth>
-                  <InputLabel sx={{ color: "#868E96" }}>Last</InputLabel>
-                  <OutlinedInput label="Last" type="text" />
+                  <OutlinedInput
+                    value={viewProfile.lastName}
+                    readOnly
+                    type="text"
+                  />
                 </FormControl>
               </Grid>
               <Grid item="true" size={{ xs: 12, md: 5.7 }}>
@@ -118,22 +115,21 @@ const CreateNew = () => {
                   Email
                 </Typography>
                 <FormControl variant="outlined" fullWidth>
-                  <InputLabel sx={{ color: "#868E96" }}>
-                    name@example.com
-                  </InputLabel>
-                  <OutlinedInput label="name@example.com" type="email" />
+                  <OutlinedInput
+                    value={viewProfile.email}
+                    readOnly
+                    type="email"
+                  />
                 </FormControl>
               </Grid>
               <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                 <Typography mb="12px" color="black" fontSize="20px">
-                  Phone <span style={{ color: "#C70000" }}>*</span>
+                  Phone
                 </Typography>
                 <FormControl variant="outlined" fullWidth>
-                  <InputLabel sx={{ color: "#868E96" }}>
-                    555-123-4567
-                  </InputLabel>
                   <OutlinedInput
-                    label="555-123-4567"
+                    value={viewProfile.phone}
+                    readOnly
                     type="number"
                   ></OutlinedInput>
                 </FormControl>
@@ -143,11 +139,9 @@ const CreateNew = () => {
                   Email 2
                 </Typography>
                 <FormControl variant="outlined" fullWidth>
-                  <InputLabel sx={{ color: "#868E96" }}>
-                    name@example.com
-                  </InputLabel>
                   <OutlinedInput
-                    label="name@example.com"
+                    value={viewProfile.email2}
+                    readOnly
                     type="text"
                   ></OutlinedInput>
                 </FormControl>
@@ -157,11 +151,9 @@ const CreateNew = () => {
                   Mobile
                 </Typography>
                 <FormControl variant="outlined" fullWidth>
-                  <InputLabel sx={{ color: "#868E96" }}>
-                    555-123-4567
-                  </InputLabel>
                   <OutlinedInput
-                    label="555-123-4567"
+                    value={viewProfile.mobile}
+                    readOnly
                     type="text"
                   ></OutlinedInput>
                 </FormControl>
@@ -175,7 +167,8 @@ const CreateNew = () => {
                   placeholder="Address"
                   multiline
                   rows={3}
-                  label="Address"
+                  value={viewProfile.address}
+                  readOnly
                 />
               </Grid>
               <Grid item="true" size={{ xs: 12, md: 5.7 }}>
@@ -183,11 +176,12 @@ const CreateNew = () => {
                   Address 2
                 </Typography>
                 <TextField
-                  label="address 2"
                   fullWidth
                   placeholder="Address 2"
                   multiline
                   rows={3}
+                  value={viewProfile.address}
+                  readOnly
                 />
               </Grid>
             </Grid>
@@ -201,12 +195,17 @@ const CreateNew = () => {
             >
               <Grid item="true" size={{ xs: 6, md: 2 }}>
                 <Button
+                  onClick={() => router.push("/contacts/edit-contact")}
                   fullWidth
-                  variant="contained"
-                  bgcolor="#4E73DF"
-                  sx={{ textTransform: "none", fontSize: "20px" }}
+                  sx={{
+                    textTransform: "none",
+                    fontSize: "20px",
+                    color: "#4E73DF",
+                  }}
+                  variant="outlined"
+                  startIcon={<EditOffOutlinedIcon />}
                 >
-                  Create
+                  Edit
                 </Button>
               </Grid>
               <Grid item="true" size={{ xs: 6, md: 2 }}>
@@ -228,4 +227,4 @@ const CreateNew = () => {
   );
 };
 
-export default CreateNew;
+export default View;

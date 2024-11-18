@@ -122,6 +122,7 @@ const SetPasswordForm = () => {
             sx={{
               bgcolor: "#4E73DF",
               textTransform: "none",
+              boxShadow: "none",
               mt: "56px",
               fontSize: "20px",
               minWidth: { xs: "306px", md: "370px" },

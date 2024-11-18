@@ -126,7 +126,7 @@ export default function SignInForm() {
               textDecoration: "underline",
               color: "#212529",
               cursor: "pointer",
-              fontSize:"15px"
+              fontSize: "15px",
             }}
           >
             Forgot Password
@@ -147,6 +147,7 @@ export default function SignInForm() {
               sx={{
                 bgcolor: "#4E73DF",
                 textTransform: "none",
+                boxShadow: "none",
                 mb: "24px",
                 mt: "38px",
                 fontSize: "20px",
@@ -159,6 +160,7 @@ export default function SignInForm() {
           <Grid item="true" size={{ xs: 10, md: 12 }}>
             <Divider
               sx={{
+                fontFamily: "Roboto",
                 mb: "26px",
                 color: "#212529",
                 "&::before, &::after": {
@@ -178,6 +180,8 @@ export default function SignInForm() {
                   textTransform: "none",
                   fontSize: "20px",
                   minWidth: "146px",
+                  color: "#4E73DF",
+                  borderColor: "#4E73DF",
                 }}
               >
                 Sign up
