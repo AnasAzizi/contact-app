@@ -126,6 +126,7 @@ export default function SignInForm() {
               textDecoration: "underline",
               color: "#212529",
               cursor: "pointer",
+              fontSize:"15px"
             }}
           >
             Forgot Password

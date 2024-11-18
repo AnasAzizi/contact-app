@@ -1,6 +1,6 @@
 import NavBar from "@/components/NavBar";
 import UserTable from "@/components/UserTable";
-import SecondNavBar from "@/components/SecondNavBar"
+import SecondNavBar from "@/components/SecondNavBar";
 import userData from "@/data/userData.json";
 import { useRouter } from "next/router";
 import {
@@ -51,6 +51,7 @@ const contacts = () => {
 
             <Grid item="true" size={{ xs: 6, md: 1.8 }} p={{ xs: 1, md: 0 }}>
               <Button
+                onClick={() => router.push("/contacts/export-via-email")}
                 fullWidth
                 sx={{
                   bgcolor: "#4E73DF",

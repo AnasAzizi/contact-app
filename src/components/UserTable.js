@@ -23,6 +23,7 @@ import FeedIcon from "@mui/icons-material/Feed";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
 import Grid from "@mui/material/Grid2";
+// import { DataGrid } from "@mui/x-data-grid";
 
 const StatusChip = styled(Chip)(({ statuscolor }) => ({
   backgroundColor: statuscolor,
@@ -58,6 +59,8 @@ const UserTable = ({ data, favorite }) => {
   const handlePageChange = (event, value) => {
     setPage(value);
   };
+
+  // ==================================================
 
   return (
     <>
@@ -353,7 +356,7 @@ const UserTable = ({ data, favorite }) => {
               color: "#4E73DF",
               height: "47px",
               width: "51px",
-              // fontSize: "18px"
+              fontSize: "18px",
             },
             "& .Mui-selected": {
               backgroundColor: "#4E73DF",

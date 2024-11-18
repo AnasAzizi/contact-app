@@ -42,7 +42,7 @@ const register = () => {
 
 register.footerProps = {
   show: false,
-  width: "60%",
+  width: "100%",
   color: "#D9D9D9",
 };
 

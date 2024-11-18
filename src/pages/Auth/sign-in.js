@@ -50,7 +50,7 @@ const SignIn = () => {
 SignIn.footerProps = {
   show: true,
   width: "60%",
-  color: "#D9D9D9",
+  color: { xs: "black", md: "#D9D9D9" },
 };
 
 export default SignIn;

@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import {
   AppBar,
   Box,
@@ -10,11 +12,16 @@ import {
   Button,
   Tooltip,
   MenuItem,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Divider,
+  Drawer,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import PersonIcon from "@mui/icons-material/Person";
-import Image from "next/image";
-import Link from "next/link";
+import CloseIcon from "@mui/icons-material/Close";
 
 const pages = [
   { name: "Home", path: "/home/home-page" },
@@ -22,24 +29,90 @@ const pages = [
   { name: "Company Profile", path: "/home/company-profile" },
   { name: "Users", path: "/home/users" },
 ];
+const NavbarPages = [
+  { name: "Home", path: "/home/home-page" },
+  { name: "Contact", path: "/home/contacts" },
+  { name: "Company Profile", path: "/home/company-profile" },
+  { name: "Users", path: "/home/users" },
+  {
+    name: "Username",
+    path: "/home/username",
+    icon: <PersonIcon sx={{ fontSize: "24px", mr: "8px" }} />,
+  },
+  { name: "My Profile", path: "/home/my-profile" },
+  { name: "Log Out", path: "/home/logout" },
+];
 const settings = ["My Profile", "Log out"];
 
 const NavBar = () => {
-  const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
+
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
+
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const [open, setOpen] = useState(false);
+
+  const toggleDrawer = (newOpen) => () => {
+    setOpen(newOpen);
+  };
+
+  const DrawerList = (
+    <Box onClick={toggleDrawer(false)}>
+      <List sx={{ p: 0 }}>
+        <ListItem sx={{ bgcolor: "#4E73DF", justifyContent: "space-between" }}>
+          <ListItemIcon>
+            <Image
+              src="/Logo_White.svg"
+              width={168}
+              height={34}
+              alt="logo"
+              priority={true}
+            />
+          </ListItemIcon>
+          <IconButton sx={{ color: "white" }} edge="end">
+            <CloseIcon sx={{ fontSize: "33px" }} />
+          </IconButton>
+        </ListItem>
+        <Divider />
+      </List>
+
+        {NavbarPages.map(({ name, path, icon }) => (
+          <List key={name}>
+            <ListItem sx={{ p: 0 }}>
+              <Link href={path}>
+                <ListItemText
+                  primaryTypographyProps={{ style: { fontSize: "18px" } }}
+                  primary={
+                    <>
+                      <Box
+                        sx={{
+                          display: "flex",
+                        }}
+                      >
+                        {name}
+                        {icon}
+                      </Box>
+                    </>
+                  }
+                  sx={{ pl: "29px", pt: "17px", pb: "19px" }}
+                />
+              </Link>
+            </ListItem>
+            <Divider />
+          </List>
+        ))}
+    </Box>
+  );
 
   return (
     <AppBar sx={{ bgcolor: "#4E73DF" }} position="static">
@@ -53,7 +126,6 @@ const NavBar = () => {
               flexDirection: {
                 md: "row",
                 xs: "row-reverse",
-                justifyContent: "space-around",
               },
             }}
           >
@@ -64,41 +136,20 @@ const NavBar = () => {
               alt="logo"
               priority={true}
             />
-            {/* burger menu */}
             <Box sx={{ display: { xs: "flex", md: "none" }, mr: "63px" }}>
-              <IconButton
-                size="large"
-                onClick={handleOpenNavMenu}
-                color="inherit"
-              >
+              <IconButton onClick={toggleDrawer(true)} color="inherit">
                 <MenuIcon />
               </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "left",
+              <Drawer 
+              
+                PaperProps={{
+                  sx: { width: "90%" },
                 }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
-                sx={{ display: { xs: "block", md: "none" } }}
+                open={open}
+                onClose={toggleDrawer(false)}
               >
-                {pages.map((page) => (
-                  <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                    <Link href={page.path} passHref>
-                      <Typography sx={{ textAlign: "center" }}>
-                        {page.name}
-                      </Typography>
-                    </Link>
-                  </MenuItem>
-                ))}
-              </Menu>
+                {DrawerList}
+              </Drawer>
             </Box>
           </Box>
 

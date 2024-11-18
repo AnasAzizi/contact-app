@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
-import { Typography } from "@mui/material";
+import { Typography, Container } from "@mui/material";
 import Divider from "@mui/material/Divider";
 
 const Footer = ({ width, show, color }) => {
@@ -12,34 +12,48 @@ const Footer = ({ width, show, color }) => {
         component="footer"
         sx={{
           width: "100%",
-          color: color,
-          position: "fixed",
+          color: { xs: "#000000", md: color },
+          position: { xs: "relative", md: "fixed" },
+          bottom: { xs: "unset", md: 10 },
         }}
       >
         <Divider
           sx={{
             bgcolor: "#D9D9D9",
-            mb: "20px",
+            mb: "16.5px",
           }}
         />
 
-        <Box
-          component="div"
-          sx={{
-            width: width,
-            display: "flex",
-            justifyContent: showText ? "space-around" : "start",
-            opacity: "60%",
-            pl: showText ? "0px" : "102px",
-          }}
-        >
-          <Typography>
-            Copyright © ITM Development | Contact Book | 2022
-          </Typography>
-          {showText && (
-            <Typography>Privacy Policy - Terms & Conditions</Typography>
-          )}
-        </Box>
+        <Container maxWidth={showText ? "xl" : false}>
+          <Box
+            component="div"
+            sx={{
+              width: width,
+              display: "flex",
+              justifyContent: showText ? "space-between" : "start",
+              opacity: "60%",
+              ml: showText ? "0px" : "100px",
+              mb: "10px",
+              px: "10px",
+              flexDirection: { xs: "column", sm: "row" },
+              alignItems: { xs: "center", sm: "flex-start" },
+            }}
+          >
+            <Typography>
+              Copyright © ITM Development | Contact Book | 2022
+            </Typography>
+            {showText && (
+              <Typography
+                sx={{
+                  mt: { xs: 2, sm: 0 },
+                  display: { xs: "none", md: "block" },
+                }}
+              >
+                Privacy Policy - Terms & Conditions
+              </Typography>
+            )}
+          </Box>
+        </Container>
       </Box>
     </>
   );

@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import NavBar from "@/components/NavBar";
 import SecondNavBar from "@/components/SecondNavBar";
 import Data from "@/data/LatestActivitiesData.json";
@@ -66,18 +67,21 @@ const HomePage = () => {
                   fontSize: "40px",
                 }}
               >
-                <CardContent sx={{ pb: 0, "&:last-child": { pb: 0 } }}>
+                {/* "&:last-child": { pb: 0 } for remove a padding in CardContent */}
+                <CardContent sx={{ "&:last-child": { pb: 0 } }}>
                   <Box
                     component="div"
                     sx={{
                       display: "flex",
                       justifyContent: "space-between",
-                      pb: 0,
                     }}
                   >
                     <Typography fontSize={40}>101</Typography>
-                    <ArrowCircleLeftRoundedIcon
-                      sx={{ fontSize: "51px", opacity: "50%" }}
+                    <Image
+                      src="/homePageIcons/arrow-down-circle-fill.svg"
+                      alt="arrow-down Icon"
+                      width={51}
+                      height={51}
                     />
                   </Box>
                   <Typography
@@ -106,13 +110,12 @@ const HomePage = () => {
               <Card
                 sx={{
                   minWidth: { xs: "400px", md: "0px" },
-
                   bgcolor: "#FC766A",
                   color: "#ffffff",
                   fontSize: "40px",
                 }}
               >
-                <CardContent sx={{ pb: 0, "&:last-child": { pb: 0 } }}>
+                <CardContent sx={{ "&:last-child": { pb: 0 } }}>
                   <Box
                     component="div"
                     sx={{
@@ -122,8 +125,11 @@ const HomePage = () => {
                     }}
                   >
                     <Typography fontSize={40}>101</Typography>
-                    <ArrowCircleLeftRoundedIcon
-                      sx={{ fontSize: "51px", opacity: "50%" }}
+                    <Image
+                      src="/homePageIcons/arrow-down-circle-fill.svg"
+                      alt="arrow-down Icon"
+                      width={51}
+                      height={51}
                     />
                   </Box>
                   <Typography
@@ -157,7 +163,7 @@ const HomePage = () => {
                   fontSize: "40px",
                 }}
               >
-                <CardContent sx={{ pb: 0, "&:last-child": { pb: 0 } }}>
+                <CardContent sx={{ "&:last-child": { pb: 0 } }}>
                   <Box
                     component="div"
                     sx={{
@@ -167,8 +173,11 @@ const HomePage = () => {
                     }}
                   >
                     <Typography fontSize={40}>101</Typography>
-                    <ArrowCircleLeftRoundedIcon
-                      sx={{ fontSize: "51px", opacity: "50%" }}
+                    <Image
+                      src="/homePageIcons/email.svg"
+                      alt="arrow-down Icon"
+                      width={51}
+                      height={51}
                     />
                   </Box>
                   <Typography
@@ -202,7 +211,7 @@ const HomePage = () => {
                   fontSize: "40px",
                 }}
               >
-                <CardContent sx={{ pb: 0, "&:last-child": { pb: 0 } }}>
+                <CardContent sx={{ "&:last-child": { pb: 0 } }}>
                   <Box
                     component="div"
                     sx={{
@@ -212,8 +221,11 @@ const HomePage = () => {
                     }}
                   >
                     <Typography fontSize={40}>101</Typography>
-                    <ArrowCircleLeftRoundedIcon
-                      sx={{ fontSize: "51px", opacity: "50%" }}
+                    <Image
+                      src="/homePageIcons/x-circle-fill.svg"
+                      alt="arrow-down Icon"
+                      width={51}
+                      height={51}
                     />
                   </Box>
                   <Typography
@@ -255,69 +267,65 @@ const HomePage = () => {
               </Typography>
             </Card>
             <TableContainer component={Paper} sx={{ px: { md: "40px" } }}>
-              <Table sx={{ mt: "18px" }}>
+              <Table>
                 <TableBody>
-                  {Data.slice(0, 5).map((data) => (
-                    <TableRow key={data.name} sx={{ border: "none" }}>
+                  {Data.slice(0, 5).map((data, index) => (
+                    <TableRow
+                      key={index}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }} //? p or m for tableRow
+                    >
                       <TableCell
-                        component="th"
                         scope="row"
                         sx={{ border: "none", fontSize: "20px" }}
                       >
                         {data.name}
                       </TableCell>
                       <TableCell
-                        component="th"
-                        scope="row"
-                        align="right"
-                        sx={{
-                          border: "none",
-                          color: "black",
-                          opacity: "40%",
-                          fontSize: "14px",
-                        }}
+                        align="left"
+                        sx={{ px: 0, border: "none", width: "115px" }}
                       >
-                        {data.date}
+                        <Typography sx={{ fontSize: "14px", opacity: "40%" }}>
+                          {data.date}
+                        </Typography>
                       </TableCell>
                       <TableCell
-                        component="th"
-                        scope="row"
-                        align="right"
-                        sx={{
-                          pr: "0px",
-                          display: "flex",
-                          justifyContent: "flex-start",
-                          gap: "9px",
-                          alignItems: "center",
-                          flexDirection: "row",
-                          border: "none",
-                          color: "black",
-                          opacity: "40%",
-                          fontSize: "14px",
-                        }}
+                        align="left"
+                        sx={{ px: 0, border: "none", width: "85px" }}
                       >
                         <Box
-                          component="div"
-                          sx={{
-                            width: "10px",
-                            height: "10px",
-                            borderRadius: "50px",
-                            bgcolor: getStatusColor(data.action),
-                          }}
-                        ></Box>
-                        {data.action}
+                          display="flex"
+                          alignItems="center"
+                          justifyContent="flex-start"
+                        >
+                          <Box
+                            sx={{
+                              width: "10px",
+                              height: "10px",
+                              borderRadius: "50px",
+                              bgcolor: getStatusColor(data.action),
+                              mr: 1,
+                            }}
+                          />
+                          <Typography
+                            sx={{
+                              fontSize: "14px",
+                              opacity: "40%",
+                              border: "none",
+                            }}
+                          >
+                            {data.action}
+                          </Typography>
+                        </Box>
                       </TableCell>
                       <TableCell
-                        component="th"
-                        scope="row"
                         align="right"
-                        sx={{ border: "none", color: "black", pl: "0px" }}
+                        sx={{ border: "none", width: "85px", pl: 0 }}
                       >
                         <Chip
                           sx={{
                             borderRadius: "2px",
                             bgcolor: "#EEEEEE",
-                            fontSize: "14px",
+                            fontSize: "12px",
                             minWidth: "54px",
                           }}
                           label={data.user}

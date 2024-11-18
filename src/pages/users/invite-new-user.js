@@ -8,6 +8,8 @@ import {
   OutlinedInput,
   Button,
   Card,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import SecondNavBar from "@/components/SecondNavBar";
@@ -89,9 +91,13 @@ const InviteNewUser = () => {
             </Typography>
             <FormControl variant="outlined" fullWidth>
               <InputLabel sx={{ color: "#868E96" }}>
-                Select User Type
+                Select your country
               </InputLabel>
-              <OutlinedInput label="Select user type" type="select" />
+              <Select label="Select your country">
+                <MenuItem value={"Turkey"}>Turkey</MenuItem>
+                <MenuItem value={"Syria"}>Syria</MenuItem>
+                <MenuItem value={"Moroco"}>Moroco</MenuItem>
+              </Select>
             </FormControl>
           </Grid>
           <Grid container item="true" direction="row" size={12} pt="30px">

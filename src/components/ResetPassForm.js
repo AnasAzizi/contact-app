@@ -79,7 +79,7 @@ const ResetPassForm = () => {
               minWidth: { xs: "306px", md: "370px" },
             }}
           >
-            Reset Password
+            Send
           </Button>
         </Grid>
 

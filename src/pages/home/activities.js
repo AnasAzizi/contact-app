@@ -96,8 +96,8 @@ const activities = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {Data.map((data) => (
-                <TableRow
+              {Data.map((data,index) => (
+                <TableRow key={index}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }} //? p or m for tableRow
                 >
                   <TableCell scope="row" sx={{ fontSize: "20px" }}>
