@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import SetPasswordForm from "@/components/SetPasswordForm";
 import Head from "next/head";
 import Grid from "@mui/material/Grid2";
+import AuthFooter from "@/components/AuthFooter";
 
 const SetPassword = () => {
   return (
@@ -13,7 +14,7 @@ const SetPassword = () => {
       </Head>
       <Grid container sx={{ bgcolor: "#ffffff" }}>
         {/* background image */}
-        <Grid item="true" size={{ xs: 0, md: 7.5 }}>
+        <Grid item="true" size={{ xs: 0, md: 6.5, lg: 7.5 }}>
           <Box
             component="div"
             sx={{
@@ -34,21 +35,16 @@ const SetPassword = () => {
         {/* sign in form */}
         <Grid
           item="true"
-          size={{ xs: 12, md: 4.2 }}
+          size={{ xs: 12, md: 5.5, lg: 4.2 }}
           display="flex"
           justifyContent="center"
         >
           <SetPasswordForm />
         </Grid>
       </Grid>
+      <AuthFooter show={true} width="60%" />
     </>
   );
-};
-
-SetPassword.footerProps = {
-  show: true,
-  width: "60%",
-  color: "#D9D9D9",
 };
 
 export default SetPassword;

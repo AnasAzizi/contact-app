@@ -21,6 +21,7 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 import FeedIcon from "@mui/icons-material/Feed";
+import { useRouter } from "next/router";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
 import Grid from "@mui/material/Grid2";
@@ -37,6 +38,7 @@ const UserTable = ({ data, favorite }) => {
   const rowsPerPage = 5;
   const [selected, setSelected] = useState([]);
   const [starred, setStarred] = useState({});
+  const router = useRouter();
 
   const paginatedData = data.slice(
     (page - 1) * rowsPerPage,
@@ -105,7 +107,7 @@ const UserTable = ({ data, favorite }) => {
         <Card
           key={index}
           sx={{
-            display: { xs: "block", md: "none" },
+            display: { xs: "block", lg: "none" },
             mb: "19px",
             minHeight: "274px",
           }}
@@ -184,7 +186,12 @@ const UserTable = ({ data, favorite }) => {
           </CardContent>
         </Card>
       ))}
-      <TableContainer component={Paper}>
+      <TableContainer
+        component={Paper}
+        sx={{
+          display: { xs: "none", lg: "block" },
+        }}
+      >
         <Table>
           <TableHead>
             <TableRow>
@@ -199,14 +206,7 @@ const UserTable = ({ data, favorite }) => {
                 if (headCell.id === "favorite" || headCell.id === "image") {
                   if (favorite) {
                     return (
-                      <TableCell
-                        key={headCell.id}
-                        align={
-                          headCell.id === "email" || headCell.id === "status"
-                            ? "center"
-                            : "left"
-                        }
-                      >
+                      <TableCell key={headCell.id} align="center">
                         <TableSortLabel
                           sx={{ fontSize: "20px", fontWeight: "bold" }}
                         >
@@ -220,11 +220,9 @@ const UserTable = ({ data, favorite }) => {
                     <TableCell
                       key={headCell.id}
                       align={
-                        headCell.id === "email"
-                          ? "left"
-                          : "left" || headCell.id === "status"
+                        favorite && headCell.id === "email"
                           ? "center"
-                          : "left"
+                          : undefined
                       }
                     >
                       <TableSortLabel
@@ -286,7 +284,7 @@ const UserTable = ({ data, favorite }) => {
                     <FeedIcon />
                   </TableCell> */}
                   <TableCell sx={{ fontSize: "19px" }}>{row.phone}</TableCell>
-                  <TableCell align="center">
+                  <TableCell align="left" sx={{ pl: "0px" }}>
                     <StatusChip
                       label={row.status}
                       statuscolor={getStatusColor(row.status)}
@@ -294,12 +292,14 @@ const UserTable = ({ data, favorite }) => {
                   </TableCell>
                   <TableCell>
                     <Button
+                      onClick={() => router.push("/contacts/view")}
                       variant="contained"
                       sx={{
                         bgcolor: "#4E73DF",
                         borderRadius: "5px",
                         textTransform: "none",
                         fontSize: "16px",
+                        boxShadow: 0,
                       }}
                     >
                       View

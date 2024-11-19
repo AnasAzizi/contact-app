@@ -86,31 +86,31 @@ const NavBar = () => {
         <Divider />
       </List>
 
-        {NavbarPages.map(({ name, path, icon }) => (
-          <List key={name}>
-            <ListItem sx={{ p: 0 }}>
-              <Link href={path}>
-                <ListItemText
-                  primaryTypographyProps={{ style: { fontSize: "18px" } }}
-                  primary={
-                    <>
-                      <Box
-                        sx={{
-                          display: "flex",
-                        }}
-                      >
-                        {name}
-                        {icon}
-                      </Box>
-                    </>
-                  }
-                  sx={{ pl: "29px", pt: "17px", pb: "19px" }}
-                />
-              </Link>
-            </ListItem>
-            <Divider />
-          </List>
-        ))}
+      {NavbarPages.map(({ name, path, icon }) => (
+        <List key={name}>
+          <ListItem sx={{ p: 0 }}>
+            <Link href={path}>
+              <ListItemText
+                primaryTypographyProps={{ style: { fontSize: "18px" } }}
+                primary={
+                  <>
+                    <Box
+                      sx={{
+                        display: "flex",
+                      }}
+                    >
+                      {name}
+                      {icon}
+                    </Box>
+                  </>
+                }
+                sx={{ pl: "29px", pt: "17px", pb: "19px" }}
+              />
+            </Link>
+          </ListItem>
+          <Divider />
+        </List>
+      ))}
     </Box>
   );
 
@@ -140,8 +140,7 @@ const NavBar = () => {
               <IconButton onClick={toggleDrawer(true)} color="inherit">
                 <MenuIcon />
               </IconButton>
-              <Drawer 
-              
+              <Drawer
                 PaperProps={{
                   sx: { width: "90%" },
                 }}
@@ -153,19 +152,23 @@ const NavBar = () => {
             </Box>
           </Box>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex" },
+              ml: "20px",
+            }}
+          >
             {pages.map((page) => (
               <Link href={page.path} passHref key={page.name}>
                 <Button
                   onClick={handleCloseNavMenu}
                   sx={{
-                    my: 4,
-                    p: 0,
+                    my: 2,
                     color: "white",
-                    display: "block",
-                    ml: "71px",
                     textTransform: "none",
                     fontSize: "16px",
+                    ml: "20px",
                   }}
                 >
                   {page.name}

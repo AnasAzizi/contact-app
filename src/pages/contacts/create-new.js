@@ -72,7 +72,7 @@ const CreateNew = () => {
                 size="large"
                 variant="contained"
                 bgcolor="#4E73DF"
-                sx={{ textTransform: "none" }}
+                sx={{ textTransform: "none", boxShadow: "none" }}
               >
                 Upload new image
               </Button>
@@ -204,7 +204,11 @@ const CreateNew = () => {
                   fullWidth
                   variant="contained"
                   bgcolor="#4E73DF"
-                  sx={{ textTransform: "none", fontSize: "20px" }}
+                  sx={{
+                    textTransform: "none",
+                    fontSize: "20px",
+                    boxShadow: "none",
+                  }}
                 >
                   Create
                 </Button>

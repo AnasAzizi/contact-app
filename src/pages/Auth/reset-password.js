@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import ResetPassForm from "@/components/ResetPassForm";
 import Head from "next/head";
 import Grid from "@mui/material/Grid2";
+import AuthFooter from "@/components/AuthFooter";
 
 const resetPassword = () => {
   return (
@@ -15,7 +16,7 @@ const resetPassword = () => {
       </Head>
       <Grid container sx={{ bgcolor: "#ffffff" }}>
         {/* background image */}
-        <Grid item="true" size={{ xs: 0, md: 7.5 }}>
+        <Grid item="true" size={{ xs: 0, md: 6.5, lg: 7.5 }}>
           <Box
             component="div"
             sx={{
@@ -36,21 +37,16 @@ const resetPassword = () => {
         {/* sign in form */}
         <Grid
           item="true"
-          size={{ xs: 12, md: 4.2 }}
+          size={{ xs: 12, md: 5.5, lg: 4.2 }}
           display="flex"
           justifyContent="center"
         >
           <ResetPassForm />
         </Grid>
       </Grid>
+      <AuthFooter show={true} width="60%" />
     </>
   );
-};
-
-resetPassword.footerProps = {
-  show: true,
-  width: "60%",
-  color: "#D9D9D9",
 };
 
 export default resetPassword;

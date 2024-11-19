@@ -11,6 +11,8 @@ import {
   TextField,
   FormControl,
   OutlinedInput,
+  Box,
+  Switch,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
@@ -26,19 +28,33 @@ const EditContact = () => {
           sx={{
             height: "72px",
             bgcolor: "#F7F7F7",
-            mt: "31px",
             boxShadow: 3,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
           }}
         >
           <Typography
             sx={{
               fontSize: "23px",
-              mt: "20px",
+              // mt: "20px",
               ml: "40px",
             }}
           >
-            Contact details
+            User details
           </Typography>
+          <Box
+            component="div"
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              mr: "40px",
+            }}
+          >
+            <Typography>Active</Typography>
+            <Switch defaultChecked />
+          </Box>
         </Card>
         <Grid
           container
@@ -51,9 +67,10 @@ const EditContact = () => {
           <Grid
             container
             item="true"
-            size={{ xs: 12, md: 3 }}
+            size={{ xs: 12, md: 12, lg: 3 }}
             direction="column"
             alignItems="center"
+            mb={5}
           >
             <Grid item="true" xs={12}>
               <Avatar
@@ -74,8 +91,11 @@ const EditContact = () => {
               <Button
                 size="large"
                 variant="contained"
-                bgcolor="#4E73DF"
-                sx={{ textTransform: "none" }}
+                sx={{
+                  textTransform: "none",
+                  boxShadow: "none",
+                  bgcolor: "#4E73DF",
+                }}
               >
                 Upload new image
               </Button>
@@ -84,7 +104,7 @@ const EditContact = () => {
           <Grid
             container
             item="true"
-            size={{ xs: 12, md: 9 }}
+            size={{ xs: 12, md: 12, lg: 9 }}
             pr="32px"
             pl={{ xs: "32px", md: 0 }}
           >
@@ -194,6 +214,8 @@ const EditContact = () => {
                   sx={{
                     textTransform: "none",
                     fontSize: "20px",
+                    boxShadow: "none",
+                    bgcolor: "#4E73DF",
                   }}
                   variant="contained"
                 >

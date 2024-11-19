@@ -1,80 +1,84 @@
 import UserTable from "@/components/UserTable";
 import userData from "@/data/userData.json";
+import SecondNavBar from "@/components/SecondNavBar";
+
 import {
   Container,
-  Divider,
-  Typography,
   FormControl,
   InputLabel,
   OutlinedInput,
   Button,
-  Box,
 } from "@mui/material";
+import Grid from "@mui/material/Grid2";
 
 const ExportViaEmail = () => {
   return (
     <>
       <Container maxWidth="xl">
-        <Typography mt={6} mb={1} variant="h5" color="black">
-          Home / Contacts / Export via email
-        </Typography>
-        <Divider sx={{ mb: "31px" }} />
-        <Box
-          component="div"
-          sx={{
-            mb: "18px",
-            display: "flex",
-            flexDirection: { xs: "column", md: "row" },
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
+        <SecondNavBar path="Home / Contacts / Export via email" />
+        <Grid
+          alignItems="center"
+          container
+          size={12}
+          direction="row-reverse"
+          mb="18px"
         >
-          <FormControl
-            variant="outlined"
-            size="small"
-            sx={{ bgcolor: "white", minWidth: "391px" }}
+          <Grid
+            container
+            item="true"
+            justifyContent="flex-end"
+            alignItems="center"
+            size={{ xs: 12, md: 8.5 }}
+            gap="25px"
           >
-            <InputLabel sx={{ color: "#868E96", fontSize: "16px" }}>
-              Search
-            </InputLabel>
-            <OutlinedInput label="Search" type="text"></OutlinedInput>
-          </FormControl>
-          <Box
-            component="div"
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: "22px",
-              mt: { xs: 2, md: 0 },
-            }}
-          >
+            <Grid item="true" size={{ xs: 6.6, md: 4.7, lg: 3.5 }}>
+              <FormControl
+                fullWidth
+                size="small"
+                variant="outlined"
+                sx={{
+                  bgcolor: "white",
+                }}
+              >
+                <InputLabel sx={{ color: "#868E96" }}>
+                  name@example.com
+                </InputLabel>
+                <OutlinedInput
+                  label="name@example.com"
+                  type="text"
+                ></OutlinedInput>
+              </FormControl>
+            </Grid>
+            <Grid item="true" size={{ xs: 5, md: 3, lg: 1.8 }}>
+              <Button
+                fullWidth
+                sx={{
+                  bgcolor: "#4E73DF",
+                  fontSize: "18px",
+                  textTransform: "none",
+                  boxShadow: 0,
+                }}
+                variant="contained"
+              >
+                Send
+              </Button>
+            </Grid>
+          </Grid>
+          <Grid item="true" size={{ xs: 12, md: 3, lg: 3.5 }}>
             <FormControl
-              variant="outlined"
+              fullWidth
               size="small"
-              sx={{ bgcolor: "white", minWidth: "391px" }}
-            >
-              <InputLabel sx={{ color: "#868E96", fontSize: "16px" }}>
-                name@example.com
-              </InputLabel>
-              <OutlinedInput
-                label="name@example.com"
-                type="text"
-              ></OutlinedInput>
-            </FormControl>
-            <Button
+              variant="outlined"
               sx={{
-                bgcolor: "#4E73DF",
-                fontSize: "18px",
-                width: "142px",
-                textTransform: "none",
-                boxShadow: "none",
+                bgcolor: "white",
+                mt: { xs: "11px", md: 0 },
               }}
-              variant="contained"
             >
-              Send
-            </Button>
-          </Box>
-        </Box>
+              <InputLabel sx={{ color: "#868E96" }}>Search</InputLabel>
+              <OutlinedInput label="Search" type="text"></OutlinedInput>
+            </FormControl>
+          </Grid>
+        </Grid>
         <UserTable data={userData} favorite={true} />
       </Container>
     </>

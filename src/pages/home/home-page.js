@@ -275,7 +275,7 @@ const HomePage = () => {
                         scope="row"
                         sx={{
                           border: "none",
-                          fontSize: { xs: "15px", md: "20px" },
+                          fontSize: { xs: "14px", md: "13px", lg: "20px" },
                           p: 0,
                         }}
                       >

@@ -31,7 +31,7 @@ const RegisterForm = () => {
           mt: { xs: "20px" },
         }}
       >
-        <Grid container size={8.2}>
+        <Grid container size={{ xs: 10, md: 10, lg: 8.2 }}>
           <Grid item="true" size={{ xs: 12, md: 12 }}>
             <Typography
               color="#212529"

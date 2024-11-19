@@ -144,7 +144,7 @@ const CompanyProfile = () => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item="true" size={{ xs: 6, md: 3.1 }}>
+            <Grid item="true" size={{ xs: 6, md: 4, lg: 3.1 }}>
               <Button
                 fullWidth
                 sx={{

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import {
   Box,
   Button,
@@ -12,6 +13,8 @@ import {
 import Grid from "@mui/material/Grid2";
 
 const ResetPassForm = () => {
+  const router = useRouter();
+
   return (
     <>
       <Grid
@@ -70,6 +73,7 @@ const ResetPassForm = () => {
         </Grid>
         <Grid item="true" size={{ sx: "0px", md: 12 }}>
           <Button
+            onClick={() => router.push("/auth/set-password")}
             variant="contained"
             sx={{
               bgcolor: "#4E73DF",

@@ -5,7 +5,7 @@ import Navbar from "@/components/NavBar";
 import { Box } from "@mui/material";
 
 export default function Layout({ children, footerProps }) {
-  const router = useRouter(); // to get all url
+  const router = useRouter();
   const { pathname } = router;
 
   console.log("router", router);
@@ -14,14 +14,13 @@ export default function Layout({ children, footerProps }) {
 
   return (
     <Box display="flex" flexDirection="column" minHeight="100vh">
-      {/* Render Navbar conditionally */}
       {!isAuthPage && <Navbar />}
 
       <Box component="main" flex="1">
         {children}
       </Box>
 
-      <Footer {...footerProps} />
+      {!isAuthPage && <Footer {...footerProps} />}
     </Box>
   );
 }

@@ -39,6 +39,7 @@ const contacts = () => {
                 sx={{
                   fontSize: "18px",
                   textTransform: "none",
+                  boxShadow: 0,
                 }}
                 color="error"
                 variant="contained"
@@ -59,6 +60,7 @@ const contacts = () => {
                   bgcolor: "#4E73DF",
                   fontSize: "18px",
                   textTransform: "none",
+                  boxShadow: 0,
                 }}
                 variant="contained"
               >
@@ -77,6 +79,7 @@ const contacts = () => {
                   bgcolor: "#4E73DF",
                   fontSize: "18px",
                   textTransform: "none",
+                  boxShadow: 0,
                 }}
                 variant="contained"
               >
@@ -95,6 +98,7 @@ const contacts = () => {
                   bgcolor: { xs: "#4E73DF", md: "#28A745" },
                   fontSize: "18px",
                   textTransform: "none",
+                  boxShadow: 0,
                 }}
                 variant="contained"
               >

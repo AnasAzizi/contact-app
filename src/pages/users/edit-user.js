@@ -9,34 +9,50 @@ import {
   Card,
   Select,
   MenuItem,
+  Switch,
+  Box,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import SecondNavBar from "@/components/SecondNavBar";
 import { useRouter } from "next/router";
 
-const InviteNewUser = () => {
+const EditUser = () => {
   const router = useRouter();
 
   return (
     <>
       <Container maxWidth="xl">
-        <SecondNavBar path="Home / Users / Invite new user" />
+        <SecondNavBar path="Home / Users / Adam  Smith" />
         <Card
           sx={{
             height: "72px",
             bgcolor: "#F7F7F7",
             boxShadow: 3,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
           }}
         >
           <Typography
             sx={{
               fontSize: "23px",
-              mt: "20px",
               ml: "40px",
             }}
           >
             User details
           </Typography>
+          <Box
+            component="div"
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              mr: "40px",
+            }}
+          >
+            <Typography>Unlocked</Typography>
+            <Switch defaultChecked />
+          </Box>
         </Card>
         <Grid
           container
@@ -52,7 +68,7 @@ const InviteNewUser = () => {
         >
           <Grid item="true" size={{ xs: 12, md: 6 }}>
             <Typography mb="12px" color="black" fontSize="20px">
-              First name <span style={{ color: "#C70000" }}>*</span>
+              First name
             </Typography>
             <FormControl variant="outlined" fullWidth>
               <InputLabel sx={{ color: "#868E96" }}>First Name</InputLabel>
@@ -61,7 +77,7 @@ const InviteNewUser = () => {
           </Grid>
           <Grid item="true" size={{ xs: 12, md: 6 }}>
             <Typography mb="12px" color="black" fontSize="20px">
-              Last name <span style={{ color: "#C70000" }}>*</span>
+              Last name
             </Typography>
             <FormControl variant="outlined" fullWidth>
               <InputLabel sx={{ color: "#868E96" }}>Last Name</InputLabel>
@@ -70,7 +86,7 @@ const InviteNewUser = () => {
           </Grid>
           <Grid item="true" size={{ xs: 12, md: 4 }}>
             <Typography mb="12px" color="black" fontSize="20px">
-              Email <span style={{ color: "#C70000" }}>*</span>
+              Email
             </Typography>
             <FormControl variant="outlined" fullWidth>
               <InputLabel sx={{ color: "#868E96" }}>mail@gmail.com</InputLabel>
@@ -79,7 +95,7 @@ const InviteNewUser = () => {
           </Grid>
           <Grid item="true" size={{ xs: 12, md: 4 }}>
             <Typography mb="12px" color="black" fontSize="20px">
-              Phone <span style={{ color: "#C70000" }}>*</span>
+              Phone
             </Typography>
             <FormControl variant="outlined" fullWidth>
               <InputLabel sx={{ color: "#868E96" }}>Phone Number</InputLabel>
@@ -88,7 +104,7 @@ const InviteNewUser = () => {
           </Grid>
           <Grid item="true" size={{ xs: 12, md: 4 }}>
             <Typography mb="12px" color="black" fontSize="20px">
-              User Type <span style={{ color: "#C70000" }}>*</span>
+              User Type
             </Typography>
             <FormControl variant="outlined" fullWidth>
               <InputLabel sx={{ color: "#868E96" }}>
@@ -114,7 +130,7 @@ const InviteNewUser = () => {
             </Grid>
             <Grid item="true" size={{ xs: 6, md: 2 }}>
               <Button
-                onClick={() => router.push("/home/users")}
+                onClick={() => router.push("/users/view-user")}
                 fullWidth
                 bgcolor="#4E73DF"
                 variant="outlined"
@@ -130,4 +146,4 @@ const InviteNewUser = () => {
   );
 };
 
-export default InviteNewUser;
+export default EditUser;

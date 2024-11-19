@@ -11,6 +11,8 @@ import {
   TextField,
   FormControl,
   OutlinedInput,
+  Box,
+  Switch,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import EditOffOutlinedIcon from "@mui/icons-material/EditOffOutlined";
@@ -28,19 +30,32 @@ const View = () => {
           sx={{
             height: "72px",
             bgcolor: "#F7F7F7",
-            mt: "31px",
             boxShadow: 3,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
           }}
         >
           <Typography
             sx={{
               fontSize: "23px",
-              mt: "20px",
               ml: "40px",
             }}
           >
-            Contact details
+            User details
           </Typography>
+          <Box
+            component="div"
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              mr: "40px",
+            }}
+          >
+            <Typography>Active</Typography>
+            <Switch defaultChecked />
+          </Box>
         </Card>
         <Grid
           container
@@ -53,7 +68,7 @@ const View = () => {
           <Grid
             container
             item="true"
-            size={{ xs: 12, md: 3 }}
+            size={{ xs: 12, md: 12, lg: 3 }}
             direction="column"
             alignItems="center"
           >
@@ -72,7 +87,7 @@ const View = () => {
           <Grid
             container
             item="true"
-            size={{ xs: 12, md: 9 }}
+            size={{ xs: 12, md: 12, lg: 9 }}
             pr="32px"
             pl={{ xs: "32px", md: 0 }}
           >

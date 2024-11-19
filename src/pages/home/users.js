@@ -20,9 +20,10 @@ const users = () => {
       <Container maxWidth="xl">
         <SecondNavBar path="Home / Users" />
         <Grid container size={12} direction="row" mb={{ xs: 0, md: "18px" }}>
-          <Grid item="true" size={{ xs: 12, md: 3.5 }}>
+          <Grid item="true" size={{ xs: 12, md: 3.5, lg: 4 }}>
             <FormControl
               fullWidth
+              size="small"
               variant="outlined"
               sx={{
                 bgcolor: "white",
@@ -43,11 +44,15 @@ const users = () => {
             justifyContent="flex-end"
             alignItems="center"
             item="true"
-            size={{ xs: 12, md: 8.5 }}
+            size={{ xs: 12, md: 8.5, lg: 8 }}
             direction="row"
             columnSpacing="22px"
           >
-            <Grid item="true" size={{ xs: 6, md: 1.2 }} p={{ xs: 1, md: 0 }}>
+            <Grid
+              item="true"
+              size={{ xs: 6, md: 1.5, lg: 1.5 }}
+              p={{ xs: 1, md: 0 }}
+            >
               <Button
                 fullWidth
                 color="error"
@@ -55,12 +60,17 @@ const users = () => {
                 sx={{
                   fontSize: "18px",
                   textTransform: "none",
+                  boxShadow: "none",
                 }}
               >
                 Delete
               </Button>
             </Grid>
-            <Grid item="true" size={{ xs: 6, md: 2.6 }} p={{ xs: 1, md: 0 }}>
+            <Grid
+              item="true"
+              size={{ xs: 6, md: 3.8, lg: 2.9 }}
+              p={{ xs: 1, md: 0 }}
+            >
               <Button
                 onClick={() => router.push("/users/invite-new-user")}
                 variant="contained"
@@ -69,6 +79,7 @@ const users = () => {
                   bgcolor: "#4E73DF",
                   fontSize: "18px",
                   textTransform: "none",
+                  boxShadow: "none",
                 }}
               >
                 Invite New User
