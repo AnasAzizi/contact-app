@@ -79,7 +79,7 @@ const ExportViaEmail = () => {
             </FormControl>
           </Grid>
         </Grid>
-        <UserTable data={userData} favorite={true} />
+        <UserTable data={userData} favorite={true} url="/contacts/view" />
       </Container>
     </>
   );

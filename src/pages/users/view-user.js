@@ -16,9 +16,11 @@ import Grid from "@mui/material/Grid2";
 import SecondNavBar from "@/components/SecondNavBar";
 import EditOffOutlinedIcon from "@mui/icons-material/EditOffOutlined";
 import { useRouter } from "next/router";
+import viewProfile from "@/data/viewProfile.json";
 
 const ViewUser = () => {
   const router = useRouter();
+  console.log(viewProfile);
 
   return (
     <>
@@ -73,8 +75,7 @@ const ViewUser = () => {
               First name
             </Typography>
             <FormControl variant="outlined" fullWidth>
-              <InputLabel sx={{ color: "#868E96" }}>First Name</InputLabel>
-              <OutlinedInput label="First Name" type="text" />
+              <OutlinedInput value={viewProfile.firstName} type="text" />
             </FormControl>
           </Grid>
           <Grid item="true" size={{ xs: 12, md: 6 }}>
@@ -82,8 +83,7 @@ const ViewUser = () => {
               Last name
             </Typography>
             <FormControl variant="outlined" fullWidth>
-              <InputLabel sx={{ color: "#868E96" }}>Last Name</InputLabel>
-              <OutlinedInput label="Last Name" type="text" />
+              <OutlinedInput value={viewProfile.lastName} type="text" />
             </FormControl>
           </Grid>
           <Grid item="true" size={{ xs: 12, md: 4 }}>
@@ -91,8 +91,7 @@ const ViewUser = () => {
               Email
             </Typography>
             <FormControl variant="outlined" fullWidth>
-              <InputLabel sx={{ color: "#868E96" }}>mail@gmail.com</InputLabel>
-              <OutlinedInput label="mail@gmail.com" type="email" />
+              <OutlinedInput value={viewProfile.email} type="email" />
             </FormControl>
           </Grid>
           <Grid item="true" size={{ xs: 12, md: 4 }}>
@@ -100,8 +99,7 @@ const ViewUser = () => {
               Phone
             </Typography>
             <FormControl variant="outlined" fullWidth>
-              <InputLabel sx={{ color: "#868E96" }}>Phone Number</InputLabel>
-              <OutlinedInput label="Phone Number" type="number" />
+              <OutlinedInput value={viewProfile.phone} type="number" />
             </FormControl>
           </Grid>
           <Grid item="true" size={{ xs: 12, md: 4 }}>
@@ -112,7 +110,7 @@ const ViewUser = () => {
               <InputLabel sx={{ color: "#868E96" }}>
                 Select user type
               </InputLabel>
-              <Select label=" Select user type">
+              <Select>
                 <MenuItem value={"Turkey"}>Turkey</MenuItem>
                 <MenuItem value={"Syria"}>Syria</MenuItem>
                 <MenuItem value={"Moroco"}>Moroco</MenuItem>

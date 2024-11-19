@@ -2,7 +2,8 @@ import React from "react";
 import Image from "next/image";
 import SecondNavBar from "@/components/SecondNavBar";
 import Data from "@/data/LatestActivitiesData.json";
-import Box from "@mui/material/Box";
+import Link from "next/link";
+
 import {
   Container,
   Typography,
@@ -15,6 +16,7 @@ import {
   TableRow,
   Chip,
   Paper,
+  Box,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import NorthIcon from "@mui/icons-material/North";
@@ -226,6 +228,7 @@ const HomePage = () => {
                     />
                   </Box>
                   <Typography
+                    noWrap
                     sx={{
                       opacity: "50%",
                       ml: "8px",
@@ -257,19 +260,24 @@ const HomePage = () => {
                 fontSize: "26px",
               }}
             >
-              <Typography
-                sx={{ fontSize: "26px", mt: "20px", ml: "40px", mt: "18px" }}
-              >
-                Latest activities
-              </Typography>
+              <Link href="/home/activities" passHref>
+                <Typography
+                  sx={{ fontSize: "26px", mt: "20px", ml: "40px", mt: "18px" }}
+                >
+                  Latest activities
+                </Typography>
+              </Link>
             </Card>
-            <TableContainer component={Paper} sx={{ px: { md: "40px" } }}>
+            <TableContainer
+              component={Paper}
+              sx={{ px: { md: "40px" }, py: "20px", pl: { xs: "40px" } }}
+            >
               <Table>
                 <TableBody>
-                  {Data.slice(0, 5).map((data, index) => (
+                  {Data.slice(0, 6).map((data, index) => (
                     <TableRow
                       key={index}
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }} //? p or m for tableRow
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
                       <TableCell
                         scope="row"
@@ -279,19 +287,88 @@ const HomePage = () => {
                           p: 0,
                         }}
                       >
-                        {data.name}
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        sx={{ px: 0, border: "none", width: "115px" }}
-                      >
-                        <Typography sx={{ fontSize: "14px", opacity: "40%" }}>
+                        <Typography
+                          sx={{
+                            display: {
+                              xs: "block",
+                              md: "table-cell",
+                              fontSize: "20px",
+                            },
+                          }}
+                        >
+                          {data.name}
+                        </Typography>
+                        <Typography
+                          sx={{
+                            display: {
+                              xs: "table-cell",
+                              md: "none",
+                              fontSize: "14px",
+                              opacity: "40%",
+                            },
+                          }}
+                        >
                           {data.date}
                         </Typography>
                       </TableCell>
                       <TableCell
                         align="left"
-                        sx={{ px: 0, border: "none", width: "85px" }}
+                        sx={{ px: 0, border: "none", width: "115px" }}
+                      >
+                        <Typography
+                          sx={{
+                            fontSize: "14px",
+                            opacity: "40%",
+                            display: { xs: "none", md: "table-cell" },
+                          }}
+                        >
+                          {data.date}
+                        </Typography>
+                        <Box
+                          display={{ xs: "flex", md: "none" }}
+                          alignItems="center"
+                          justifyContent="flex-start"
+                        >
+                          <Box
+                            sx={{
+                              width: "10px",
+                              height: "10px",
+                              borderRadius: "50px",
+                              bgcolor: getStatusColor(data.action),
+                              mr: 1,
+                            }}
+                          />
+                          <Typography
+                            sx={{
+                              fontSize: "14px",
+                              opacity: "40%",
+                              border: "none",
+                            }}
+                          >
+                            {data.action}
+                          </Typography>
+                        </Box>
+                        <Chip
+                          sx={{
+                            borderRadius: "2px",
+                            textAlign: "center",
+                            display: { xs: "table-cell", md: "none" },
+                            bgcolor: "#EEEEEE",
+                            fontSize: "12px",
+                            minWidth: { xs: "84px", md: "54px" },
+                            height: "20px",
+                          }}
+                          label={data.user}
+                        />
+                      </TableCell>
+                      <TableCell
+                        align="left"
+                        sx={{
+                          display: { xs: "none", md: "table-cell" },
+                          px: 0,
+                          border: "none",
+                          width: "85px",
+                        }}
                       >
                         <Box
                           display="flex"
@@ -321,6 +398,7 @@ const HomePage = () => {
                       <TableCell
                         align="right"
                         sx={{
+                          display: { xs: "none", md: "table-cell" },
                           border: "none",
                           width: "85px",
                           pr: { xs: 2, md: 0 },

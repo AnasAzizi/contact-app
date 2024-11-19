@@ -4,7 +4,6 @@ import SecondNavBar from "@/components/SecondNavBar";
 import { useRouter } from "next/router";
 import {
   Container,
-  Divider,
   FormControl,
   InputLabel,
   OutlinedInput,
