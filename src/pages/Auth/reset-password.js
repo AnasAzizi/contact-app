@@ -37,7 +37,7 @@ const resetPassword = () => {
         {/* sign in form */}
         <Grid
           item="true"
-          size={{ xs: 12, md: 5.5, lg: 4.2 }}
+          size={{ xs: 12, md: 5.5, lg: 4.5 }}
           display="flex"
           justifyContent="center"
         >

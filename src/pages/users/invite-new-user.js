@@ -42,7 +42,7 @@ const InviteNewUser = () => {
           container
           pt="44px"
           pb="39px"
-          px="60px"
+          px={{ xs: "32px", md: "60px" }}
           size={12}
           direction={{ xs: "column", md: "row" }}
           bgcolor="white"
@@ -105,9 +105,12 @@ const InviteNewUser = () => {
             <Grid item="true" size={{ xs: 6, md: 2 }}>
               <Button
                 fullWidth
-                bgcolor="#4E73DF"
                 variant="contained"
-                sx={{ textTransform: "none", fontSize: "20px" }}
+                sx={{
+                  textTransform: "none",
+                  fontSize: "20px",
+                  bgcolor: "#4E73DF",
+                }}
               >
                 Invite
               </Button>
@@ -118,7 +121,12 @@ const InviteNewUser = () => {
                 fullWidth
                 bgcolor="#4E73DF"
                 variant="outlined"
-                sx={{ textTransform: "none", fontSize: "20px" }}
+                sx={{
+                  textTransform: "none",
+                  fontSize: "20px",
+                  borderColor: "#4E73DF",
+                  color: "#4E73DF",
+                }}
               >
                 Cancel
               </Button>

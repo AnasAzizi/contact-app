@@ -99,7 +99,7 @@ const CreateNew = () => {
                 <Typography mb="12px" color="black" fontSize="20px">
                   First name <span style={{ color: "#C70000" }}>*</span>
                 </Typography>
-                <FormControl variant="outlined" fullWidth>
+                <FormControl size="small" variant="outlined" fullWidth>
                   <InputLabel sx={{ color: "#868E96" }}>First</InputLabel>
                   <OutlinedInput label="First" type="text" />
                 </FormControl>
@@ -108,7 +108,7 @@ const CreateNew = () => {
                 <Typography mb="12px" color="black" fontSize="20px">
                   First name<span style={{ color: "#C70000" }}>*</span>
                 </Typography>
-                <FormControl variant="outlined" fullWidth>
+                <FormControl size="small" variant="outlined" fullWidth>
                   <InputLabel sx={{ color: "#868E96" }}>Last</InputLabel>
                   <OutlinedInput label="Last" type="text" />
                 </FormControl>
@@ -117,7 +117,7 @@ const CreateNew = () => {
                 <Typography mb="12px" color="black" fontSize="20px">
                   Email
                 </Typography>
-                <FormControl variant="outlined" fullWidth>
+                <FormControl size="small" variant="outlined" fullWidth>
                   <InputLabel sx={{ color: "#868E96" }}>
                     name@example.com
                   </InputLabel>
@@ -128,7 +128,7 @@ const CreateNew = () => {
                 <Typography mb="12px" color="black" fontSize="20px">
                   Phone <span style={{ color: "#C70000" }}>*</span>
                 </Typography>
-                <FormControl variant="outlined" fullWidth>
+                <FormControl size="small" variant="outlined" fullWidth>
                   <InputLabel sx={{ color: "#868E96" }}>
                     555-123-4567
                   </InputLabel>
@@ -142,7 +142,7 @@ const CreateNew = () => {
                 <Typography mb="12px" color="black" fontSize="20px">
                   Email 2
                 </Typography>
-                <FormControl variant="outlined" fullWidth>
+                <FormControl size="small" variant="outlined" fullWidth>
                   <InputLabel sx={{ color: "#868E96" }}>
                     name@example.com
                   </InputLabel>
@@ -156,7 +156,7 @@ const CreateNew = () => {
                 <Typography mb="12px" color="black" fontSize="20px">
                   Mobile
                 </Typography>
-                <FormControl variant="outlined" fullWidth>
+                <FormControl size="small" variant="outlined" fullWidth>
                   <InputLabel sx={{ color: "#868E96" }}>
                     555-123-4567
                   </InputLabel>
@@ -197,9 +197,9 @@ const CreateNew = () => {
               mb="47px"
               mt="33px"
               ml={{ md: "27px" }}
-              gap={{ md: 10 }}
+              gap={{ xs: 3, md: 10 }}
             >
-              <Grid item="true" size={{ xs: 6, md: 2 }}>
+              <Grid item="true" size={{ xs: 12, sm: 5, md: 2 }}>
                 <Button
                   fullWidth
                   variant="contained"
@@ -213,7 +213,7 @@ const CreateNew = () => {
                   Create
                 </Button>
               </Grid>
-              <Grid item="true" size={{ xs: 6, md: 2 }}>
+              <Grid item="true" size={{ xs: 12, sm: 5, md: 2 }}>
                 <Button
                   onClick={() => router.push("/home/contacts")}
                   fullWidth

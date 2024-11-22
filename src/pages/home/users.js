@@ -19,7 +19,7 @@ const users = () => {
       <Container maxWidth="xl">
         <SecondNavBar path="Home / Users" />
         <Grid container size={12} direction="row" mb={{ xs: 0, md: "18px" }}>
-          <Grid item="true" size={{ xs: 12, md: 3.5, lg: 4 }}>
+          <Grid item="true" size={{ xs: 12, md: 3.5, lg: 2.5 }}>
             <FormControl
               fullWidth
               size="small"
@@ -43,14 +43,14 @@ const users = () => {
             justifyContent="flex-end"
             alignItems="center"
             item="true"
-            size={{ xs: 12, md: 8.5, lg: 8 }}
-            direction="row"
+            size={{ xs: 12, md: 8.5, lg: 9.5 }}
+            direction={{ xs: "row-reverse", md: "row" }}
             columnSpacing="22px"
           >
             <Grid
               item="true"
               size={{ xs: 6, md: 1.5, lg: 1.5 }}
-              p={{ xs: 1, md: 0 }}
+              py={{ xs: 1, md: 0 }}
             >
               <Button
                 fullWidth
@@ -68,7 +68,7 @@ const users = () => {
             <Grid
               item="true"
               size={{ xs: 6, md: 3.8, lg: 2.9 }}
-              p={{ xs: 1, md: 0 }}
+              py={{ xs: 1, md: 0 }}
             >
               <Button
                 onClick={() => router.push("/users/invite-new-user")}

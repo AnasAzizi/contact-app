@@ -1,7 +1,8 @@
 import React from "react";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import SecondNavBar from "@/components/SecondNavBar";
+import { useRouter } from "next/router";
+
 import {
   Container,
   Typography,
@@ -17,7 +18,7 @@ import {
 import Grid from "@mui/material/Grid2";
 import EditOffOutlinedIcon from "@mui/icons-material/EditOffOutlined";
 
-const CompanyProfile = () => {
+const CompanyProfileEdit = () => {
   const router = useRouter();
 
   return (
@@ -150,21 +151,17 @@ const CompanyProfile = () => {
             </Grid>
             <Grid item="true" size={{ xs: 8, md: 5, lg: 3.1 }}>
               <Button
-                onClick={() =>
-                  router.push("/company-profile/company-profile-edit")
-                }
+                onClick={() => router.push("/home/home-page")}
                 fullWidth
                 sx={{
                   mt: "26px",
                   textTransform: "none",
                   fontSize: "20px",
-                  color: "#4E73DF",
                   borderColor: "#4E73DF",
                 }}
-                variant="outlined"
-                startIcon={<EditOffOutlinedIcon />}
+                variant="contained"
               >
-                Edit
+                Save
               </Button>
             </Grid>
           </Grid>
@@ -191,4 +188,4 @@ const CompanyProfile = () => {
   );
 };
 
-export default CompanyProfile;
+export default CompanyProfileEdit;

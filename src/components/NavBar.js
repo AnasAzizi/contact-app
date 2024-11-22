@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import {
   AppBar,
   Box,
@@ -16,12 +17,11 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Divider,
   Drawer,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
 import PersonIcon from "@mui/icons-material/Person";
 import CloseIcon from "@mui/icons-material/Close";
+import ReorderIcon from "@mui/icons-material/Reorder";
 
 const pages = [
   { name: "Home", path: "/home/home-page" },
@@ -45,6 +45,7 @@ const NavbarPages = [
 const settings = ["My Profile", "Log out"];
 
 const NavBar = () => {
+  const router = useRouter();
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [anchorElNav, setAnchorElNav] = useState(null);
 
@@ -69,7 +70,14 @@ const NavBar = () => {
   const DrawerList = (
     <Box onClick={toggleDrawer(false)}>
       <List sx={{ p: 0 }}>
-        <ListItem sx={{ bgcolor: "#4E73DF", justifyContent: "space-between" }}>
+        <ListItem
+          sx={{
+            bgcolor: "#4E73DF",
+            justifyContent: "space-between",
+            height: "61px",
+            pl: "28px",
+          }}
+        >
           <ListItemIcon>
             <Image
               src="/Logo_White.svg"
@@ -83,15 +91,23 @@ const NavBar = () => {
             <CloseIcon sx={{ fontSize: "33px" }} />
           </IconButton>
         </ListItem>
-        <Divider />
       </List>
 
       {NavbarPages.map(({ name, path, icon }) => (
-        <List key={name}>
+        <List sx={{ py: "20px", borderBottom: "1px solid #CED4DA" }} key={name}>
           <ListItem sx={{ p: 0 }}>
             <Link href={path}>
               <ListItemText
-                primaryTypographyProps={{ style: { fontSize: "18px" } }}
+                primaryTypographyProps={{
+                  style: {
+                    fontSize: "18px",
+                    opacity: router.pathname === path ? "100%" : "70%",
+                    marginLeft:
+                      name === "My Profile" || name === "Log Out"
+                        ? "20px"
+                        : "none",
+                  },
+                }}
                 primary={
                   <>
                     <Box
@@ -104,87 +120,115 @@ const NavBar = () => {
                     </Box>
                   </>
                 }
-                sx={{ pl: "29px", pt: "17px", pb: "19px" }}
+                sx={{ pl: "29px" }}
               />
             </Link>
           </ListItem>
-          <Divider />
         </List>
       ))}
     </Box>
   );
 
   return (
-    <AppBar sx={{ bgcolor: "#4E73DF" }} position="static">
+    <AppBar
+      sx={{ bgcolor: "#4E73DF", height: { xs: "61px", md: "82px" } }}
+      position="static"
+    >
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
+        <Toolbar sx={{ py: "5px" }} disableGutters>
+          <Box
+            sx={{
+              display: { xs: "inline-block", md: "none" },
+            }}
+          >
+            <IconButton
+              sx={{ p: 0 }}
+              onClick={toggleDrawer(true)}
+              color="inherit"
+            >
+              <ReorderIcon sx={{ fontSize: "37px" }} />
+            </IconButton>
+            <Drawer
+              PaperProps={{
+                sx: { width: "92%" },
+              }}
+              open={open}
+              onClose={toggleDrawer(false)}
+            >
+              {DrawerList}
+            </Drawer>
+          </Box>
+
           <Box
             component="div"
             sx={{
               display: "flex",
+              justifyContent: {
+                xs: "center",
+                md: "flex-start",
+              },
               alignItems: "center",
               flexDirection: {
-                md: "row",
                 xs: "row-reverse",
+                md: "row",
               },
+              flexGrow: { xs: 1, md: 0 },
             }}
           >
-            <Image
-              src="/Logo_White.svg"
-              width={168}
-              height={34}
-              alt="logo"
-              priority={true}
-            />
-            <Box sx={{ display: { xs: "flex", md: "none" }, mr: "63px" }}>
-              <IconButton onClick={toggleDrawer(true)} color="inherit">
-                <MenuIcon />
-              </IconButton>
-              <Drawer
-                PaperProps={{
-                  sx: { width: "90%" },
-                }}
-                open={open}
-                onClose={toggleDrawer(false)}
-              >
-                {DrawerList}
-              </Drawer>
-            </Box>
+            <Link href="/home/home-page">
+              <Image
+                src="/Logo_White.svg"
+                width={168}
+                height={34}
+                alt="logo"
+                priority={true}
+              />
+            </Link>
           </Box>
 
           <Box
             sx={{
               flexGrow: 1,
               display: { xs: "none", md: "flex" },
-              ml: "20px",
             }}
           >
-            {pages.map((page) => (
-              <Link href={page.path} passHref key={page.name}>
+            {pages.map(({ name, path }) => (
+              <Link href={path} passHref key={name}>
                 <Button
                   onClick={handleCloseNavMenu}
                   sx={{
                     my: 2,
-                    color: "white",
                     textTransform: "none",
                     fontSize: "16px",
-                    ml: "20px",
+                    ml: { md: "20px", lg: "70px" },
+                    color: "white",
+                    opacity: router.pathname === path ? "100%" : "70%",
                   }}
                 >
-                  {page.name}
+                  {name}
                 </Button>
               </Link>
             ))}
           </Box>
-          <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
+
+          <Box
+            sx={{
+              flexGrow: 0,
+              display: { xs: "none", md: "flex" },
+            }}
+          >
             <Tooltip title="Open settings">
               <Button
-                sx={{ p: "0", textTransform: "none", fontSize: "16px" }}
+                sx={{
+                  p: 0,
+                  textTransform: "none",
+                  fontSize: "16px",
+                }}
                 onClick={handleOpenUserMenu}
                 color="#ffffff"
-                startIcon={<PersonIcon style={{ fontSize: "24px" }} />}
+                startIcon={<PersonIcon style={{ fontSize: "36px" }} />}
               >
-                User Name
+                Anas
               </Button>
             </Tooltip>
             <Menu
@@ -204,7 +248,11 @@ const NavBar = () => {
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography
-                    sx={{ textAlign: "left", px: "20px", display: "block" }}
+                    sx={{
+                      textAlign: "left",
+                      px: "20px",
+                      display: "block",
+                    }}
                   >
                     {setting}
                   </Typography>

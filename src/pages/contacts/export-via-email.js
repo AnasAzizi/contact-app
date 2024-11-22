@@ -31,7 +31,7 @@ const ExportViaEmail = () => {
             size={{ xs: 12, md: 8.5 }}
             gap="25px"
           >
-            <Grid item="true" size={{ xs: 6.6, md: 4.7, lg: 3.5 }}>
+            <Grid item="true" size={{ xs: 12, md: 4.7, lg: 3.5 }}>
               <FormControl
                 fullWidth
                 size="small"
@@ -49,7 +49,7 @@ const ExportViaEmail = () => {
                 ></OutlinedInput>
               </FormControl>
             </Grid>
-            <Grid item="true" size={{ xs: 5, md: 3, lg: 1.8 }}>
+            <Grid item="true" size={{ xs: 12, md: 3, lg: 1.8 }}>
               <Button
                 fullWidth
                 sx={{
@@ -64,7 +64,7 @@ const ExportViaEmail = () => {
               </Button>
             </Grid>
           </Grid>
-          <Grid item="true" size={{ xs: 12, md: 3, lg: 3.5 }}>
+          <Grid item="true" size={{ xs: 12, md: 3.5, lg: 3.5 }}>
             <FormControl
               fullWidth
               size="small"

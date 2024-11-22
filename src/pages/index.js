@@ -1,18 +1,23 @@
 import Head from "next/head";
-import localFont from "next/font/local";
-import styles from "@/styles/Home.module.css";
-import "@fontsource/roboto/400.css"; // Regular
-import "@fontsource/roboto/700.css"; // Bold
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/700.css";
 
-
+export async function getServerSideProps() {
+  return {
+    redirect: {
+      destination: "/auth/sign-in",
+      permanent: false,
+    },
+  };
+}
 
 export default function Home() {
   return (
     <>
-    <Head>
-      <title>Contact Managemant App</title>
-    </Head>
-    <h1>Sign In Page</h1>
+      <Head>
+        <title>Contact Management App</title>
+      </Head>
+      <h1>Error</h1>
     </>
   );
 }

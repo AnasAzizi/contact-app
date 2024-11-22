@@ -37,7 +37,7 @@ const SignIn = () => {
         {/* sign in form */}
         <Grid
           item="true"
-          size={{ xs: 9.5, md: 6, lg: 4.2 }}
+          size={{ xs: 12, md: 6, lg: 4.5 }}
           display="flex"
           justifyContent="center"
         >

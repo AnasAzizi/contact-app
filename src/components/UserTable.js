@@ -10,7 +10,6 @@ import {
   Button,
   Checkbox,
   Paper,
-  Pagination,
   Box,
   Avatar,
   TableSortLabel,
@@ -18,13 +17,16 @@ import {
   CardContent,
   Divider,
   Typography,
+  Tooltip,
+  IconButton,
 } from "@mui/material";
 import { styled } from "@mui/system";
-import FeedIcon from "@mui/icons-material/Feed";
 import { useRouter } from "next/router";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
 import Grid from "@mui/material/Grid2";
+import FileCopyOutlinedIcon from "@mui/icons-material/FileCopyOutlined";
+import TablePagination from "./TablePagination";
 
 const StatusChip = styled(Chip)(({ statuscolor }) => ({
   backgroundColor: statuscolor,
@@ -34,12 +36,14 @@ const StatusChip = styled(Chip)(({ statuscolor }) => ({
 }));
 
 const UserTable = ({ data, favorite }) => {
-  const [page, setPage] = useState(1);
-  const rowsPerPage = 5;
   const [selected, setSelected] = useState([]);
   const [starred, setStarred] = useState({});
   const router = useRouter();
 
+  // for Pagination
+
+  const [page, setPage] = useState(1);
+  const rowsPerPage = 5;
   const paginatedData = data.slice(
     (page - 1) * rowsPerPage,
     page * rowsPerPage
@@ -60,8 +64,11 @@ const UserTable = ({ data, favorite }) => {
     }
   };
 
-  const handlePageChange = (event, value) => {
-    setPage(value);
+  const [tooltipText, setTooltipText] = useState("Copy");
+
+  const handleClickIcon = () => {
+    setTooltipText("Copied!");
+    setTimeout(() => setTooltipText("Copy"), 2000);
   };
 
   const handleSelectAllClick = (event) => {
@@ -74,7 +81,7 @@ const UserTable = ({ data, favorite }) => {
   };
 
   const handleCheckboxClick = (event, id) => {
-    event.stopPropagation(); // Prevent row selection when clicking checkbox
+    event.stopPropagation();
     setSelected((prevSelected) =>
       prevSelected.includes(id)
         ? prevSelected.filter((item) => item !== id)
@@ -85,7 +92,7 @@ const UserTable = ({ data, favorite }) => {
   const handleStarClick = (id) => {
     setStarred((prevStarred) => ({
       ...prevStarred,
-      [id]: !prevStarred[id], // Toggle the favorite status of the clicked row
+      [id]: !prevStarred[id],
     }));
   };
 
@@ -241,7 +248,7 @@ const UserTable = ({ data, favorite }) => {
             {paginatedData.map((row) => {
               const isItemSelected = selected.includes(row.id);
               return (
-                <TableRow hover key={row.id} selected={isItemSelected}>
+                <TableRow key={row.id} selected={isItemSelected}>
                   <TableCell padding="checkbox">
                     <Checkbox
                       checked={isItemSelected}
@@ -279,10 +286,40 @@ const UserTable = ({ data, favorite }) => {
                   <TableCell sx={{ fontSize: "19px" }}>
                     {row.lastName}
                   </TableCell>
-                  <TableCell sx={{ fontSize: "19px" }}>{row.email}</TableCell>
-                  {/* <TableCell>
-                    <FeedIcon />
-                  </TableCell> */}
+                  <TableCell sx={{ fontSize: "19px", pr: 0 }}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexWrap: "nowrap",
+                        alignItems: "center",
+                        gap: "4%",
+                      }}
+                    >
+                      {row.email}
+                      <Tooltip
+                        slotProps={{
+                          tooltip: {
+                            sx: {
+                              bgcolor: "white",
+                              color: "black",
+                              fontSize: "16px",
+                            },
+                          },
+                        }}
+                        title="Copy"
+                        placement="top"
+                      >
+                        <IconButton onClick={handleClickIcon}>
+                          <FileCopyOutlinedIcon
+                            sx={{
+                              cursor: "pointer",
+                              fontSize: "18px",
+                            }}
+                          />
+                        </IconButton>
+                      </Tooltip>
+                    </Box>
+                  </TableCell>
                   <TableCell sx={{ fontSize: "19px" }}>{row.phone}</TableCell>
                   <TableCell align="left" sx={{ pl: "0px" }}>
                     <StatusChip
@@ -313,33 +350,12 @@ const UserTable = ({ data, favorite }) => {
       </TableContainer>
 
       {/* Pagination Component */}
-      <Box
-        component="div"
-        sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}
-      >
-        <Pagination
-          count={Math.ceil(data.length / rowsPerPage)}
-          page={page}
-          onChange={handlePageChange}
-          variant="outlined"
-          shape="rounded"
-          sx={{
-            "& .MuiPaginationItem-root": {
-              borderColor: "#DEE2E6",
-              borderRadius: 0,
-              mx: 0,
-              color: "#4E73DF",
-              height: "47px",
-              width: "51px",
-              fontSize: "18px",
-            },
-            "& .Mui-selected": {
-              backgroundColor: "#4E73DF",
-              color: "white",
-            },
-          }}
-        />
-      </Box>
+      <TablePagination
+        data={data}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={(newPage) => setPage(newPage)}
+      />
     </>
   );
 };

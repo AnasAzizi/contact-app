@@ -122,7 +122,7 @@ const EditContact = () => {
                 <Typography mb="12px" color="black" fontSize="20px">
                   First name
                 </Typography>
-                <FormControl variant="outlined" fullWidth>
+                <FormControl size="small" variant="outlined" fullWidth>
                   <OutlinedInput value={viewProfile.firstName} type="text" />
                 </FormControl>
               </Grid>
@@ -130,7 +130,7 @@ const EditContact = () => {
                 <Typography mb="12px" color="black" fontSize="20px">
                   Last name
                 </Typography>
-                <FormControl variant="outlined" fullWidth>
+                <FormControl size="small" variant="outlined" fullWidth>
                   <OutlinedInput value={viewProfile.lastName} type="text" />
                 </FormControl>
               </Grid>
@@ -138,7 +138,7 @@ const EditContact = () => {
                 <Typography mb="12px" color="black" fontSize="20px">
                   Email
                 </Typography>
-                <FormControl variant="outlined" fullWidth>
+                <FormControl size="small" variant="outlined" fullWidth>
                   <OutlinedInput value={viewProfile.email} type="email" />
                 </FormControl>
               </Grid>
@@ -146,7 +146,7 @@ const EditContact = () => {
                 <Typography mb="12px" color="black" fontSize="20px">
                   Phone
                 </Typography>
-                <FormControl variant="outlined" fullWidth>
+                <FormControl size="small" variant="outlined" fullWidth>
                   <OutlinedInput
                     value={viewProfile.phone}
                     type="number"
@@ -157,7 +157,7 @@ const EditContact = () => {
                 <Typography mb="12px" color="black" fontSize="20px">
                   Email 2
                 </Typography>
-                <FormControl variant="outlined" fullWidth>
+                <FormControl size="small" variant="outlined" fullWidth>
                   <OutlinedInput
                     value={viewProfile.email2}
                     type="text"
@@ -168,7 +168,7 @@ const EditContact = () => {
                 <Typography mb="12px" color="black" fontSize="20px">
                   Mobile
                 </Typography>
-                <FormControl variant="outlined" fullWidth>
+                <FormControl size="small" variant="outlined" fullWidth>
                   <OutlinedInput
                     value={viewProfile.mobile}
                     type="text"
@@ -206,9 +206,9 @@ const EditContact = () => {
               mb="47px"
               mt="33px"
               ml={{ md: "27px" }}
-              gap={{ md: 10 }}
+              gap={{ xs: 3, md: 10 }}
             >
-              <Grid item="true" size={{ xs: 6, md: 2 }}>
+              <Grid item="true" size={{ xs: 12, sm: 5, md: 2 }}>
                 <Button
                   fullWidth
                   sx={{
@@ -222,13 +222,17 @@ const EditContact = () => {
                   Save
                 </Button>
               </Grid>
-              <Grid item="true" size={{ xs: 6, md: 2 }}>
+              <Grid item="true" size={{ xs: 12, sm: 5, md: 2 }}>
                 <Button
                   onClick={() => router.push("/contacts/view")}
                   fullWidth
                   variant="outlined"
                   bgcolor="#4E73DF"
-                  sx={{ textTransform: "none", fontSize: "20px" }}
+                  sx={{
+                    textTransform: "none",
+                    fontSize: "20px",
+                    color: "#4E73DF",
+                  }}
                 >
                   Back
                 </Button>

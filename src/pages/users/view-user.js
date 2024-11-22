@@ -62,7 +62,7 @@ const ViewUser = () => {
           container
           pt="44px"
           pb="39px"
-          px="60px"
+          px={{ xs: "32px", md: "60px" }}
           size={12}
           direction={{ xs: "column", md: "row" }}
           bgcolor="white"
@@ -74,7 +74,7 @@ const ViewUser = () => {
             <Typography mb="12px" color="black" fontSize="20px">
               First name
             </Typography>
-            <FormControl variant="outlined" fullWidth>
+            <FormControl size="small" variant="outlined" fullWidth>
               <OutlinedInput value={viewProfile.firstName} type="text" />
             </FormControl>
           </Grid>
@@ -82,7 +82,7 @@ const ViewUser = () => {
             <Typography mb="12px" color="black" fontSize="20px">
               Last name
             </Typography>
-            <FormControl variant="outlined" fullWidth>
+            <FormControl size="small" variant="outlined" fullWidth>
               <OutlinedInput value={viewProfile.lastName} type="text" />
             </FormControl>
           </Grid>
@@ -90,7 +90,7 @@ const ViewUser = () => {
             <Typography mb="12px" color="black" fontSize="20px">
               Email
             </Typography>
-            <FormControl variant="outlined" fullWidth>
+            <FormControl size="small" variant="outlined" fullWidth>
               <OutlinedInput value={viewProfile.email} type="email" />
             </FormControl>
           </Grid>
@@ -98,7 +98,7 @@ const ViewUser = () => {
             <Typography mb="12px" color="black" fontSize="20px">
               Phone
             </Typography>
-            <FormControl variant="outlined" fullWidth>
+            <FormControl size="small" variant="outlined" fullWidth>
               <OutlinedInput value={viewProfile.phone} type="number" />
             </FormControl>
           </Grid>
@@ -106,11 +106,11 @@ const ViewUser = () => {
             <Typography mb="12px" color="black" fontSize="20px">
               User Type
             </Typography>
-            <FormControl variant="outlined" fullWidth>
+            <FormControl size="small" variant="outlined" fullWidth>
               <InputLabel sx={{ color: "#868E96" }}>
                 Select user type
               </InputLabel>
-              <Select>
+              <Select label=" Select user type">
                 <MenuItem value={"Turkey"}>Turkey</MenuItem>
                 <MenuItem value={"Syria"}>Syria</MenuItem>
                 <MenuItem value={"Moroco"}>Moroco</MenuItem>
@@ -126,6 +126,7 @@ const ViewUser = () => {
                   textTransform: "none",
                   fontSize: "20px",
                   color: "#4E73DF",
+                  borderColor: "#4E73DF",
                 }}
                 variant="outlined"
                 startIcon={<EditOffOutlinedIcon />}
@@ -139,7 +140,12 @@ const ViewUser = () => {
                 fullWidth
                 bgcolor="#4E73DF"
                 variant="outlined"
-                sx={{ textTransform: "none", fontSize: "20px" }}
+                sx={{
+                  textTransform: "none",
+                  borderColor: "#4E73DF",
+                  color: "#4E73DF",
+                  fontSize: "20px",
+                }}
               >
                 Back
               </Button>

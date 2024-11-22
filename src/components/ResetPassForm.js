@@ -59,16 +59,20 @@ const ResetPassForm = () => {
           alignItems="center"
         >
           <FormControl
-            size="medium"
+            size="small"
             sx={{
               minWidth: { xs: "306px", md: "371px" },
             }}
             variant="outlined"
           >
-            <InputLabel sx={{ color: "#868E96" }}>
+            <InputLabel sx={{ color: "#868E96", fontSize: "20px" }}>
               Enter your email address
             </InputLabel>
-            <OutlinedInput label="Enter your email address" type="text" />
+            <OutlinedInput
+              sx={{ minHeight: "48px" }}
+              label="Enter your email address====="
+              type="text"
+            />
           </FormControl>
         </Grid>
         <Grid item="true" size={{ sx: "0px", md: 12 }}>

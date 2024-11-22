@@ -29,11 +29,11 @@ const contacts = () => {
           <Grid
             container
             item="true"
-            justifyContent="flex-end"
-            size={{ xs: 12, md: 8.5 }}
-            gap={{ md: "25px", xs: 0 }}
+            justifyContent={{ xs: "space-between", md: "flex-end" }}
+            size={{ xs: 12, md: 9, lg: 8.5 }}
+            gap={{ md: "25px", xs: "10px" }}
           >
-            <Grid item="true" size={{ xs: 6, md: 1 }} p={{ xs: 1, md: 0 }}>
+            <Grid item="true" size={{ xs: 5.8, md: 1.2, lg: 1 }}>
               <Button
                 fullWidth
                 sx={{
@@ -48,11 +48,7 @@ const contacts = () => {
               </Button>
             </Grid>
 
-            <Grid
-              item="true"
-              size={{ xs: 6, md: 2.5, lg: 1.7 }}
-              p={{ xs: 1, md: 0 }}
-            >
+            <Grid item="true" size={{ xs: 5.8, md: 2.2, lg: 1.7 }}>
               <Button
                 onClick={() => router.push("/contacts/export-via-email")}
                 fullWidth
@@ -68,11 +64,7 @@ const contacts = () => {
               </Button>
             </Grid>
 
-            <Grid
-              item="true"
-              size={{ xs: 6, md: 3, lg: 2 }}
-              p={{ xs: 1, md: 0 }}
-            >
+            <Grid item="true" size={{ xs: 5.8, md: 2.5, lg: 2 }}>
               <Button
                 fullWidth
                 sx={{
@@ -88,8 +80,8 @@ const contacts = () => {
             </Grid>
             <Grid
               item="true"
-              size={{ xs: 6, md: 2.7, lg: 2.5 }}
-              p={{ xs: 1, md: 0 }}
+              size={{ xs: 5.8, md: 2.7, lg: 2.5 }}
+              // p={{ xs: 1, md: 0 }}
             >
               <Button
                 onClick={() => router.push("/contacts/create-new")}

@@ -67,12 +67,18 @@ export default function SignInForm() {
           alignItems="center"
         >
           <FormControl
-            size="medium"
+            size="small"
             variant="outlined"
             sx={{ minWidth: { xs: "306px", md: "371px" } }}
           >
-            <InputLabel sx={{ color: "#868E96" }}>Email</InputLabel>
-            <OutlinedInput label="Email" type="email" />
+            <InputLabel sx={{ color: "#868E96", fontSize: "20px" }}>
+              Email
+            </InputLabel>
+            <OutlinedInput
+              sx={{ minHeight: "48px" }}
+              label="Email="
+              type="email"
+            />
           </FormControl>
         </Grid>
         <Grid
@@ -82,17 +88,20 @@ export default function SignInForm() {
           alignItems="center"
         >
           <FormControl
-            size="medium"
+            size="small"
             sx={{
               minWidth: { xs: "306px", md: "371px" },
               mt: "35px",
-              mb: "22px",
+              mb: "12px",
             }}
             variant="outlined"
           >
-            <InputLabel sx={{ color: "#868E96" }}>Password</InputLabel>
+            <InputLabel sx={{ color: "#868E96", fontSize: "20px" }}>
+              Password
+            </InputLabel>
             <OutlinedInput
-              label="Password"
+              sx={{ minHeight: "48px" }}
+              label="Password=="
               type={showPassword ? "text" : "password"}
               endAdornment={
                 <IconButton onClick={handleClickShowPassword} edge="end">
@@ -117,7 +126,7 @@ export default function SignInForm() {
         >
           <FormControlLabel
             sx={{ color: "#212529" }}
-            control={<Checkbox color="#B7B7B7" />}
+            control={<Checkbox sx={{ color: "#B7B7B7" }} />}
             label="Remember me"
           />
           <Link
@@ -138,7 +147,6 @@ export default function SignInForm() {
           display="flex"
           flexDirection="column"
           alignItems="center"
-          mx={{ xs: "36px", md: "0px" }}
           size={{ xs: 12, md: 12 }}
         >
           <Grid item="true" size={{ sx: "0px", md: 12 }}>
@@ -172,21 +180,19 @@ export default function SignInForm() {
             </Divider>
           </Grid>
           <Grid item="true">
-            <Box>
-              <Button
-                onClick={() => router.push("/auth/register")}
-                variant="outlined"
-                sx={{
-                  textTransform: "none",
-                  fontSize: "20px",
-                  minWidth: "146px",
-                  color: "#4E73DF",
-                  borderColor: "#4E73DF",
-                }}
-              >
-                Sign up
-              </Button>
-            </Box>
+            <Button
+              onClick={() => router.push("/auth/register")}
+              variant="outlined"
+              sx={{
+                textTransform: "none",
+                fontSize: "20px",
+                minWidth: "146px",
+                color: "#4E73DF",
+                borderColor: "#4E73DF",
+              }}
+            >
+              Sign up
+            </Button>
           </Grid>
         </Grid>
       </Grid>

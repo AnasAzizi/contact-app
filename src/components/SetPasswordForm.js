@@ -66,15 +66,18 @@ const SetPasswordForm = () => {
           alignItems="center"
         >
           <FormControl
-            size="medium"
+            size="small"
             sx={{
               minWidth: { xs: "306px", md: "371px" },
             }}
             variant="outlined"
           >
-            <InputLabel sx={{ color: "#868E96" }}>Password</InputLabel>
+            <InputLabel sx={{ color: "#868E96", fontSize: "20px" }}>
+              Password
+            </InputLabel>
             <OutlinedInput
-              label="Password"
+              label="Password=="
+              sx={{ minHeight: "48px" }}
               type={showPassword ? "text" : "password"}
               endAdornment={
                 <IconButton onClick={handleClickShowPassword} edge="end">
@@ -96,13 +99,16 @@ const SetPasswordForm = () => {
           alignItems="center"
         >
           <FormControl
-            size="medium"
+            size="small"
             variant="outlined"
             sx={{ minWidth: { xs: "306px", md: "371px" } }}
           >
-            <InputLabel sx={{ color: "#868E96" }}>Confirm password</InputLabel>
+            <InputLabel sx={{ color: "#868E96", fontSize: "20px" }}>
+              Confirm password
+            </InputLabel>
             <OutlinedInput
-              label="Confirm password"
+              sx={{ minHeight: "48px" }}
+              label="Confirm password===="
               type={showConfirmPassword ? "text" : "password"}
               endAdornment={
                 <IconButton onClick={handleClickShowConfirmPassword} edge="end">

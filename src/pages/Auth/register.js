@@ -38,7 +38,7 @@ const register = () => {
         </Grid>
       </Grid>
 
-      <AuthFooter show={false} />
+      <AuthFooter width="35%" show={false} />
     </>
   );
 };

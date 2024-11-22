@@ -10,35 +10,15 @@ import {
   Card,
   CardContent,
   Table,
-  TableBody,
-  TableCell,
   TableContainer,
-  TableRow,
-  Chip,
   Paper,
   Box,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import NorthIcon from "@mui/icons-material/North";
+import ActiveTable from "@/components/ActiveTable";
 
 const HomePage = () => {
-  const getStatusColor = (status) => {
-    switch (status) {
-      case "Add":
-        return "#00AC69";
-      case "Delete":
-        return "#FC766A";
-      case "Update":
-        return "#F4A100";
-      case "Access":
-        return "#0061F2";
-      case "Email sent":
-        return "#17C3B2";
-      default:
-        return "#757575";
-    }
-  };
-
   return (
     <>
       <Container maxWidth="xl">
@@ -66,7 +46,6 @@ const HomePage = () => {
                   fontSize: "40px",
                 }}
               >
-                {/* "&:last-child": { pb: 0 } for remove a padding in CardContent */}
                 <CardContent sx={{ "&:last-child": { pb: 0 } }}>
                   <Box
                     component="div"
@@ -270,154 +249,16 @@ const HomePage = () => {
             </Card>
             <TableContainer
               component={Paper}
-              sx={{ px: { md: "40px" }, py: "20px", pl: { xs: "40px" } }}
+              sx={{
+                boxShadow: "none",
+                px: { md: "40px" },
+                py: "20px",
+                pl: { xs: "40px" },
+                border: "1px solid #E0E0E0",
+              }}
             >
               <Table>
-                <TableBody>
-                  {Data.slice(0, 6).map((data, index) => (
-                    <TableRow
-                      key={index}
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell
-                        scope="row"
-                        sx={{
-                          border: "none",
-                          fontSize: { xs: "14px", md: "13px", lg: "20px" },
-                          p: 0,
-                        }}
-                      >
-                        <Typography
-                          sx={{
-                            display: {
-                              xs: "block",
-                              md: "table-cell",
-                              fontSize: "20px",
-                            },
-                          }}
-                        >
-                          {data.name}
-                        </Typography>
-                        <Typography
-                          sx={{
-                            display: {
-                              xs: "table-cell",
-                              md: "none",
-                              fontSize: "14px",
-                              opacity: "40%",
-                            },
-                          }}
-                        >
-                          {data.date}
-                        </Typography>
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        sx={{ px: 0, border: "none", width: "115px" }}
-                      >
-                        <Typography
-                          sx={{
-                            fontSize: "14px",
-                            opacity: "40%",
-                            display: { xs: "none", md: "table-cell" },
-                          }}
-                        >
-                          {data.date}
-                        </Typography>
-                        <Box
-                          display={{ xs: "flex", md: "none" }}
-                          alignItems="center"
-                          justifyContent="flex-start"
-                        >
-                          <Box
-                            sx={{
-                              width: "10px",
-                              height: "10px",
-                              borderRadius: "50px",
-                              bgcolor: getStatusColor(data.action),
-                              mr: 1,
-                            }}
-                          />
-                          <Typography
-                            sx={{
-                              fontSize: "14px",
-                              opacity: "40%",
-                              border: "none",
-                            }}
-                          >
-                            {data.action}
-                          </Typography>
-                        </Box>
-                        <Chip
-                          sx={{
-                            borderRadius: "2px",
-                            textAlign: "center",
-                            display: { xs: "table-cell", md: "none" },
-                            bgcolor: "#EEEEEE",
-                            fontSize: "12px",
-                            minWidth: { xs: "84px", md: "54px" },
-                            height: "20px",
-                          }}
-                          label={data.user}
-                        />
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        sx={{
-                          display: { xs: "none", md: "table-cell" },
-                          px: 0,
-                          border: "none",
-                          width: "85px",
-                        }}
-                      >
-                        <Box
-                          display="flex"
-                          alignItems="center"
-                          justifyContent="flex-start"
-                        >
-                          <Box
-                            sx={{
-                              width: "10px",
-                              height: "10px",
-                              borderRadius: "50px",
-                              bgcolor: getStatusColor(data.action),
-                              mr: 1,
-                            }}
-                          />
-                          <Typography
-                            sx={{
-                              fontSize: "14px",
-                              opacity: "40%",
-                              border: "none",
-                            }}
-                          >
-                            {data.action}
-                          </Typography>
-                        </Box>
-                      </TableCell>
-                      <TableCell
-                        align="right"
-                        sx={{
-                          display: { xs: "none", md: "table-cell" },
-                          border: "none",
-                          width: "85px",
-                          pr: { xs: 2, md: 0 },
-                        }}
-                      >
-                        <Chip
-                          sx={{
-                            borderRadius: "2px",
-                            bgcolor: "#EEEEEE",
-                            fontSize: "12px",
-                            minWidth: "54px",
-                            maxHeight: "20px",
-                          }}
-                          label={data.user}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
+                <ActiveTable line={false} data={Data} />
               </Table>
             </TableContainer>
           </Grid>
