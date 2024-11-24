@@ -1,6 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import React, { useState } from "react";
+import { useRouter } from "next/router";
+
 import {
   Box,
   Typography,
@@ -12,6 +14,7 @@ import {
   Button,
   Select,
   MenuItem,
+  FormHelperText,
 } from "@mui/material";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
@@ -19,6 +22,7 @@ import Grid from "@mui/material/Grid2";
 import Link from "next/link";
 
 const RegisterForm = () => {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -38,6 +42,30 @@ const RegisterForm = () => {
     phoneNumber: "5346504463",
   });
 
+  const [errors, setErrors] = useState({});
+  const [termsAccepted, setTermsAccepted] = useState(false);
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.firstName) newErrors.firstName = "First name is required.";
+    if (!formData.lastName) newErrors.lastName = "Last name is required.";
+    if (!formData.email) newErrors.email = "Email is required.";
+    if (!formData.password || formData.password.length < 8)
+      newErrors.password = "Password most be 8";
+    if (!formData.companyName)
+      newErrors.companyName = "companyName is required.";
+    if (!formData.vatNumber) newErrors.vatNumber = "vatNumber is required.";
+    if (!formData.streetOne) newErrors.streetOne = "streetOne is required.";
+    if (!formData.city) newErrors.city = "city is required.";
+    if (!formData.zip) newErrors.zip = "zip is required.";
+    if (!formData.state) newErrors.state = "state is required.";
+    if (!formData.country) newErrors.country = "country is required.";
+
+    if (!termsAccepted) newErrors.terms = "You must accept the terms.";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -47,13 +75,17 @@ const RegisterForm = () => {
     try {
       const response = await axios.post(
         "https://ms.itmd-b1.com:5123/api/register",
-        JSON.stringify(formData),
+        formData,
         {
           headers: {
             "Content-Type": "application/json",
           },
         }
       );
+      if (response.status === 200) {
+        console.log("Registration successful:", response);
+        router.push("/auth/sign-in"); 
+      }
       console.log("response:", response);
       return response;
     } catch (error) {
@@ -77,14 +109,14 @@ const RegisterForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
     try {
       await userRegister(formData);
     } catch (e) {
       console.error(e);
+    } finally {
     }
   };
-
-  
 
   return (
     <>
@@ -103,7 +135,7 @@ const RegisterForm = () => {
               color="#212529"
               fontSize="42px"
               fontWeight="bold"
-              mb="22px"
+              mb="10px"
             >
               Create Account
             </Typography>
@@ -132,7 +164,12 @@ const RegisterForm = () => {
               wrap="wrap"
             >
               <Grid item="true" size={{ xs: 12, md: 6 }}>
-                <FormControl size="small" variant="outlined" fullWidth>
+                <FormControl
+                  size="small"
+                  variant="outlined"
+                  fullWidth
+                  error={!!errors.firstName}
+                >
                   <InputLabel
                     sx={{
                       color: "#868E96",
@@ -150,10 +187,18 @@ const RegisterForm = () => {
                     value={formData.firstName}
                     onChange={handleChange}
                   />
+                  {errors.firstName && (
+                    <FormHelperText>{errors.firstName}</FormHelperText>
+                  )}
                 </FormControl>
               </Grid>
               <Grid item="true" size={{ xs: 12, md: 6 }}>
-                <FormControl size="small" variant="outlined" fullWidth>
+                <FormControl
+                  size="small"
+                  variant="outlined"
+                  fullWidth
+                  error={!!errors.lastName}
+                >
                   <InputLabel sx={{ color: "#868E96", fontSize: "20px" }}>
                     Last Name
                   </InputLabel>
@@ -165,10 +210,18 @@ const RegisterForm = () => {
                     value={formData.lastName}
                     onChange={handleChange}
                   />
+                  {errors.lastName && (
+                    <FormHelperText>{errors.lastName}</FormHelperText>
+                  )}
                 </FormControl>
               </Grid>
               <Grid item="true" size={{ xs: 12, md: 6 }}>
-                <FormControl size="small" variant="outlined" fullWidth>
+                <FormControl
+                  size="small"
+                  variant="outlined"
+                  fullWidth
+                  error={!!errors.email}
+                >
                   <InputLabel sx={{ color: "#868E96", fontSize: "20px" }}>
                     Email
                   </InputLabel>
@@ -180,10 +233,18 @@ const RegisterForm = () => {
                     value={formData.email}
                     onChange={handleChange}
                   />
+                  {errors.email && (
+                    <FormHelperText>{errors.email}</FormHelperText>
+                  )}
                 </FormControl>
               </Grid>
               <Grid item="true" size={{ xs: 12, md: 6 }}>
-                <FormControl size="small" variant="outlined" fullWidth>
+                <FormControl
+                  size="small"
+                  variant="outlined"
+                  fullWidth
+                  error={!!errors.password}
+                >
                   <InputLabel sx={{ color: "#868E96", fontSize: "20px" }}>
                     Password
                   </InputLabel>
@@ -204,6 +265,9 @@ const RegisterForm = () => {
                       </IconButton>
                     }
                   />
+                  {errors.password && (
+                    <FormHelperText>{errors.password}</FormHelperText>
+                  )}
                 </FormControl>
               </Grid>
             </Grid>
@@ -230,7 +294,12 @@ const RegisterForm = () => {
               wrap="wrap"
             >
               <Grid size={{ xs: 12, md: 6 }}>
-                <FormControl size="small" variant="outlined" fullWidth>
+                <FormControl
+                  size="small"
+                  variant="outlined"
+                  fullWidth
+                  error={!!errors.companyName}
+                >
                   <InputLabel sx={{ color: "#868E96", fontSize: "20px" }}>
                     Company Name
                   </InputLabel>
@@ -242,11 +311,19 @@ const RegisterForm = () => {
                     value={formData.companyName}
                     onChange={handleChange}
                   />
+                  {errors.companyName && (
+                    <FormHelperText>{errors.companyName}</FormHelperText>
+                  )}
                 </FormControl>
               </Grid>
 
               <Grid size={{ xs: 12, md: 6 }}>
-                <FormControl size="small" variant="outlined" fullWidth>
+                <FormControl
+                  size="small"
+                  variant="outlined"
+                  fullWidth
+                  error={!!errors.vatNumber}
+                >
                   <InputLabel sx={{ color: "#868E96", fontSize: "20px" }}>
                     VAT Number
                   </InputLabel>
@@ -258,11 +335,19 @@ const RegisterForm = () => {
                     value={formData.vatNumber}
                     onChange={handleChange}
                   />
+                  {errors.vatNumber && (
+                    <FormHelperText>{errors.vatNumber}</FormHelperText>
+                  )}
                 </FormControl>
               </Grid>
 
               <Grid size={{ xs: 12, md: 6 }}>
-                <FormControl size="small" variant="outlined" fullWidth>
+                <FormControl
+                  size="small"
+                  variant="outlined"
+                  fullWidth
+                  error={!!errors.streetOne}
+                >
                   <InputLabel sx={{ color: "#868E96", fontSize: "20px" }}>
                     Street
                   </InputLabel>
@@ -274,6 +359,9 @@ const RegisterForm = () => {
                     value={formData.streetOne}
                     onChange={handleChange}
                   />
+                  {errors.streetOne && (
+                    <FormHelperText>{errors.streetOne}</FormHelperText>
+                  )}
                 </FormControl>
               </Grid>
 
@@ -294,7 +382,12 @@ const RegisterForm = () => {
               </Grid>
 
               <Grid size={{ xs: 12, md: 6 }}>
-                <FormControl size="small" variant="outlined" fullWidth>
+                <FormControl
+                  size="small"
+                  variant="outlined"
+                  fullWidth
+                  error={!!errors.city}
+                >
                   <InputLabel sx={{ color: "#868E96", fontSize: "20px" }}>
                     City
                   </InputLabel>
@@ -306,11 +399,19 @@ const RegisterForm = () => {
                     value={formData.city}
                     onChange={handleChange}
                   />
+                  {errors.city && (
+                    <FormHelperText>{errors.city}</FormHelperText>
+                  )}
                 </FormControl>
               </Grid>
 
               <Grid size={{ xs: 12, md: 6 }}>
-                <FormControl size="small" variant="outlined" fullWidth>
+                <FormControl
+                  size="small"
+                  variant="outlined"
+                  fullWidth
+                  error={!!errors.state}
+                >
                   <InputLabel sx={{ color: "#868E96", fontSize: "20px" }}>
                     State
                   </InputLabel>
@@ -322,11 +423,19 @@ const RegisterForm = () => {
                     value={formData.state}
                     onChange={handleChange}
                   />
+                  {errors.state && (
+                    <FormHelperText>{errors.state}</FormHelperText>
+                  )}
                 </FormControl>
               </Grid>
 
               <Grid size={{ xs: 12, md: 6 }}>
-                <FormControl size="small" variant="outlined" fullWidth>
+                <FormControl
+                  size="small"
+                  variant="outlined"
+                  fullWidth
+                  error={!!errors.zip}
+                >
                   <InputLabel sx={{ color: "#868E96", fontSize: "20px" }}>
                     Zip
                   </InputLabel>
@@ -338,11 +447,17 @@ const RegisterForm = () => {
                     value={formData.zip}
                     onChange={handleChange}
                   />
+                  {errors.zip && <FormHelperText>{errors.zip}</FormHelperText>}
                 </FormControl>
               </Grid>
 
               <Grid size={{ xs: 12, md: 6 }}>
-                <FormControl size="small" variant="outlined" fullWidth>
+                <FormControl
+                  size="small"
+                  variant="outlined"
+                  fullWidth
+                  error={!!errors.country}
+                >
                   <InputLabel
                     sx={{
                       color: "#868E96",
@@ -384,7 +499,12 @@ const RegisterForm = () => {
                 mb="31px"
                 wrap="nowrap"
               >
-                <Checkbox size="medium" sx={{ color: "#B7B7B7", pl: 0 }} />
+                <Checkbox
+                  size="medium"
+                  sx={{ color: "#B7B7B7", pl: 0 }}
+                  checked={termsAccepted}
+                  onChange={(e) => setTermsAccepted(e.target.checked)} // Update termsAccepted state
+                />
                 <Typography sx={{ fontSize: "18px", color: "black" }}>
                   I agree to the website terms and conditions
                 </Typography>
@@ -392,7 +512,6 @@ const RegisterForm = () => {
 
               <Grid item="true" size={12}>
                 <Button
-                  // onClick={handleSubmit}
                   type="submit"
                   fullWidth
                   sx={{
