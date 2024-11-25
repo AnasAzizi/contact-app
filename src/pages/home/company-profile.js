@@ -182,6 +182,7 @@ const CompanyProfile = () => {
                 alt="logo"
                 layout="fill"
                 objectFit="cover"
+                priority={true}
               />
             </Box>
           </Grid>

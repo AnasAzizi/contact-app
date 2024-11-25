@@ -1,8 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-
 import {
   Box,
   Typography,
@@ -15,16 +13,26 @@ import {
   Select,
   MenuItem,
   FormHelperText,
+  Alert,
+  Snackbar,
 } from "@mui/material";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import Grid from "@mui/material/Grid2";
 import Link from "next/link";
+import { RegisterUser } from "@/pages/api/auth";
 
 const RegisterForm = () => {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarSeverity, setSnackbarSeverity] = useState("error");
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+
+  const handleSnackbarClose = () => {
+    setOpenSnackbar(false);
+  };
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -71,41 +79,32 @@ const RegisterForm = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const addUser = async () => {
-    try {
-      const response = await axios.post(
-        "https://ms.itmd-b1.com:5123/api/register",
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (response.status === 200) {
-        console.log("Registration successful:", response);
-        router.push("/auth/sign-in"); 
-      }
-      console.log("response:", response);
-      return response;
-    } catch (error) {
-      console.error("Error:", error);
-      throw error;
-    }
-  };
-
   console.log("formData", formData);
 
   const { mutateAsync: userRegister } = useMutation({
-    mutationFn: addUser,
+    mutationFn: (data) => RegisterUser(data, router),
     onSuccess: () => {
-      alert("Registration successful!");
+      setOpenSnackbar(true);
+      setSnackbarSeverity("success");
+      setSnackbarMessage("Registration successful!");
     },
     onError: (error) => {
       console.error("Error registering:", error);
-      alert("Registration failed.");
+      setOpenSnackbar(true);
+      setSnackbarSeverity(error.response?.status === 403 ? "error" : "warning");
+      setSnackbarMessage(getErrorMessage(error));
     },
   });
+
+  const getErrorMessage = (error) => {
+    if (error.response && error.response.status === 403) {
+      return "Validation errors occurred. Email is taken.";
+    } else if (error.response && error.response.status === 500) {
+      return "An unexpected server error occurred. Please try again later.";
+    } else {
+      return "Registration failed. Please check your input and try again.";
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -114,7 +113,6 @@ const RegisterForm = () => {
       await userRegister(formData);
     } catch (e) {
       console.error(e);
-    } finally {
     }
   };
 
@@ -278,7 +276,7 @@ const RegisterForm = () => {
               color="#212529"
               fontSize="26px"
               mb="22px"
-              mt="50px"
+              mt="30px"
             >
               Billing details
             </Grid>
@@ -495,8 +493,8 @@ const RegisterForm = () => {
                 size={12}
                 item="true"
                 alignItems="center"
-                mt="14px"
-                mb="31px"
+                mt="7px"
+                mb="11px"
                 wrap="nowrap"
               >
                 <Checkbox
@@ -542,6 +540,15 @@ const RegisterForm = () => {
           </Box>
         </Grid>
       </Box>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={5000}
+        onClose={handleSnackbarClose}
+      >
+        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

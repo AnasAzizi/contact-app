@@ -31,6 +31,7 @@ const resetPassword = () => {
               fill
               sizes="100vw"
               style={{ objectFit: "cover" }}
+              priority={true}
             />
           </Box>
         </Grid>

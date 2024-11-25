@@ -38,6 +38,7 @@ const ResetPassForm = () => {
             quality={100}
             width={150}
             height={145}
+            priority={true}
           />
         </Box>
         <Typography

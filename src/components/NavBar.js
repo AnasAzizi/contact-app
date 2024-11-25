@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -66,6 +66,16 @@ const NavBar = () => {
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
+
+  const [firstName, setFirstName] = useState('');
+
+  useEffect(() => {
+    const storedName = localStorage.getItem('registeredName');
+    if (storedName) {
+      setFirstName(JSON.parse(storedName));
+    }
+  }, []);
+
 
   const DrawerList = (
     <Box onClick={toggleDrawer(false)}>
@@ -228,7 +238,7 @@ const NavBar = () => {
                 color="#ffffff"
                 startIcon={<PersonIcon style={{ fontSize: "36px" }} />}
               >
-                Anas
+                {firstName}
               </Button>
             </Tooltip>
             <Menu

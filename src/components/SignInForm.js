@@ -1,3 +1,4 @@
+import { useMutation } from "@tanstack/react-query";
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -15,13 +16,85 @@ import {
   InputLabel,
   FormControl,
   IconButton,
+  FormHelperText,
+  Alert,
+  Snackbar,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
+import { loginUser } from "@/pages/api/auth";
 
 export default function SignInForm() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarSeverity, setSnackbarSeverity] = useState("error");
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+
+  const handleSnackbarClose = () => {
+    setOpenSnackbar(false);
+  };
+
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [errors, setErrors] = useState({});
+  const [termsAccepted, setTermsAccepted] = useState(false);
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.email) newErrors.email = "Email is required.";
+    if (!formData.password || formData.password.length < 8)
+      newErrors.password = "Password most be 8";
+
+    // if (!termsAccepted) newErrors.terms = "You must accept the terms.";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  console.log("formData", formData);
+
+  const { mutateAsync: userLogin } = useMutation({
+    mutationFn: (data) => loginUser(data, router),
+    onSuccess: () => {
+      setOpenSnackbar(true);
+      setSnackbarSeverity("success");
+      setSnackbarMessage("Registration successful!");
+    },
+    onError: (error) => {
+      console.error("Error registering:", error);
+      setOpenSnackbar(true);
+      setSnackbarSeverity(error.response?.status === 403 ? "error" : "warning");
+      setSnackbarMessage(getErrorMessage(error));
+    },
+  });
+
+  const getErrorMessage = (error) => {
+    if (error.response && error.response.status === 401) {
+      return "Validation errors occurred. please check your email or password and try again.";
+    } else if (error.response && error.response.status === 500) {
+      return "An unexpected server error occurred. Please try again later.";
+    } else {
+      return "Login failed. Please check your input and try again.";
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+    try {
+      await userLogin(formData);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <>
@@ -46,6 +119,7 @@ export default function SignInForm() {
             quality={100}
             width={150}
             height={145}
+            priority={true}
           />
         </Box>
         <Typography
@@ -60,142 +134,165 @@ export default function SignInForm() {
         >
           Sign In
         </Typography>
-        <Grid
-          item="true"
-          display="flex"
-          justifyContent={{ xs: "center", md: "left" }}
-          alignItems="center"
-        >
-          <FormControl
-            size="small"
-            variant="outlined"
-            sx={{ minWidth: { xs: "306px", md: "371px" } }}
+        <Box component="form" onSubmit={handleSubmit}>
+          <Grid
+            item="true"
+            display="flex"
+            justifyContent={{ xs: "center", md: "left" }}
+            alignItems="center"
           >
-            <InputLabel sx={{ color: "#868E96", fontSize: "20px" }}>
-              Email
-            </InputLabel>
-            <OutlinedInput
-              sx={{ minHeight: "48px" }}
-              label="Email="
-              type="email"
-            />
-          </FormControl>
-        </Grid>
-        <Grid
-          item="true"
-          display="flex"
-          justifyContent={{ xs: "center", md: "left" }}
-          alignItems="center"
-        >
-          <FormControl
-            size="small"
-            sx={{
-              minWidth: { xs: "306px", md: "371px" },
-              mt: "35px",
-              mb: "12px",
-            }}
-            variant="outlined"
-          >
-            <InputLabel sx={{ color: "#868E96", fontSize: "20px" }}>
-              Password
-            </InputLabel>
-            <OutlinedInput
-              sx={{ minHeight: "48px" }}
-              label="Password=="
-              type={showPassword ? "text" : "password"}
-              endAdornment={
-                <IconButton onClick={handleClickShowPassword} edge="end">
-                  {showPassword ? (
-                    <VisibilityOffOutlinedIcon />
-                  ) : (
-                    <VisibilityOutlinedIcon />
-                  )}
-                </IconButton>
-              }
-            />
-          </FormControl>
-        </Grid>
-        <Grid
-          item="true"
-          display="flex"
-          direction="row"
-          alignItems="center"
-          gap={4}
-          justifyContent={{ xs: "center", md: "space-between" }}
-          maxWidth={{ xs: "none", md: "370px" }}
-        >
-          <FormControlLabel
-            sx={{ color: "#212529" }}
-            control={<Checkbox sx={{ color: "#B7B7B7" }} />}
-            label="Remember me"
-          />
-          <Link
-            href="/auth/reset-password"
-            style={{
-              textDecoration: "underline",
-              color: "#212529",
-              cursor: "pointer",
-              fontSize: "15px",
-            }}
-          >
-            Forgot Password
-          </Link>
-        </Grid>
-        <Grid
-          container
-          item="true"
-          display="flex"
-          flexDirection="column"
-          alignItems="center"
-          size={{ xs: 12, md: 12 }}
-        >
-          <Grid item="true" size={{ sx: "0px", md: 12 }}>
-            <Button
-              variant="contained"
-              sx={{
-                bgcolor: "#4E73DF",
-                textTransform: "none",
-                boxShadow: "none",
-                mb: "24px",
-                mt: "38px",
-                fontSize: "20px",
-                minWidth: { xs: "306px", md: "370px" },
-              }}
-            >
-              Sign in
-            </Button>
-          </Grid>
-          <Grid item="true" size={{ xs: 10, md: 12 }}>
-            <Divider
-              sx={{
-                fontFamily: "Roboto",
-                mb: "26px",
-                color: "#212529",
-                "&::before, &::after": {
-                  borderColor: "#212529",
-                },
-              }}
-            >
-              Don't have account?
-            </Divider>
-          </Grid>
-          <Grid item="true">
-            <Button
-              onClick={() => router.push("/auth/register")}
+            <FormControl
+              error={!!errors.email}
+              size="small"
               variant="outlined"
+              sx={{ minWidth: { xs: "306px", md: "371px" } }}
+            >
+              <InputLabel sx={{ color: "#868E96", fontSize: "20px" }}>
+                Email
+              </InputLabel>
+              <OutlinedInput
+                name="email"
+                onChange={handleChange}
+                sx={{ minHeight: "48px" }}
+                label="Email="
+                type="email"
+              />
+              {errors.email && <FormHelperText>{errors.email}</FormHelperText>}
+            </FormControl>
+          </Grid>
+          <Grid
+            item="true"
+            display="flex"
+            justifyContent={{ xs: "center", md: "left" }}
+            alignItems="center"
+          >
+            <FormControl
+              error={!!errors.password}
+              onChange={handleChange}
+              size="small"
               sx={{
-                textTransform: "none",
-                fontSize: "20px",
-                minWidth: "146px",
-                color: "#4E73DF",
-                borderColor: "#4E73DF",
+                minWidth: { xs: "306px", md: "371px" },
+                mt: "35px",
+                mb: "12px",
+              }}
+              variant="outlined"
+            >
+              <InputLabel sx={{ color: "#868E96", fontSize: "20px" }}>
+                Password
+              </InputLabel>
+              <OutlinedInput
+                name="password"
+                sx={{ minHeight: "48px" }}
+                label="Password=="
+                type={showPassword ? "text" : "password"}
+                endAdornment={
+                  <IconButton onClick={handleClickShowPassword} edge="end">
+                    {showPassword ? (
+                      <VisibilityOffOutlinedIcon />
+                    ) : (
+                      <VisibilityOutlinedIcon />
+                    )}
+                  </IconButton>
+                }
+              />
+              {errors.password && (
+                <FormHelperText>{errors.password}</FormHelperText>
+              )}
+            </FormControl>
+          </Grid>
+          <Grid
+            item="true"
+            display="flex"
+            direction="row"
+            alignItems="center"
+            gap={4}
+            justifyContent={{ xs: "center", md: "space-between" }}
+            maxWidth={{ xs: "none", md: "370px" }}
+          >
+            <FormControlLabel
+              sx={{ color: "#212529" }}
+              control={<Checkbox sx={{ color: "#B7B7B7" }} />}
+              label="Remember me"
+            />
+            <Link
+              href="/auth/reset-password"
+              style={{
+                textDecoration: "underline",
+                color: "#212529",
+                cursor: "pointer",
+                fontSize: "15px",
               }}
             >
-              Sign up
-            </Button>
+              Forgot Password
+            </Link>
           </Grid>
-        </Grid>
+
+          <Grid
+            container
+            item="true"
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            size={{ xs: 12, md: 12 }}
+          >
+            <Grid item="true" size={{ sx: "0px", md: 12 }}>
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{
+                  bgcolor: "#4E73DF",
+                  textTransform: "none",
+                  boxShadow: "none",
+                  mb: "24px",
+                  mt: "38px",
+                  fontSize: "20px",
+                  minWidth: { xs: "306px", md: "370px" },
+                }}
+              >
+                Sign in
+              </Button>
+            </Grid>
+            <Grid item="true" size={{ xs: 10, md: 12 }}>
+              <Divider
+                sx={{
+                  fontFamily: "Roboto",
+                  mb: "26px",
+                  color: "#212529",
+                  "&::before, &::after": {
+                    borderColor: "#212529",
+                  },
+                }}
+              >
+                Don't have account?
+              </Divider>
+            </Grid>
+            <Grid item="true">
+              <Button
+                onClick={() => router.push("/auth/register")}
+                variant="outlined"
+                sx={{
+                  textTransform: "none",
+                  fontSize: "20px",
+                  minWidth: "146px",
+                  color: "#4E73DF",
+                  borderColor: "#4E73DF",
+                }}
+              >
+                Sign up
+              </Button>
+            </Grid>
+          </Grid>
+        </Box>
       </Grid>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={5000}
+        onClose={handleSnackbarClose}
+      >
+        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </>
   );
 }

@@ -60,6 +60,7 @@ const HomePage = () => {
                       alt="arrow-down Icon"
                       width={51}
                       height={51}
+                      priority={true}
                     />
                   </Box>
                   <Typography
@@ -108,6 +109,7 @@ const HomePage = () => {
                       alt="arrow-down Icon"
                       width={51}
                       height={51}
+                      priority={true}
                     />
                   </Box>
                   <Typography
@@ -156,6 +158,7 @@ const HomePage = () => {
                       alt="arrow-down Icon"
                       width={51}
                       height={51}
+                      priority={true}
                     />
                   </Box>
                   <Typography
@@ -204,6 +207,7 @@ const HomePage = () => {
                       alt="arrow-down Icon"
                       width={51}
                       height={51}
+                      priority={true}
                     />
                   </Box>
                   <Typography

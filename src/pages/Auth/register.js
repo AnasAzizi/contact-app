@@ -24,11 +24,12 @@ const register = () => {
           >
             <Image
               src="/signBackground.jpg"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               alt="background"
               quality={100}
               fill
-              sizes="100vw"
               style={{ objectFit: "cover" }}
+              priority={true}
             />
           </Box>
         </Grid>
