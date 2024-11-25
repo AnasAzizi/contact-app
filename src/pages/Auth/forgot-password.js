@@ -1,16 +1,18 @@
 import React from "react";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/700.css";
 import Image from "next/image";
 import Box from "@mui/material/Box";
-import SetPasswordForm from "@/components/SetPasswordForm";
+import ResetPassForm from "@/components/ResetPassForm";
 import Head from "next/head";
 import Grid from "@mui/material/Grid2";
 import AuthFooter from "@/components/AuthFooter";
 
-const SetPassword = () => {
+const resetPassword = () => {
   return (
     <>
       <Head>
-        <title>Set Password</title>
+        <title>Reset password</title>
       </Head>
       <Grid container sx={{ bgcolor: "#ffffff" }}>
         {/* background image */}
@@ -40,7 +42,7 @@ const SetPassword = () => {
           display="flex"
           justifyContent="center"
         >
-          <SetPasswordForm />
+          <ResetPassForm />
         </Grid>
       </Grid>
       <AuthFooter show={true} width="60%" />
@@ -48,4 +50,4 @@ const SetPassword = () => {
   );
 };
 
-export default SetPassword;
+export default resetPassword;

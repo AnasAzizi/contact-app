@@ -215,7 +215,7 @@ export default function SignInForm() {
               label="Remember me"
             />
             <Link
-              href="/auth/reset-password"
+              href="/auth/forgot-password"
               style={{
                 textDecoration: "underline",
                 color: "#212529",

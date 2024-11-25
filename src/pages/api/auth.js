@@ -52,4 +52,64 @@ const loginUser = async (formData, router) => {
   }
 };
 
-export { RegisterUser, loginUser };
+const resetPassword = async (email, router) => {
+  try {
+    const endpoint = "/forgot-password";
+    const payload = { Email: email };
+
+    const response = await axios.post(`${BASE_URL}${endpoint}`, payload, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.status === 200) {
+      console.log("Sending email successful:", response);
+      router.push("/auth/reset-password");
+    }
+
+    return response;
+  } catch (error) {
+    console.error("Error:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+const setNewPassword = async (password, router) => {
+  const id = router.query.id;
+  const code = router.query.code;
+
+  console.log("id", id);
+  console.log("code", code);
+
+  console.log("id type",typeof id)
+  console.log("code type",typeof code)
+
+  try {
+    const endpoint = `/reset-password?id=${id}&code=${code}`;
+    const payload = {
+      setPassword: true, 
+      password, 
+      id:id,
+      code:code
+    };
+
+    const response = await axios.post(`${BASE_URL}${endpoint}`, payload, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.status === 200) {
+      console.log("Reset password successful:", response);
+      // router.push("/auth/sign-in");
+    }
+
+    return response;
+  } catch (error) {
+    console.error("Error:", error.response.data || error.message);
+    throw error;
+  }
+};
+
+export { RegisterUser, loginUser, resetPassword, setNewPassword };

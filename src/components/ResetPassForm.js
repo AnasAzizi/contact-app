@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -9,11 +10,64 @@ import {
   OutlinedInput,
   InputLabel,
   FormControl,
+  Alert,
+  Snackbar,
+  FormHelperText,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
+import { resetPassword } from "@/pages/api/auth";
 
 const ResetPassForm = () => {
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState({});
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarSeverity, setSnackbarSeverity] = useState("error");
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+
+  const handleSnackbarClose = () => {
+    setOpenSnackbar(false);
+  };
+
+  const handleChange = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const validateEmail = () => {
+    if (!email) {
+      setError({ email: "Email is required." });
+      return false;
+    }
+    return true;
+  };
+
+  const { mutateAsync: passwordReset } = useMutation({
+    mutationFn: (email) => resetPassword(email, router),
+    onSuccess: () => {
+      setOpenSnackbar(true);
+      setSnackbarSeverity("success");
+      setSnackbarMessage("Registration successful!");
+    },
+    onError: (error) => {
+      console.error("Error registering:", error);
+      setOpenSnackbar(true);
+      if (error.response.status === 404) {
+        setSnackbarSeverity("error");
+        setSnackbarMessage("User not found. Please check the email address.");
+      }
+    },
+  });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validateEmail()) return;
+
+    try {
+      await passwordReset(email);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <>
@@ -53,45 +107,51 @@ const ResetPassForm = () => {
         >
           Change Password
         </Typography>
-        <Grid
-          item="true"
-          display="flex"
-          justifyContent={{ xs: "center", md: "left" }}
-          alignItems="center"
-        >
-          <FormControl
-            size="small"
-            sx={{
-              minWidth: { xs: "306px", md: "371px" },
-            }}
-            variant="outlined"
+        <Box component="form" onSubmit={handleSubmit}>
+          <Grid
+            item="true"
+            display="flex"
+            justifyContent={{ xs: "center", md: "left" }}
+            alignItems="center"
           >
-            <InputLabel sx={{ color: "#868E96", fontSize: "20px" }}>
-              Enter your email address
-            </InputLabel>
-            <OutlinedInput
-              sx={{ minHeight: "48px" }}
-              label="Enter your email address====="
-              type="text"
-            />
-          </FormControl>
-        </Grid>
-        <Grid item="true" size={{ sx: "0px", md: 12 }}>
-          <Button
-            onClick={() => router.push("/auth/set-password")}
-            variant="contained"
-            sx={{
-              bgcolor: "#4E73DF",
-              textTransform: "none",
-              boxShadow: "none",
-              mt: "37px",
-              fontSize: "20px",
-              minWidth: { xs: "306px", md: "370px" },
-            }}
-          >
-            Send
-          </Button>
-        </Grid>
+            <FormControl
+              error={!!error.email}
+              size="small"
+              sx={{
+                minWidth: { xs: "306px", md: "371px" },
+              }}
+              variant="outlined"
+            >
+              <InputLabel sx={{ color: "#868E96", fontSize: "20px" }}>
+                Enter your email address
+              </InputLabel>
+              <OutlinedInput
+                name="email"
+                onChange={handleChange}
+                sx={{ minHeight: "48px" }}
+                label="Enter your email address====="
+                type="email"
+              />
+              {error.email && <FormHelperText>{error.email}</FormHelperText>}
+            </FormControl>
+          </Grid>
+          <Grid item="true" size={{ sx: "0px", md: 12 }}>
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{
+                bgcolor: "#4E73DF",
+                textTransform: "none",
+                boxShadow: "none",
+                mt: "37px",
+                fontSize: "20px",
+                minWidth: { xs: "306px", md: "370px" },
+              }}
+            >
+              Send
+            </Button>
+          </Grid>
+        </Box>
 
         <Grid
           item="true"
@@ -108,6 +168,15 @@ const ResetPassForm = () => {
           <Link href="/auth/sign-in">Back to login</Link>
         </Grid>
       </Grid>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={5000}
+        onClose={handleSnackbarClose}
+      >
+        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </>
   );
 };
