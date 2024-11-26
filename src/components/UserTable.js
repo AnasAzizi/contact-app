@@ -35,7 +35,7 @@ const StatusChip = styled(Chip)(({ statuscolor }) => ({
   fontSize: "16px",
 }));
 
-const UserTable = ({ data, favorite }) => {
+const UserTable = ({ data, favorite, onSelectRows }) => {
   const [selected, setSelected] = useState([]);
   const [starred, setStarred] = useState({});
   const router = useRouter();
@@ -71,22 +71,14 @@ const UserTable = ({ data, favorite }) => {
     setTimeout(() => setTooltipText("Copy"), 2000);
   };
 
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelected = paginatedData.map((n) => n.id);
-      setSelected(newSelected);
-    } else {
-      setSelected([]);
-    }
-  };
-
   const handleCheckboxClick = (event, id) => {
     event.stopPropagation();
-    setSelected((prevSelected) =>
-      prevSelected.includes(id)
-        ? prevSelected.filter((item) => item !== id)
-        : [...prevSelected, id]
-    );
+    const newSelected = selected.includes(id)
+      ? selected.filter((item) => item !== id)
+      : [...selected, id];
+
+    setSelected(newSelected);
+    onSelectRows(newSelected);
   };
 
   const handleStarClick = (id) => {
@@ -186,7 +178,7 @@ const UserTable = ({ data, favorite }) => {
               </Grid>
               <Grid item="true">
                 <Typography fontSize="18px" color="#808080">
-                  {row.phone}
+                  {row.phoneNumber}
                 </Typography>
               </Grid>
             </Grid>
@@ -203,11 +195,7 @@ const UserTable = ({ data, favorite }) => {
           <TableHead>
             <TableRow>
               <TableCell padding="checkbox">
-                <Checkbox
-                  color="primary"
-                  checked={selected.length === paginatedData.length}
-                  onChange={handleSelectAllClick}
-                />
+                <Checkbox color="primary" />
               </TableCell>
               {headCells.map((headCell) => {
                 if (headCell.id === "favorite" || headCell.id === "image") {
@@ -320,7 +308,9 @@ const UserTable = ({ data, favorite }) => {
                       </Tooltip>
                     </Box>
                   </TableCell>
-                  <TableCell sx={{ fontSize: "19px" }}>{row.phone}</TableCell>
+                  <TableCell sx={{ fontSize: "19px" }}>
+                    {row.phoneNumber}
+                  </TableCell>
                   <TableCell align="left" sx={{ pl: "0px" }}>
                     <StatusChip
                       label={row.status}

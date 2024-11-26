@@ -1,7 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
+import React, { useState, useEffect } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import UserTable from "@/components/UserTable";
 import SecondNavBar from "@/components/SecondNavBar";
-import userData from "@/data/userData.json";
 import { useRouter } from "next/router";
 import {
   Container,
@@ -9,26 +9,71 @@ import {
   InputLabel,
   OutlinedInput,
   Button,
+  Alert,
+  Snackbar,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { ShowContact } from "@/pages/api/contact";
-import { useEffect } from "react";
+import { ShowContact, deleteContact } from "@/pages/api/contact";
 
 const contacts = () => {
+  const [selectedRows, setSelectedRows] = useState("");
+  const handleSelectedRows = (newSelected) => {
+    console.log("Selected rows in Parent:", newSelected);
+    setSelectedRows(newSelected);
+  };
+
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarSeverity, setSnackbarSeverity] = useState("error");
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+
+  const handleSnackbarClose = () => {
+    setOpenSnackbar(false);
+  };
+
   const router = useRouter();
+  const queryClient = useQueryClient();
+
+  const { mutate: contactDelete } = useMutation({
+    mutationFn: deleteContact,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["contacts"]);
+      setOpenSnackbar(true);
+      setSnackbarSeverity("success");
+      setSnackbarMessage("deleted Contact successful!");
+    },
+  });
+
+  const handleDelete = (contactId) => {
+    if (contactId.length !== 1) {
+      setOpenSnackbar(true);
+      setSnackbarSeverity("error");
+      setSnackbarMessage("Select one user please.");
+      return;
+    }
+
+    contactDelete(contactId);
+  };
 
   const { data, error } = useQuery({
-    queryKey: ['contacts'],
+    queryKey: ["contacts"],
     queryFn: ShowContact,
   });
+
   useEffect(() => {
-    if (data) {
-      console.log("Fetched contacts data:", data);
-    }
-    if (error) {
-      console.error("Error fetching contacts:", error);
-    }
+    const fetchData = async () => {
+      if (data) {
+        console.log("Fetched contacts data:", data);
+      }
+      if (error) {
+        console.error("Error fetching contacts:", error);
+      }
+    };
+    fetchData();
   }, [data, error]);
+
+  if (!data) {
+    return <div>No data available.</div>;
+  }
 
   return (
     <>
@@ -51,6 +96,7 @@ const contacts = () => {
           >
             <Grid item="true" size={{ xs: 5.8, md: 1.2, lg: 1 }}>
               <Button
+                onClick={() => handleDelete(selectedRows)}
                 fullWidth
                 sx={{
                   fontSize: "18px",
@@ -129,8 +175,21 @@ const contacts = () => {
             </FormControl>
           </Grid>
         </Grid>
-        <UserTable data={userData} favorite={true} />
+        <UserTable
+          data={data}
+          favorite={true}
+          onSelectRows={handleSelectedRows}
+        />
       </Container>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={5000}
+        onClose={handleSnackbarClose}
+      >
+        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </>
   );
 };
