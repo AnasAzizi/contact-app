@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import UserTable from "@/components/UserTable";
 import SecondNavBar from "@/components/SecondNavBar";
 import userData from "@/data/userData.json";
@@ -10,9 +11,24 @@ import {
   Button,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
+import { ShowContact } from "@/pages/api/contact";
+import { useEffect } from "react";
 
 const contacts = () => {
   const router = useRouter();
+
+  const { data, error } = useQuery({
+    queryKey: ['contacts'],
+    queryFn: ShowContact,
+  });
+  useEffect(() => {
+    if (data) {
+      console.log("Fetched contacts data:", data);
+    }
+    if (error) {
+      console.error("Error fetching contacts:", error);
+    }
+  }, [data, error]);
 
   return (
     <>

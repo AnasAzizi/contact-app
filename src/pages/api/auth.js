@@ -39,7 +39,7 @@ const loginUser = async (formData, router) => {
       const token = response.data.token;
 
       if (token) {
-        localStorage.setItem("jwtToken", JSON.stringify(token));
+        localStorage.setItem("jwtToken", token);
       } else {
         console.warn("Missing JWT token in login response.");
       }
