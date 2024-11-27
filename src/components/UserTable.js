@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import {  useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   Table,
   TableBody,
@@ -28,6 +27,8 @@ import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
 import Grid from "@mui/material/Grid2";
 import FileCopyOutlinedIcon from "@mui/icons-material/FileCopyOutlined";
 import TablePagination from "./TablePagination";
+import { useMutation } from "@tanstack/react-query";
+import { toggleFavorite } from "@/pages/api/contact";
 
 const StatusChip = styled(Chip)(({ statuscolor }) => ({
   backgroundColor: statuscolor,
@@ -58,7 +59,7 @@ const UserTable = ({ data, favorite, onSelectRows }) => {
       case "Locked":
         return "#F8D7DA";
       case "Inactive":
-        return "#6C757D";
+        return "#E7E8EA";
       default:
         return "#757575";
     }
@@ -81,11 +82,17 @@ const UserTable = ({ data, favorite, onSelectRows }) => {
     onSelectRows(newSelected);
   };
 
+  const { mutate: mutateToggleFavorite } = useMutation((id) =>
+    toggleFavorite(id)
+  );
+
   const handleStarClick = (id) => {
+    console.log("id", id);
     setStarred((prevStarred) => ({
       ...prevStarred,
       [id]: !prevStarred[id],
     }));
+    mutateToggleFavorite(id);
   };
 
   const headCells = [

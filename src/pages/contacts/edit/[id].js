@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useMutation } from "@tanstack/react-query";
 import SecondNavBar from "@/components/SecondNavBar";
 import { useRouter } from "next/router";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { viewContact, editContact } from "@/pages/api/contact";
 import {
   Card,
   Container,
@@ -15,76 +16,118 @@ import {
   Switch,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import EditOffOutlinedIcon from "@mui/icons-material/EditOffOutlined";
-import { viewContact } from "@/pages/api/contact";
 
-const View = () => {
+const Edit = () => {
   const router = useRouter();
   const { id } = router.query;
-  const [contact, setContact] = useState(null);
 
-  const { mutateAsync: contactView } = useMutation({
-    mutationFn: () => viewContact(id),
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    emailTwo: "",
+    phoneNumber: "",
+    mobileNumber: "",
+    address: "",
+    addressTwo: "",
+    imageUrl: "",
+    status: "Active",
+  });
+
+  const { data: contact } = useQuery({
+    queryKey: ["contact", id],
+    queryFn: () => viewContact(id),
   });
 
   useEffect(() => {
-    const fetchContact = async () => {
-      try {
-        const data = await contactView();
-        console.log("data", data);
-        setContact(data);
-      } catch (err) {
-        console.error("Error fetching contact:", err);
-      }
-    };
-
-    if (id) {
-      fetchContact();
+    if (contact) {
+      setFormData({
+        firstName: contact.firstName || "",
+        lastName: contact.lastName || "",
+        email: contact.email || "",
+        emailTwo: contact.emailTwo || "",
+        phoneNumber: contact.phoneNumber || "",
+        mobileNumber: contact.mobileNumber || "",
+        address: contact.address || "",
+        addressTwo: contact.addressTwo || "",
+        imageUrl: contact.imageUrl || "",
+        status: contact.status || "Active",
+      });
     }
-  }, [id, contactView]);
+  }, [contact]);
+
+  const { mutateAsync: contactEdit } = useMutation({
+    mutationFn: (updatedContact) => editContact(updatedContact, id),
+    onSuccess: () => {
+      alert("Contact updated successfully!");
+      router.push("/home/contacts");
+    },
+    onError: (error) => {
+      console.error("Error updating contact:", error);
+    },
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    contactEdit(formData);
+  };
+
+  console.log("formData", formData);
 
   return (
     <>
-      {contact && (
-        <Container maxWidth="xl">
-          <SecondNavBar
-            path={`Home / Contacts /${contact.firstName} ${contact.lastName}`}
-          />
-          <Card
+      <Container maxWidth="xl">
+        <SecondNavBar
+          path={`Home / Contacts /${formData.firstName} ${formData.lastName}`}
+        />
+        <Card
+          sx={{
+            height: "72px",
+            bgcolor: "#F7F7F7",
+            boxShadow: 3,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Typography
             sx={{
-              height: "72px",
-              bgcolor: "#F7F7F7",
-              boxShadow: 3,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
+              fontSize: "23px",
+              ml: "40px",
             }}
           >
-            <Typography
-              sx={{
-                fontSize: "23px",
-                ml: "40px",
-              }}
-            >
-              User details
-            </Typography>
-            <Box
-              component="div"
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                mr: "40px",
-              }}
-            >
-              <Typography>Active</Typography>
-              <Switch
-                disabled
-                name="status"
-                checked={contact.status === "Active"} // Check if the status is Active
-              />
-            </Box>
-          </Card>
+            User details
+          </Typography>
+          <Box
+            component="div"
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              mr: "40px",
+            }}
+          >
+            <Typography>Active</Typography>
+            <Switch
+              checked={formData.status === "Active"}
+              onChange={(e) =>
+                handleChange({
+                  target: {
+                    name: "status",
+                    value: e.target.checked ? "Active" : "Inactive",
+                  },
+                })
+              }
+              name="status"
+            />
+          </Box>
+        </Card>
+        <Box component="form" onSubmit={handleSubmit}>
           <Grid
             container
             pt="45px"
@@ -99,14 +142,35 @@ const View = () => {
               size={{ xs: 12, md: 12, lg: 3 }}
               direction="column"
               alignItems="center"
+              mb={5}
             >
               <Grid item="true" xs={12}>
-                <Avatar sx={{ width: 202, height: 202 }} />
+                <Avatar
+                  src={formData.imageUrl}
+                  sx={{ width: 202, height: 202 }}
+                />
               </Grid>
               <Grid item="true" xs={12}>
-                <Typography color="black" fontSize="24px" sx={{ my: "20px" }}>
-                  {contact.firstName} {contact.lastName}
+                <Typography
+                  color="black"
+                  fontSize="18px"
+                  sx={{ opacity: "40%", my: "20px" }}
+                >
+                  JPG or PNG no larger than 5 MB
                 </Typography>
+              </Grid>
+              <Grid item="true" xs={12}>
+                <Button
+                  size="large"
+                  variant="contained"
+                  sx={{
+                    textTransform: "none",
+                    boxShadow: "none",
+                    bgcolor: "#4E73DF",
+                  }}
+                >
+                  Upload new image
+                </Button>
               </Grid>
             </Grid>
             <Grid
@@ -132,8 +196,9 @@ const View = () => {
                   </Typography>
                   <FormControl size="small" variant="outlined" fullWidth>
                     <OutlinedInput
-                      value={contact.firstName}
-                      readOnly
+                      name="firstName"
+                      onChange={handleChange}
+                      value={formData.firstName}
                       type="text"
                     />
                   </FormControl>
@@ -144,8 +209,9 @@ const View = () => {
                   </Typography>
                   <FormControl size="small" variant="outlined" fullWidth>
                     <OutlinedInput
-                      value={contact.lastName}
-                      readOnly
+                      name="lastName"
+                      onChange={handleChange}
+                      value={formData.lastName}
                       type="text"
                     />
                   </FormControl>
@@ -156,8 +222,9 @@ const View = () => {
                   </Typography>
                   <FormControl size="small" variant="outlined" fullWidth>
                     <OutlinedInput
-                      value={contact.email}
-                      readOnly
+                      name="email"
+                      onChange={handleChange}
+                      value={formData.email}
                       type="email"
                     />
                   </FormControl>
@@ -168,8 +235,9 @@ const View = () => {
                   </Typography>
                   <FormControl size="small" variant="outlined" fullWidth>
                     <OutlinedInput
-                      value={contact.phoneNumber}
-                      readOnly
+                      name="phoneNumber"
+                      onChange={handleChange}
+                      value={formData.phoneNumber}
                       type="number"
                     ></OutlinedInput>
                   </FormControl>
@@ -180,8 +248,9 @@ const View = () => {
                   </Typography>
                   <FormControl size="small" variant="outlined" fullWidth>
                     <OutlinedInput
-                      value={contact.emailTwo}
-                      readOnly
+                      name="emailTwo"
+                      onChange={handleChange}
+                      value={formData.emailTwo}
                       type="text"
                     ></OutlinedInput>
                   </FormControl>
@@ -192,8 +261,9 @@ const View = () => {
                   </Typography>
                   <FormControl size="small" variant="outlined" fullWidth>
                     <OutlinedInput
-                      value={contact.mobileNumber}
-                      readOnly
+                      name="mobileNumber"
+                      onChange={handleChange}
+                      value={formData.mobileNumber}
                       type="text"
                     ></OutlinedInput>
                   </FormControl>
@@ -207,8 +277,9 @@ const View = () => {
                     placeholder="Address"
                     multiline
                     rows={3}
-                    value={contact.address}
-                    readOnly
+                    name="address"
+                    onChange={handleChange}
+                    value={formData.address}
                   />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
@@ -220,8 +291,9 @@ const View = () => {
                     placeholder="Address 2"
                     multiline
                     rows={3}
-                    value={contact.addressTwo}
-                    readOnly
+                    name="addressTwo"
+                    onChange={handleChange}
+                    value={formData.addressTwo}
                   />
                 </Grid>
               </Grid>
@@ -235,22 +307,22 @@ const View = () => {
               >
                 <Grid item="true" size={{ xs: 12, sm: 5, md: 2 }}>
                   <Button
-                    onClick={() => router.push(`/contacts/edit/${id}`)}
+                    type="submit"
                     fullWidth
                     sx={{
                       textTransform: "none",
                       fontSize: "20px",
-                      color: "#4E73DF",
+                      boxShadow: "none",
+                      bgcolor: "#4E73DF",
                     }}
-                    variant="outlined"
-                    startIcon={<EditOffOutlinedIcon />}
+                    variant="contained"
                   >
-                    Edit
+                    Save
                   </Button>
                 </Grid>
                 <Grid item="true" size={{ xs: 12, sm: 5, md: 2 }}>
                   <Button
-                    onClick={() => router.push("/home/contacts")}
+                    onClick={() => router.push(`/contacts/view/${id}`)}
                     fullWidth
                     variant="outlined"
                     bgcolor="#4E73DF"
@@ -266,10 +338,10 @@ const View = () => {
               </Grid>
             </Grid>
           </Grid>
-        </Container>
-      )}
+        </Box>
+      </Container>
     </>
   );
 };
 
-export default View;
+export default Edit;

@@ -36,7 +36,7 @@ const AddContact = async (formData, router) => {
     if (response.status === 200) {
       setTimeout(() => {
         router.push("/home/contacts");
-      }, 1000);
+      }, 500);
     }
     return response;
   } catch (error) {
@@ -72,7 +72,7 @@ const deleteContact = async (contactId) => {
         Authorization: `Bearer ${token}`,
       },
     });
-
+    console.log("contactId", contactId);
     console.log("Contact deleted successfully:", response.data);
     return response.data;
   } catch (error) {
@@ -99,16 +99,21 @@ const viewContact = async (contactId) => {
   }
 };
 
-const editContact = async (contactId) => {
+const editContact = async (formData, contactId) => {
   try {
     const token = getToken();
     const endpoint = `/Contacts/${contactId}`;
-    const response = await axios.get(`${BASE_URL}${endpoint}`, {
+    const config = {
       headers: {
         Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
       },
-    });
-
+    };
+    const response = await axios.put(
+      `${BASE_URL}${endpoint}`,
+      formData,
+      config
+    );
     console.log("Edit User:", response.data);
     return response.data;
   } catch (error) {
@@ -117,4 +122,30 @@ const editContact = async (contactId) => {
   }
 };
 
-export { AddContact, ShowContact, deleteContact,viewContact,editContact };
+const toggleFavorite = async (contactId) => {
+  try {
+    const token = getToken();
+    const endpoint = `/Contacts/toggle-favorite${contactId}`;
+    console.log("toggle favorite successfully:", contactId);
+
+    const response = await axios.patch(`${BASE_URL}${endpoint}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log("toggle favorite successfully:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error toggle favorite:", error);
+    throw error;
+  }
+};
+
+export {
+  AddContact,
+  ShowContact,
+  deleteContact,
+  viewContact,
+  editContact,
+  toggleFavorite,
+};
