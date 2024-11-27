@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import UserTable from "@/components/UserTable";
 import SecondNavBar from "@/components/SecondNavBar";
@@ -15,23 +15,22 @@ import {
 import Grid from "@mui/material/Grid2";
 import { ShowContact, deleteContact } from "@/pages/api/contact";
 
-const contacts = () => {
-  const [selectedRows, setSelectedRows] = useState("");
-  const handleSelectedRows = (newSelected) => {
-    console.log("Selected rows in Parent:", newSelected);
-    setSelectedRows(newSelected);
-  };
+const Contacts = () => {
+  const router = useRouter();
+  const queryClient = useQueryClient();
 
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarSeverity, setSnackbarSeverity] = useState("error");
   const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [selectedRows, setSelectedRows] = useState("");
+
+  const handleSelectedRows = (newSelected) => {
+    setSelectedRows(newSelected);
+  };
 
   const handleSnackbarClose = () => {
     setOpenSnackbar(false);
   };
-
-  const router = useRouter();
-  const queryClient = useQueryClient();
 
   const { mutate: contactDelete } = useMutation({
     mutationFn: deleteContact,
@@ -39,40 +38,28 @@ const contacts = () => {
       queryClient.invalidateQueries(["contacts"]);
       setOpenSnackbar(true);
       setSnackbarSeverity("success");
-      setSnackbarMessage("deleted Contact successful!");
+      setSnackbarMessage("Contact deleted successfully!");
     },
   });
 
   const handleDelete = (contactId) => {
-    if (contactId.length !== 1) {
+    if (!Array.isArray(contactId) || contactId.length !== 1) {
       setOpenSnackbar(true);
       setSnackbarSeverity("error");
-      setSnackbarMessage("Select one user please.");
+      setSnackbarMessage("Please select exactly one contact to delete.");
       return;
     }
 
     contactDelete(contactId);
   };
 
-  const { data, error } = useQuery({
+  const { data } = useQuery({
     queryKey: ["contacts"],
     queryFn: ShowContact,
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (data) {
-        console.log("Fetched contacts data:", data);
-      }
-      if (error) {
-        console.error("Error fetching contacts:", error);
-      }
-    };
-    fetchData();
-  }, [data, error]);
-
-  if (!data) {
-    return <div>No data available.</div>;
+  if (!data || data.length === 0) {
+    return <div>No contacts available.</div>;
   }
 
   return (
@@ -140,11 +127,7 @@ const contacts = () => {
                 Send Email
               </Button>
             </Grid>
-            <Grid
-              item="true"
-              size={{ xs: 5.8, md: 2.7, lg: 2.5 }}
-              // p={{ xs: 1, md: 0 }}
-            >
+            <Grid item="true" size={{ xs: 5.8, md: 2.7, lg: 2.5 }}>
               <Button
                 onClick={() => router.push("/contacts/create-new")}
                 fullWidth
@@ -194,4 +177,4 @@ const contacts = () => {
   );
 };
 
-export default contacts;
+export default Contacts;

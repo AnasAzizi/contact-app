@@ -224,7 +224,7 @@ const EditContact = () => {
               </Grid>
               <Grid item="true" size={{ xs: 12, sm: 5, md: 2 }}>
                 <Button
-                  onClick={() => router.push("/contacts/view")}
+                  onClick={() => router.push(`/contacts/view/${row.id}`)}
                   fullWidth
                   variant="outlined"
                   bgcolor="#4E73DF"

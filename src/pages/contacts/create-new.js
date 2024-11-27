@@ -35,8 +35,8 @@ const CreateNew = () => {
     LastName: "",
     Email: "",
     EmailTwo: "",
-    PhoneNumber: "",
-    MobileNumber: "",
+    phoneNumber: "",
+    mobileNumber: "",
     Address: "",
     AddressTwo: "",
   });
@@ -48,8 +48,8 @@ const CreateNew = () => {
     if (!formData.FirstName) newErrors.FirstName = "First name is required.";
     if (!formData.LastName) newErrors.LastName = "Last name is required.";
     if (!formData.Email) newErrors.Email = "Email is required.";
-    if (!formData.PhoneNumber)
-      newErrors.PhoneNumber = "PhoneNumber is required.";
+    if (!formData.phoneNumber)
+      newErrors.phoneNumber = "PhoneNumber is required.";
     if (!formData.Address) newErrors.Address = "Address is required.";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -249,7 +249,7 @@ const CreateNew = () => {
                     Phone <span style={{ color: "#C70000" }}>*</span>
                   </Typography>
                   <FormControl
-                    error={!!errors.PhoneNumber}
+                    error={!!errors.phoneNumber}
                     size="small"
                     variant="outlined"
                     fullWidth
@@ -258,13 +258,13 @@ const CreateNew = () => {
                       555-123-4567
                     </InputLabel>
                     <OutlinedInput
-                      name="PhoneNumber"
+                      name="phoneNumber"
                       onChange={handleChange}
                       label="555-123-4567"
                       type="number"
                     ></OutlinedInput>
-                    {errors.PhoneNumber && (
-                      <FormHelperText>{errors.PhoneNumber}</FormHelperText>
+                    {errors.phoneNumber && (
+                      <FormHelperText>{errors.phoneNumber}</FormHelperText>
                     )}
                   </FormControl>
                 </Grid>
@@ -297,7 +297,6 @@ const CreateNew = () => {
                     Mobile
                   </Typography>
                   <FormControl
-                    error={!!errors.MobileNumber}
                     size="small"
                     variant="outlined"
                     fullWidth
@@ -306,14 +305,11 @@ const CreateNew = () => {
                       555-123-4567
                     </InputLabel>
                     <OutlinedInput
-                      name="MobileNumber"
+                      name="mobileNumber"
                       onChange={handleChange}
                       label="555-123-4567"
-                      type="number "
+                      type="number"
                     ></OutlinedInput>
-                    {errors.MobileNumber && (
-                      <FormHelperText>{errors.MobileNumber}</FormHelperText>
-                    )}
                   </FormControl>
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>

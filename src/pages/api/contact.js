@@ -81,4 +81,40 @@ const deleteContact = async (contactId) => {
   }
 };
 
-export { AddContact, ShowContact, deleteContact };
+const viewContact = async (contactId) => {
+  try {
+    const token = getToken();
+    const endpoint = `/Contacts/${contactId}`;
+    const response = await axios.get(`${BASE_URL}${endpoint}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log("View User:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error View contact:", error);
+    throw error;
+  }
+};
+
+const editContact = async (contactId) => {
+  try {
+    const token = getToken();
+    const endpoint = `/Contacts/${contactId}`;
+    const response = await axios.get(`${BASE_URL}${endpoint}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log("Edit User:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error Edit contact:", error);
+    throw error;
+  }
+};
+
+export { AddContact, ShowContact, deleteContact,viewContact,editContact };

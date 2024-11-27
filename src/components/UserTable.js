@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {  useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   Table,
   TableBody,
@@ -41,7 +42,6 @@ const UserTable = ({ data, favorite, onSelectRows }) => {
   const router = useRouter();
 
   // for Pagination
-
   const [page, setPage] = useState(1);
   const rowsPerPage = 5;
   const paginatedData = data.slice(
@@ -319,7 +319,7 @@ const UserTable = ({ data, favorite, onSelectRows }) => {
                   </TableCell>
                   <TableCell>
                     <Button
-                      onClick={() => router.push("/contacts/view")}
+                      onClick={() => router.push(`/contacts/view/${row.id}`)}
                       variant="contained"
                       sx={{
                         bgcolor: "#4E73DF",
