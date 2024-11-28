@@ -6,17 +6,17 @@ import { useRouter } from "next/router";
 import {
   Container,
   FormControl,
-  InputLabel,
-  OutlinedInput,
   Button,
   Alert,
   Snackbar,
+  TextField,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { ShowContact, deleteContact } from "@/pages/api/contact";
 
 const contacts = () => {
   const [selectedRows, setSelectedRows] = useState("");
+  const [search, setSearch] = useState("");
   const handleSelectedRows = (newSelected) => {
     console.log("Selected rows in Parent:", newSelected);
 
@@ -165,15 +165,18 @@ const contacts = () => {
           <Grid item="true" size={{ xs: 12, md: 3, lg: 3.5 }}>
             <FormControl
               fullWidth
-              size="small"
-              variant="outlined"
               sx={{
                 bgcolor: "white",
                 mt: { xs: "11px", md: 0 },
               }}
             >
-              <InputLabel sx={{ color: "#868E96" }}>Search</InputLabel>
-              <OutlinedInput label="Search" type="text"></OutlinedInput>
+              <TextField
+                size="small"
+                variant="outlined"
+                placeholder="search"
+                type="search"
+                onInput={(e) => setSearch(e.target.value)}
+              />
             </FormControl>
           </Grid>
         </Grid>
@@ -181,6 +184,7 @@ const contacts = () => {
           data={data}
           favorite={true}
           onSelectRows={handleSelectedRows}
+          search={search}
         />
       </Container>
       <Snackbar

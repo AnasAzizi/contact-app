@@ -37,10 +37,12 @@ const StatusChip = styled(Chip)(({ statuscolor }) => ({
   fontSize: "16px",
 }));
 
-const UserTable = ({ data, favorite, onSelectRows }) => {
+const UserTable = ({ data, favorite, onSelectRows, search }) => {
   const [selected, setSelected] = useState([]);
   const [starred, setStarred] = useState({});
   const router = useRouter();
+
+  console.log("search", search);
 
   // for Pagination
   const [page, setPage] = useState(1);
@@ -240,108 +242,112 @@ const UserTable = ({ data, favorite, onSelectRows }) => {
           </TableHead>
 
           <TableBody>
-            {paginatedData.map((row) => {
-              const isItemSelected = selected.includes(row.id);
-              return (
-                <TableRow key={row.id} selected={isItemSelected}>
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={isItemSelected}
-                      onClick={(event) => handleCheckboxClick(event, row.id)}
-                    />
-                  </TableCell>
-                  <TableCell sx={{ fontSize: "21px", fontWeight: "bold" }}>
-                    {row.id}
-                  </TableCell>
-                  {favorite && (
-                    <>
-                      <TableCell>
-                        <Button onClick={() => handleStarClick(row.id)}>
-                          {starred[row.id] ? (
-                            <StarOutlinedIcon sx={{ fontSize: "35px" }} />
-                          ) : (
-                            <StarBorderOutlinedIcon
-                              sx={{ fontSize: "35px", color: "black" }}
-                            />
-                          )}
-                        </Button>
-                      </TableCell>
-                      <TableCell>
-                        <Avatar
-                          alt={`${row.firstName} ${row.lastName}`}
-                          src={row.imageUrl}
-                          sx={{ width: 58, height: 58 }}
-                        />
-                      </TableCell>
-                    </>
-                  )}
-                  <TableCell sx={{ fontSize: "19px" }}>
-                    {row.firstName}
-                  </TableCell>
-                  <TableCell sx={{ fontSize: "19px" }}>
-                    {row.lastName}
-                  </TableCell>
-                  <TableCell sx={{ fontSize: "19px", pr: 0 }}>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexWrap: "nowrap",
-                        alignItems: "center",
-                        gap: "4%",
-                      }}
-                    >
-                      {row.email}
-                      <Tooltip
-                        slotProps={{
-                          tooltip: {
-                            sx: {
-                              bgcolor: "white",
-                              color: "black",
-                              fontSize: "16px",
-                            },
-                          },
-                        }}
-                        title="Copy"
-                        placement="top"
-                      >
-                        <IconButton onClick={handleClickIcon}>
-                          <FileCopyOutlinedIcon
-                            sx={{
-                              cursor: "pointer",
-                              fontSize: "18px",
-                            }}
+            {paginatedData
+              .filter((item) => {
+                return item.firstName.includes(search.toLowerCase());
+              })
+              .map((row) => {
+                const isItemSelected = selected.includes(row.id);
+                return (
+                  <TableRow key={row.id} selected={isItemSelected}>
+                    <TableCell padding="checkbox">
+                      <Checkbox
+                        checked={isItemSelected}
+                        onClick={(event) => handleCheckboxClick(event, row.id)}
+                      />
+                    </TableCell>
+                    <TableCell sx={{ fontSize: "21px", fontWeight: "bold" }}>
+                      {row.id}
+                    </TableCell>
+                    {favorite && (
+                      <>
+                        <TableCell>
+                          <Button onClick={() => handleStarClick(row.id)}>
+                            {starred[row.id] ? (
+                              <StarOutlinedIcon sx={{ fontSize: "35px" }} />
+                            ) : (
+                              <StarBorderOutlinedIcon
+                                sx={{ fontSize: "35px", color: "black" }}
+                              />
+                            )}
+                          </Button>
+                        </TableCell>
+                        <TableCell>
+                          <Avatar
+                            alt={`${row.firstName} ${row.lastName}`}
+                            src={row.imageUrl}
+                            sx={{ width: 58, height: 58 }}
                           />
-                        </IconButton>
-                      </Tooltip>
-                    </Box>
-                  </TableCell>
-                  <TableCell sx={{ fontSize: "19px" }}>
-                    {row.phoneNumber}
-                  </TableCell>
-                  <TableCell align="left" sx={{ pl: "0px" }}>
-                    <StatusChip
-                      label={row.status}
-                      statuscolor={getStatusColor(row.status)}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <Button
-                      onClick={() => router.push(`/contacts/view/${row.id}`)}
-                      variant="contained"
-                      sx={{
-                        bgcolor: "#4E73DF",
-                        borderRadius: "5px",
-                        textTransform: "none",
-                        fontSize: "16px",
-                        boxShadow: 0,
-                      }}
-                    >
-                      View
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
+                        </TableCell>
+                      </>
+                    )}
+                    <TableCell sx={{ fontSize: "19px" }}>
+                      {row.firstName}
+                    </TableCell>
+                    <TableCell sx={{ fontSize: "19px" }}>
+                      {row.lastName}
+                    </TableCell>
+                    <TableCell sx={{ fontSize: "19px", pr: 0 }}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexWrap: "nowrap",
+                          alignItems: "center",
+                          gap: "4%",
+                        }}
+                      >
+                        {row.email}
+                        <Tooltip
+                          slotProps={{
+                            tooltip: {
+                              sx: {
+                                bgcolor: "white",
+                                color: "black",
+                                fontSize: "16px",
+                              },
+                            },
+                          }}
+                          title="Copy"
+                          placement="top"
+                        >
+                          <IconButton onClick={handleClickIcon}>
+                            <FileCopyOutlinedIcon
+                              sx={{
+                                cursor: "pointer",
+                                fontSize: "18px",
+                              }}
+                            />
+                          </IconButton>
+                        </Tooltip>
+                      </Box>
+                    </TableCell>
+                    <TableCell sx={{ fontSize: "19px" }}>
+                      {row.phoneNumber}
+                    </TableCell>
+                    <TableCell align="left" sx={{ pl: "0px" }}>
+                      <StatusChip
+                        label={row.status}
+                        statuscolor={getStatusColor(row.status)}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        onClick={() => router.push(`/contacts/view/${row.id}`)}
+                        variant="contained"
+                        sx={{
+                          bgcolor: "#4E73DF",
+                          borderRadius: "5px",
+                          textTransform: "none",
+                          fontSize: "16px",
+                          boxShadow: 0,
+                        }}
+                      >
+                        View
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
           </TableBody>
         </Table>
       </TableContainer>
