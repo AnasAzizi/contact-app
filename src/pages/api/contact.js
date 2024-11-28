@@ -141,6 +141,34 @@ const toggleFavorite = async (contactId) => {
   }
 };
 
+const EmailSend = async (formData) => {
+  try {
+    const token = getToken();
+    console.log("test token", token);
+    console.log("test formData", formData);
+    const endpoint = "/Contacts/send-email";
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const response = await axios
+      .post(`${BASE_URL}${endpoint}`, formData, config)
+      .then((res) => {
+        console.log("Response data:", res.data);
+        return res;
+      })
+      .catch((err) => {
+        console.error("Error in send email:", err.response.data);
+        throw err;
+      });
+  } catch (error) {
+    console.error("Error adding contact:", error);
+    throw error;
+  }
+};
+
 export {
   AddContact,
   ShowContact,
@@ -148,4 +176,5 @@ export {
   viewContact,
   editContact,
   toggleFavorite,
+  EmailSend,
 };

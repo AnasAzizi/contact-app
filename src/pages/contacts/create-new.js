@@ -60,8 +60,6 @@ const CreateNew = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  console.log("formData", formData);
-
   const { mutateAsync: ContactAdd } = useMutation({
     mutationFn: (data) => AddContact(data, router),
     onSuccess: () => {
@@ -296,11 +294,7 @@ const CreateNew = () => {
                   <Typography mb="12px" color="black" fontSize="20px">
                     Mobile
                   </Typography>
-                  <FormControl
-                    size="small"
-                    variant="outlined"
-                    fullWidth
-                  >
+                  <FormControl size="small" variant="outlined" fullWidth>
                     <InputLabel sx={{ color: "#868E96" }}>
                       555-123-4567
                     </InputLabel>

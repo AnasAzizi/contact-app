@@ -19,14 +19,13 @@ const contacts = () => {
   const [selectedRows, setSelectedRows] = useState("");
   const handleSelectedRows = (newSelected) => {
     console.log("Selected rows in Parent:", newSelected);
-    
+
     if (Array.isArray(newSelected) && newSelected.length > 1) {
       setSelectedRows(newSelected.slice(1));
     } else {
       setSelectedRows(newSelected);
     }
   };
-
 
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarSeverity, setSnackbarSeverity] = useState("error");
@@ -134,6 +133,7 @@ const contacts = () => {
 
             <Grid item="true" size={{ xs: 5.8, md: 2.5, lg: 2 }}>
               <Button
+                onClick={() => router.push("/contacts/send-email")}
                 fullWidth
                 sx={{
                   bgcolor: "#4E73DF",
@@ -146,10 +146,7 @@ const contacts = () => {
                 Send Email
               </Button>
             </Grid>
-            <Grid
-              item="true"
-              size={{ xs: 5.8, md: 2.7, lg: 2.5 }}
-            >
+            <Grid item="true" size={{ xs: 5.8, md: 2.7, lg: 2.5 }}>
               <Button
                 onClick={() => router.push("/contacts/create-new")}
                 fullWidth
