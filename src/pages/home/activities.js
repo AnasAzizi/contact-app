@@ -1,6 +1,6 @@
-import { useState } from "react";
-import React from "react";
-import Data from "@/data/LatestActivitiesData.json";
+import React, { useState } from "react";
+import { Activities } from "@/pages/api/contact";
+import { useQuery } from "@tanstack/react-query";
 import {
   Table,
   TableCell,
@@ -9,8 +9,6 @@ import {
   TableRow,
   Paper,
   Container,
-  Box,
-  TableBody,
 } from "@mui/material";
 import SecondNavBar from "@/components/SecondNavBar";
 import ActiveTable from "@/components/ActiveTable";
@@ -18,8 +16,18 @@ import TablePagination from "@/components/TablePagination";
 
 const activities = () => {
   const [page, setPage] = useState(1);
-  const rowsPerPage = 5;
-  const paginatedData = Data.slice(
+
+  const { data } = useQuery({
+    queryKey: ["activities"],
+    queryFn: Activities,
+  });
+
+  if (!data) {
+    return <div>No data available.</div>;
+  }
+
+  const rowsPerPage = 10;
+  const paginatedData = data.slice(
     (page - 1) * rowsPerPage,
     page * rowsPerPage
   );
@@ -87,7 +95,7 @@ const activities = () => {
           </Table>
         </TableContainer>
         <TablePagination
-          data={Data}
+          data={data}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={(newPage) => setPage(newPage)}

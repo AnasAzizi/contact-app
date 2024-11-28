@@ -8,7 +8,15 @@ import {
   Box,
 } from "@mui/material";
 
-const ActiveTable = ({ line, data }) => {
+const ActiveTable = ({ line, data, rowLimit }) => {
+  const reversedData = [...data].reverse();
+  const displayedData = rowLimit
+    ? reversedData.slice(0, rowLimit)
+    : reversedData;
+
+  const formatDate = (timestamp) => {
+    return new Date(timestamp).toISOString().split("T")[0]; // Extract YYYY-MM-DD
+  };
   const getStatusColor = (status) => {
     switch (status) {
       case "Add":
@@ -28,7 +36,7 @@ const ActiveTable = ({ line, data }) => {
 
   return (
     <TableBody>
-      {data.map((item, index) => (
+      {displayedData.map((item, index) => (
         <TableRow key={index}>
           <TableCell
             scope="row"
@@ -45,7 +53,7 @@ const ActiveTable = ({ line, data }) => {
                 fontSize: "20px",
               }}
             >
-              {item.name}
+              {item.contact}
             </Typography>
             <Typography
               sx={{
@@ -54,7 +62,7 @@ const ActiveTable = ({ line, data }) => {
                 opacity: "40%",
               }}
             >
-              {item.date}
+              {formatDate(item.timestamp)}
             </Typography>
           </TableCell>
           <TableCell
@@ -72,7 +80,7 @@ const ActiveTable = ({ line, data }) => {
                 display: { xs: "none", md: "table-cell" },
               }}
             >
-              {item.date}
+              {formatDate(item.timestamp)}
             </Typography>
             <Box
               display={{ xs: "flex", md: "none" }}
@@ -108,7 +116,7 @@ const ActiveTable = ({ line, data }) => {
                 minWidth: { xs: "84px", md: "54px" },
                 height: "20px",
               }}
-              label={item.user}
+              label={item.by}
             />
           </TableCell>
           <TableCell
@@ -157,7 +165,7 @@ const ActiveTable = ({ line, data }) => {
                 minWidth: "54px",
                 maxHeight: "20px",
               }}
-              label={item.user}
+              label={item.by}
             />
           </TableCell>
         </TableRow>

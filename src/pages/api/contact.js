@@ -169,6 +169,24 @@ const EmailSend = async (formData) => {
   }
 };
 
+const Activities = async () => {
+  try {
+    const token = getToken();
+    const endpoint = "/logs";
+
+    const response = await axios.get(`${BASE_URL}${endpoint}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Error Activities :", error);
+    throw error;
+  }
+};
+
 export {
   AddContact,
   ShowContact,
@@ -177,4 +195,5 @@ export {
   editContact,
   toggleFavorite,
   EmailSend,
+  Activities
 };

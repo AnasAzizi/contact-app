@@ -61,7 +61,6 @@ const TablePagination = ({ data, rowsPerPage, page, onPageChange }) => {
             color: "#4E73DF",
             height: "47px",
             minWidth: "51px",
-            mx: "90px",
             fontSize: "20px",
           },
           "& .MuiPagination-ul": {

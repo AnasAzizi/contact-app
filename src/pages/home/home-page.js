@@ -1,9 +1,9 @@
 import React from "react";
 import Image from "next/image";
 import SecondNavBar from "@/components/SecondNavBar";
-import Data from "@/data/LatestActivitiesData.json";
 import Link from "next/link";
-
+import { Activities } from "@/pages/api/contact";
+import { useQuery } from "@tanstack/react-query";
 import {
   Container,
   Typography,
@@ -19,6 +19,17 @@ import NorthIcon from "@mui/icons-material/North";
 import ActiveTable from "@/components/ActiveTable";
 
 const HomePage = () => {
+  const { data, error } = useQuery({
+    queryKey: ["activities"],
+    queryFn: Activities,
+  });
+
+  if (!data) {
+    return <div>No data available.</div>;
+  }
+
+  console.log("Activities data", data);
+
   return (
     <>
       <Container maxWidth="xl">
@@ -262,7 +273,7 @@ const HomePage = () => {
               }}
             >
               <Table>
-                <ActiveTable line={false} data={Data} />
+                <ActiveTable line={false} data={data} rowLimit={6} />
               </Table>
             </TableContainer>
           </Grid>

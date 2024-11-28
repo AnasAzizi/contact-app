@@ -14,12 +14,20 @@ import {
   OutlinedInput,
   Box,
   Switch,
+  Alert,
+  Snackbar,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
 const Edit = () => {
   const router = useRouter();
   const { id } = router.query;
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarSeverity, setSnackbarSeverity] = useState("error");
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const handleSnackbarClose = () => {
+    setOpenSnackbar(false);
+  };
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -59,7 +67,9 @@ const Edit = () => {
   const { mutateAsync: contactEdit } = useMutation({
     mutationFn: (updatedContact) => editContact(updatedContact, id),
     onSuccess: () => {
-      alert("Contact updated successfully!");
+      setOpenSnackbar(true);
+      setSnackbarSeverity("success");
+      setSnackbarMessage("Contact updated successful!");
       router.push("/home/contacts");
     },
     onError: (error) => {
@@ -340,6 +350,15 @@ const Edit = () => {
           </Grid>
         </Box>
       </Container>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={5000}
+        onClose={handleSnackbarClose}
+      >
+        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </>
   );
 };
