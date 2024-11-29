@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import UserTable from "@/components/UserTable";
+import ContactTable from "@/components/ContactTable";
 import SecondNavBar from "@/components/SecondNavBar";
 import { useRouter } from "next/router";
 import {
@@ -14,9 +14,10 @@ import {
 import Grid from "@mui/material/Grid2";
 import { ShowContact, deleteContact } from "@/pages/api/contact";
 
-const contacts = () => {
+const Contacts = () => {
   const [selectedRows, setSelectedRows] = useState("");
   const [search, setSearch] = useState("");
+
   const handleSelectedRows = (newSelected) => {
     console.log("Selected rows in Parent:", newSelected);
 
@@ -44,7 +45,7 @@ const contacts = () => {
       queryClient.invalidateQueries(["contacts"]);
       setOpenSnackbar(true);
       setSnackbarSeverity("success");
-      setSnackbarMessage("deleted Contact successful!");
+      setSnackbarMessage("Deleted contact successfully!");
     },
   });
 
@@ -52,7 +53,7 @@ const contacts = () => {
     if (contactId.length !== 1) {
       setOpenSnackbar(true);
       setSnackbarSeverity("error");
-      setSnackbarMessage("Select one user please.");
+      setSnackbarMessage("Select one user, please.");
       return;
     }
 
@@ -65,19 +66,16 @@ const contacts = () => {
   });
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (data) {
-        console.log("Fetched contacts data:", data);
-      }
-      if (error) {
-        console.error("Error fetching contacts:", error);
-      }
-    };
-    fetchData();
-  }, [data, error]);
+    if (data) {
+      console.log("Fetched contacts data:", data);
+    }
+    if (error) {
+      console.error("Error fetching contacts:", error);
+    }
+  }, [data, error]); 
 
   if (!data) {
-    return <div>No data available.</div>;
+    return <div>No data available.</div>; 
   }
 
   return (
@@ -175,16 +173,16 @@ const contacts = () => {
                 variant="outlined"
                 placeholder="search"
                 type="search"
-                onInput={(e) => setSearch(e.target.value)}
+                onInput={(e) => setSearch(e.target.value)} 
               />
             </FormControl>
           </Grid>
         </Grid>
-        <UserTable
+        <ContactTable
           data={data}
           favorite={true}
           onSelectRows={handleSelectedRows}
-          search={search}
+          search={search} 
         />
       </Container>
       <Snackbar
@@ -200,4 +198,4 @@ const contacts = () => {
   );
 };
 
-export default contacts;
+export default Contacts;

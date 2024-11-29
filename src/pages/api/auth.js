@@ -82,9 +82,6 @@ const setNewPassword = async (password, router) => {
   console.log("id", id);
   console.log("code", code);
 
-  console.log("id type",typeof id)
-  console.log("code type",typeof code)
-
   try {
     const endpoint = `/reset-password?id=${id}&code=${code}`;
     const payload = {

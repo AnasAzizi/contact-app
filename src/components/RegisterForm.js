@@ -79,8 +79,6 @@ const RegisterForm = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  console.log("formData", formData);
-
   const { mutateAsync: userRegister } = useMutation({
     mutationFn: (data) => RegisterUser(data, router),
     onSuccess: () => {

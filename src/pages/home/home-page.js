@@ -28,8 +28,6 @@ const HomePage = () => {
     return <div>No data available.</div>;
   }
 
-  console.log("Activities data", data);
-
   return (
     <>
       <Container maxWidth="xl">

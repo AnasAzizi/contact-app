@@ -44,8 +44,6 @@ const SendEmail = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  console.log("formData", formData);
-
   const { mutateAsync: EmailSendMutate } = useMutation({
     mutationFn: (data) => EmailSend(data),
     onSuccess: () => {
@@ -108,6 +106,7 @@ const SendEmail = () => {
                 py={{ xs: 1, md: 0 }}
               >
                 <Button
+                  onClick={() => router.push("/home/contacts")}
                   type="submit"
                   variant="contained"
                   fullWidth

@@ -39,7 +39,10 @@ const CreateNew = () => {
     mobileNumber: "",
     Address: "",
     AddressTwo: "",
+    image: null
   });
+
+  console.log("image",formData.image)
 
   const [errors, setErrors] = useState({});
 
@@ -85,11 +88,33 @@ const CreateNew = () => {
     }
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        setSnackbarSeverity("error");
+        setSnackbarMessage("File size exceeds 5 MB limit.");
+        setOpenSnackbar(true);
+        return;
+      }
+      setFormData((prevData) => ({ ...prevData, image: file }));
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
+
+    // Create FormData object to append the file before sending to API
+    const formToSend = new FormData();
+    for (let key in formData) {
+      if (formData[key]) {
+        formToSend.append(key, formData[key]);
+      }
+    }
+    
     try {
-      await ContactAdd(formData);
+      await ContactAdd(formToSend); 
     } catch (e) {
       console.error(e);
     }
@@ -135,7 +160,14 @@ const CreateNew = () => {
               mb="70px"
             >
               <Grid item="true" xs={12}>
-                <Avatar sx={{ width: 202, height: 202 }} />
+                <Avatar
+                  src={
+                    formData.image
+                      ? URL.createObjectURL(formData.image)
+                      : "/Placeholder.jpg"
+                  } 
+                  sx={{ width: 202, height: 202 }}
+                />
               </Grid>
               <Grid item="true" xs={12}>
                 <Typography
@@ -148,12 +180,20 @@ const CreateNew = () => {
               </Grid>
               <Grid item="true" xs={12}>
                 <Button
+                  component="label"
                   size="large"
                   variant="contained"
                   bgcolor="#4E73DF"
                   sx={{ textTransform: "none", boxShadow: "none" }}
                 >
                   Upload new image
+                  <input
+                    type="file"
+                    name="image"
+                    accept="image/png, image/jpeg"
+                    hidden
+                    onChange={handleFileChange}
+                  />
                 </Button>
               </Grid>
             </Grid>

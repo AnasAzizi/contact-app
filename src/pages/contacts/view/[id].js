@@ -132,7 +132,7 @@ const View = () => {
                   </Typography>
                   <FormControl size="small" variant="outlined" fullWidth>
                     <OutlinedInput
-                      value={contact.firstName}
+                      value={contact.firstName || ""}
                       readOnly
                       type="text"
                     />
@@ -144,7 +144,7 @@ const View = () => {
                   </Typography>
                   <FormControl size="small" variant="outlined" fullWidth>
                     <OutlinedInput
-                      value={contact.lastName}
+                      value={contact.lastName || ""}
                       readOnly
                       type="text"
                     />
@@ -156,7 +156,7 @@ const View = () => {
                   </Typography>
                   <FormControl size="small" variant="outlined" fullWidth>
                     <OutlinedInput
-                      value={contact.email}
+                      value={contact.email || ""}
                       readOnly
                       type="email"
                     />
@@ -168,7 +168,7 @@ const View = () => {
                   </Typography>
                   <FormControl size="small" variant="outlined" fullWidth>
                     <OutlinedInput
-                      value={contact.phoneNumber}
+                      value={contact.phoneNumber || ""}
                       readOnly
                       type="number"
                     ></OutlinedInput>
@@ -180,7 +180,7 @@ const View = () => {
                   </Typography>
                   <FormControl size="small" variant="outlined" fullWidth>
                     <OutlinedInput
-                      value={contact.emailTwo}
+                      value={contact.emailTwo || ""}
                       readOnly
                       type="text"
                     ></OutlinedInput>
@@ -192,7 +192,7 @@ const View = () => {
                   </Typography>
                   <FormControl size="small" variant="outlined" fullWidth>
                     <OutlinedInput
-                      value={contact.mobileNumber}
+                      value={contact.mobileNumber || ""}
                       readOnly
                       type="text"
                     ></OutlinedInput>
@@ -207,7 +207,7 @@ const View = () => {
                     placeholder="Address"
                     multiline
                     rows={3}
-                    value={contact.address}
+                    value={contact.address || ""}
                     readOnly
                   />
                 </Grid>
@@ -220,7 +220,7 @@ const View = () => {
                     placeholder="Address 2"
                     multiline
                     rows={3}
-                    value={contact.addressTwo}
+                    value={contact.addressTwo || ""}
                     readOnly
                   />
                 </Grid>

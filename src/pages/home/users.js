@@ -1,5 +1,7 @@
+import React, { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { ShowUsers } from "@/pages/api/user";
 import UserTable from "@/components/UserTable";
-import userData from "@/data/userData.json";
 import SecondNavBar from "@/components/SecondNavBar";
 import { useRouter } from "next/router";
 import {
@@ -11,8 +13,31 @@ import {
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
-const users = () => {
+const Users = () => {
   const router = useRouter();
+  const [search, setSearch] = useState("");
+
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["getUsers"],
+    queryFn: ShowUsers,
+  });
+
+  useEffect(() => {
+    if (data) {
+      console.log("Fetched users data:", data);
+    }
+    if (error) {
+      console.error("Error fetching users:", error);
+    }
+  }, [data, error]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!data || data.length === 0) {
+    return <div>No data available.</div>;
+  }
 
   return (
     <>
@@ -35,7 +60,12 @@ const users = () => {
               >
                 Search
               </InputLabel>
-              <OutlinedInput label="Search" type="text"></OutlinedInput>
+              <OutlinedInput
+                label="Search"
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
             </FormControl>
           </Grid>
           <Grid
@@ -86,10 +116,10 @@ const users = () => {
             </Grid>
           </Grid>
         </Grid>
-        <UserTable data={userData} favorite={false} />
+        <UserTable data={data} favorite={false} search={search} />
       </Container>
     </>
   );
 };
 
-export default users;
+export default Users;

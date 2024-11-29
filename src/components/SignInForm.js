@@ -59,8 +59,6 @@ export default function SignInForm() {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  console.log("formData", formData);
-
   const { mutateAsync: userLogin } = useMutation({
     mutationFn: (data) => loginUser(data, router),
     onSuccess: () => {
@@ -263,7 +261,7 @@ export default function SignInForm() {
                   },
                 }}
               >
-                Don't have account?
+                Don&apos;t have account?
               </Divider>
             </Grid>
             <Grid item="true">

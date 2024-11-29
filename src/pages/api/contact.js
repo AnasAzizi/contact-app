@@ -12,7 +12,6 @@ const getToken = () => {
 const AddContact = async (formData, router) => {
   try {
     const token = getToken();
-    console.log("test token", formData);
 
     const endpoint = "/Contacts";
     const config = {
@@ -144,8 +143,6 @@ const toggleFavorite = async (contactId) => {
 const EmailSend = async (formData) => {
   try {
     const token = getToken();
-    console.log("test token", token);
-    console.log("test formData", formData);
     const endpoint = "/Contacts/send-email";
     const config = {
       headers: {

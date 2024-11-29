@@ -22,9 +22,13 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 import { useRouter } from "next/router";
+import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
+import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
 import Grid from "@mui/material/Grid2";
 import FileCopyOutlinedIcon from "@mui/icons-material/FileCopyOutlined";
 import TablePagination from "./TablePagination";
+import { useMutation } from "@tanstack/react-query";
+import { toggleFavorite } from "@/pages/api/contact";
 
 const StatusChip = styled(Chip)(({ statuscolor }) => ({
   backgroundColor: statuscolor,
@@ -33,8 +37,9 @@ const StatusChip = styled(Chip)(({ statuscolor }) => ({
   fontSize: "16px",
 }));
 
-const UserTable = ({ data, onSelectRows, search }) => {
+const ContactTable = ({ data, onSelectRows, search }) => {
   const [selected, setSelected] = useState([]);
+  const [starred, setStarred] = useState({});
   const router = useRouter();
 
   console.log("search", search);
@@ -79,8 +84,23 @@ const UserTable = ({ data, onSelectRows, search }) => {
     onSelectRows(newSelected);
   };
 
+  const { mutate: mutateToggleFavorite } = useMutation((id) =>
+    toggleFavorite(id)
+  );
+
+  const handleStarClick = (id) => {
+    console.log("id", id);
+    setStarred((prevStarred) => ({
+      ...prevStarred,
+      [id]: !prevStarred[id],
+    }));
+    mutateToggleFavorite(id);
+  };
+
   const headCells = [
     { id: "id", label: "ID" },
+    { id: "favorite", label: "Favorite" },
+    { id: "image", label: "Image" },
     { id: "firstName", label: "First Name" },
     { id: "lastName", label: "Last Name" },
     { id: "email", label: "Email" },
@@ -110,6 +130,11 @@ const UserTable = ({ data, onSelectRows, search }) => {
             >
               <Grid item="true">
                 <Checkbox size="medium" />
+              </Grid>
+              <Grid item="true">
+                <StarBorderOutlinedIcon
+                  sx={{ fontSize: "30px", color: "#707070" }}
+                />
               </Grid>
             </Grid>
             <Divider />
@@ -181,28 +206,22 @@ const UserTable = ({ data, onSelectRows, search }) => {
               <TableCell padding="checkbox">
                 <Checkbox color="primary" />
               </TableCell>
-              {headCells.map((headCell) => {
-                return (
-                  <TableCell
-                    key={headCell.id}
-                  >
-                    <TableSortLabel
-                      sx={{ fontSize: "20px", fontWeight: "bold" }}
-                    >
-                      {headCell.label}
-                    </TableSortLabel>
-                  </TableCell>
-                );
-              })}
+              {headCells.map((headCell) => (
+                <TableCell key={headCell.id} align="center">
+                  <TableSortLabel sx={{ fontSize: "20px", fontWeight: "bold" }}>
+                    {headCell.label}
+                  </TableSortLabel>
+                </TableCell>
+              ))}
             </TableRow>
           </TableHead>
 
           <TableBody>
             {paginatedData
-            // .filter((item) => {
-            //   return item.firstName.includes(search.toLowerCase());
-            // })
-              .map((row,index) => {
+              .filter((item) => {
+                return item.firstName.includes(search.toLowerCase());
+              })
+              .map((row) => {
                 const isItemSelected = selected.includes(row.id);
                 return (
                   <TableRow key={row.id} selected={isItemSelected}>
@@ -213,7 +232,25 @@ const UserTable = ({ data, onSelectRows, search }) => {
                       />
                     </TableCell>
                     <TableCell sx={{ fontSize: "21px", fontWeight: "bold" }}>
-                      000{index+1}
+                      {row.id}
+                    </TableCell>
+                    <TableCell>
+                      <Button onClick={() => handleStarClick(row.id)}>
+                        {starred[row.id] ? (
+                          <StarOutlinedIcon sx={{ fontSize: "35px" }} />
+                        ) : (
+                          <StarBorderOutlinedIcon
+                            sx={{ fontSize: "35px", color: "black" }}
+                          />
+                        )}
+                      </Button>
+                    </TableCell>
+                    <TableCell>
+                      <Avatar
+                        alt={`${row.firstName} ${row.lastName}`}
+                        src={row.imageUrl}
+                        sx={{ width: 58, height: 58 }}
+                      />
                     </TableCell>
                     <TableCell sx={{ fontSize: "19px" }}>
                       {row.firstName}
@@ -266,7 +303,7 @@ const UserTable = ({ data, onSelectRows, search }) => {
                     </TableCell>
                     <TableCell>
                       <Button
-                        onClick={() => router.push(`/users/view/${row.id}`)}
+                        onClick={() => router.push(`/contacts/view/${row.id}`)}
                         variant="contained"
                         sx={{
                           bgcolor: "#4E73DF",
@@ -297,4 +334,4 @@ const UserTable = ({ data, onSelectRows, search }) => {
   );
 };
 
-export default UserTable;
+export default ContactTable;

@@ -14,7 +14,7 @@ import SecondNavBar from "@/components/SecondNavBar";
 import ActiveTable from "@/components/ActiveTable";
 import TablePagination from "@/components/TablePagination";
 
-const activities = () => {
+const ActivitiesPage = () => {
   const [page, setPage] = useState(1);
 
   const { data } = useQuery({
@@ -105,4 +105,4 @@ const activities = () => {
   );
 };
 
-export default activities;
+export default ActivitiesPage;
