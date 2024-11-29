@@ -31,12 +31,13 @@ const GetCompanies = async () => {
 const EditCompanies = async (formData) => {
   try {
     const token = getToken();
-    const endpoint = `/Companies}`;
+    const endpoint = `/Companies`;
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     };
+    console.log("test formData:",formData)
     const response = await axios.put(
       `${BASE_URL}${endpoint}`,
       formData,

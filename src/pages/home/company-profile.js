@@ -33,7 +33,7 @@ const CompanyProfile = () => {
 
   console.log("data",data)
   return (
-    <>
+    <> 
       <Container maxWidth="xl">
         <SecondNavBar path="Home / Company Profile" />
         <Card
