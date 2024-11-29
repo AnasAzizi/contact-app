@@ -42,8 +42,6 @@ const ContactTable = ({ data, onSelectRows, search }) => {
   const [starred, setStarred] = useState({});
   const router = useRouter();
 
-  console.log("search", search);
-
   // for Pagination
   const [page, setPage] = useState(1);
   const rowsPerPage = 5;

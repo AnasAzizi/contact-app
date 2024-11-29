@@ -81,7 +81,7 @@ const View = () => {
               <Switch
                 disabled
                 name="status"
-                checked={contact.status === "Active"} // Check if the status is Active
+                checked={contact.status === "Active"} 
               />
             </Box>
           </Card>

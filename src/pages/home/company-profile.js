@@ -1,4 +1,6 @@
 import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import { GetCompanies } from "@/pages/api/companies";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import SecondNavBar from "@/components/SecondNavBar";
@@ -20,6 +22,16 @@ import EditOffOutlinedIcon from "@mui/icons-material/EditOffOutlined";
 const CompanyProfile = () => {
   const router = useRouter();
 
+  const { data, error } = useQuery({
+    queryKey: ["companies"],
+    queryFn: GetCompanies,
+  });
+
+  if (!data) {
+    return <div>No data available.</div>;
+  }
+
+  console.log("data",data)
   return (
     <>
       <Container maxWidth="xl">
@@ -67,9 +79,8 @@ const CompanyProfile = () => {
               <Typography mb="12px" color="black" fontSize="20px">
                 Company name
               </Typography>
-              <FormControl variant="outlined" fullWidth size="small">
-                <InputLabel sx={{ color: "#868E96" }}>Company</InputLabel>
-                <OutlinedInput label="Company" type="text" />
+              <FormControl size="small" variant="outlined" fullWidth disabled>
+                <OutlinedInput value={data.companyName} type="text" />
               </FormControl>
             </Grid>
 
@@ -77,9 +88,8 @@ const CompanyProfile = () => {
               <Typography mb="12px" color="black" fontSize="20px">
                 VAT Number
               </Typography>
-              <FormControl variant="outlined" fullWidth size="small">
-                <InputLabel sx={{ color: "#868E96" }}>00000</InputLabel>
-                <OutlinedInput label="00000" type="number" />
+              <FormControl size="small" variant="outlined" fullWidth disabled>
+                <OutlinedInput value={data.vatNumber} type="text" />
               </FormControl>
             </Grid>
 
@@ -87,9 +97,8 @@ const CompanyProfile = () => {
               <Typography mb="12px" color="black" fontSize="20px">
                 Street
               </Typography>
-              <FormControl variant="outlined" fullWidth size="small">
-                <InputLabel sx={{ color: "#868E96" }}>Street</InputLabel>
-                <OutlinedInput label="Street" type="text" />
+              <FormControl size="small" variant="outlined" fullWidth disabled>
+                <OutlinedInput value={data.streetOne} type="text" />
               </FormControl>
             </Grid>
 
@@ -97,9 +106,8 @@ const CompanyProfile = () => {
               <Typography mb="12px" color="black" fontSize="20px">
                 Street 2
               </Typography>
-              <FormControl variant="outlined" fullWidth size="small">
-                <InputLabel sx={{ color: "#868E96" }}>Street 2</InputLabel>
-                <OutlinedInput label="Street 2" type="text" />
+              <FormControl size="small" variant="outlined" fullWidth disabled>
+                <OutlinedInput value={data.streetTwo} type="text" />
               </FormControl>
             </Grid>
 
@@ -107,9 +115,8 @@ const CompanyProfile = () => {
               <Typography mb="12px" color="black" fontSize="20px">
                 City
               </Typography>
-              <FormControl variant="outlined" fullWidth size="small">
-                <InputLabel sx={{ color: "#868E96" }}>City name</InputLabel>
-                <OutlinedInput label="City name" type="text" />
+              <FormControl size="small" variant="outlined" fullWidth disabled>
+                <OutlinedInput value={data.city} type="text" />
               </FormControl>
             </Grid>
 
@@ -117,9 +124,8 @@ const CompanyProfile = () => {
               <Typography mb="12px" color="black" fontSize="20px">
                 State
               </Typography>
-              <FormControl variant="outlined" fullWidth size="small">
-                <InputLabel sx={{ color: "#868E96" }}>State</InputLabel>
-                <OutlinedInput label="State" type="text" />
+              <FormControl size="small" variant="outlined" fullWidth disabled>
+                <OutlinedInput value={data.state} type="text" />
               </FormControl>
             </Grid>
 
@@ -127,9 +133,8 @@ const CompanyProfile = () => {
               <Typography mb="12px" color="black" fontSize="20px">
                 Zip
               </Typography>
-              <FormControl variant="outlined" fullWidth size="small">
-                <InputLabel sx={{ color: "#868E96" }}>00000</InputLabel>
-                <OutlinedInput label="00000" type="number" />
+              <FormControl size="small" variant="outlined" fullWidth disabled>
+                <OutlinedInput value={data.zip} type="text" />
               </FormControl>
             </Grid>
 
@@ -137,15 +142,9 @@ const CompanyProfile = () => {
               <Typography mb="12px" color="black" fontSize="20px">
                 Country
               </Typography>
-              <FormControl variant="outlined" fullWidth size="small">
-                <InputLabel sx={{ color: "#868E96" }}>
-                  Select your country
-                </InputLabel>
-                <Select label="Select your country">
-                  <MenuItem value={"Turkey"}>Turkey</MenuItem>
-                  <MenuItem value={"Syria"}>Syria</MenuItem>
-                  <MenuItem value={"Moroco"}>Moroco</MenuItem>
-                </Select>
+              <FormControl size="small" variant="outlined" fullWidth disabled>
+                <InputLabel>{data.country}</InputLabel>
+                <Select></Select>
               </FormControl>
             </Grid>
             <Grid item="true" size={{ xs: 8, md: 5, lg: 3.1 }}>

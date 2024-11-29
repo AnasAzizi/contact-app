@@ -39,10 +39,10 @@ const CreateNew = () => {
     mobileNumber: "",
     Address: "",
     AddressTwo: "",
-    image: null
+    Image: ""
   });
 
-  console.log("image",formData.image)
+  console.log("Image",formData.Image)
 
   const [errors, setErrors] = useState({});
 
@@ -97,7 +97,7 @@ const CreateNew = () => {
         setOpenSnackbar(true);
         return;
       }
-      setFormData((prevData) => ({ ...prevData, image: file }));
+      setFormData((prevData) => ({ ...prevData, Image: file }));
     }
   };
 
@@ -105,7 +105,6 @@ const CreateNew = () => {
     e.preventDefault();
     if (!validateForm()) return;
 
-    // Create FormData object to append the file before sending to API
     const formToSend = new FormData();
     for (let key in formData) {
       if (formData[key]) {
@@ -162,8 +161,8 @@ const CreateNew = () => {
               <Grid item="true" xs={12}>
                 <Avatar
                   src={
-                    formData.image
-                      ? URL.createObjectURL(formData.image)
+                    formData.Image
+                      ? URL.createObjectURL(formData.Image)
                       : "/Placeholder.jpg"
                   } 
                   sx={{ width: 202, height: 202 }}
@@ -189,7 +188,7 @@ const CreateNew = () => {
                   Upload new image
                   <input
                     type="file"
-                    name="image"
+                    name="Image"
                     accept="image/png, image/jpeg"
                     hidden
                     onChange={handleFileChange}

@@ -12,7 +12,7 @@ const getToken = () => {
 const AddContact = async (formData, router) => {
   try {
     const token = getToken();
-
+    console.log("formData text",formData)
     const endpoint = "/Contacts";
     const config = {
       headers: {
