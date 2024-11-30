@@ -10,7 +10,6 @@ import {
   Button,
   TextField,
   FormControl,
-  OutlinedInput,
   Box,
   Switch,
 } from "@mui/material";
@@ -81,7 +80,7 @@ const View = () => {
               <Switch
                 disabled
                 name="status"
-                checked={contact.status === "Active"} 
+                checked={contact.status === "Active"}
               />
             </Box>
           </Card>
@@ -130,11 +129,12 @@ const View = () => {
                   <Typography mb="12px" color="black" fontSize="20px">
                     First name
                   </Typography>
-                  <FormControl size="small" variant="outlined" fullWidth>
-                    <OutlinedInput
-                      value={contact.firstName || ""}
-                      readOnly
+                  <FormControl variant="outlined" fullWidth>
+                    <TextField
+                      size="small"
+                      defaultValue={contact.firstName || ""}
                       type="text"
+                      disabled
                     />
                   </FormControl>
                 </Grid>
@@ -142,11 +142,12 @@ const View = () => {
                   <Typography mb="12px" color="black" fontSize="20px">
                     Last name
                   </Typography>
-                  <FormControl size="small" variant="outlined" fullWidth>
-                    <OutlinedInput
-                      value={contact.lastName || ""}
-                      readOnly
+                  <FormControl fullWidth>
+                    <TextField
+                      size="small"
+                      defaultValue={contact.lastName || ""}
                       type="text"
+                      disabled
                     />
                   </FormControl>
                 </Grid>
@@ -154,11 +155,12 @@ const View = () => {
                   <Typography mb="12px" color="black" fontSize="20px">
                     Email
                   </Typography>
-                  <FormControl size="small" variant="outlined" fullWidth>
-                    <OutlinedInput
-                      value={contact.email || ""}
-                      readOnly
-                      type="email"
+                  <FormControl fullWidth>
+                    <TextField
+                      size="small"
+                      defaultValue={contact.email || ""}
+                      type="text"
+                      disabled
                     />
                   </FormControl>
                 </Grid>
@@ -166,36 +168,39 @@ const View = () => {
                   <Typography mb="12px" color="black" fontSize="20px">
                     Phone
                   </Typography>
-                  <FormControl size="small" variant="outlined" fullWidth>
-                    <OutlinedInput
-                      value={contact.phoneNumber || ""}
-                      readOnly
-                      type="number"
-                    ></OutlinedInput>
+                  <FormControl fullWidth>
+                    <TextField
+                      size="small"
+                      defaultValue={contact.phoneNumber || ""}
+                      type="text"
+                      disabled
+                    />
                   </FormControl>
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                   <Typography mb="12px" color="black" fontSize="20px">
                     Email 2
                   </Typography>
-                  <FormControl size="small" variant="outlined" fullWidth>
-                    <OutlinedInput
-                      value={contact.emailTwo || ""}
-                      readOnly
+                  <FormControl fullWidth>
+                    <TextField
+                      size="small"
+                      defaultValue={contact.emailTwo || ""}
                       type="text"
-                    ></OutlinedInput>
+                      disabled
+                    />
                   </FormControl>
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                   <Typography mb="12px" color="black" fontSize="20px">
                     Mobile
                   </Typography>
-                  <FormControl size="small" variant="outlined" fullWidth>
-                    <OutlinedInput
-                      value={contact.mobileNumber || ""}
-                      readOnly
+                  <FormControl fullWidth>
+                    <TextField
+                      size="small"
+                      defaultValue={contact.mobileNumber || ""}
                       type="text"
-                    ></OutlinedInput>
+                      disabled
+                    />
                   </FormControl>
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
@@ -204,11 +209,10 @@ const View = () => {
                   </Typography>
                   <TextField
                     fullWidth
-                    placeholder="Address"
                     multiline
                     rows={3}
                     value={contact.address || ""}
-                    readOnly
+                    disabled
                   />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
@@ -217,11 +221,10 @@ const View = () => {
                   </Typography>
                   <TextField
                     fullWidth
-                    placeholder="Address 2"
+                    disabled
                     multiline
                     rows={3}
                     value={contact.addressTwo || ""}
-                    readOnly
                   />
                 </Grid>
               </Grid>
@@ -233,7 +236,7 @@ const View = () => {
                 ml={{ md: "27px" }}
                 gap={{ xs: 3, md: 10 }}
               >
-                <Grid item="true" size={{ xs: 12, sm: 5, md: 2 }}>
+                <Grid item="true" size={{ xs: 12, sm: 5.7, md: 2 }}>
                   <Button
                     onClick={() => router.push(`/contacts/edit/${id}`)}
                     fullWidth
@@ -248,7 +251,7 @@ const View = () => {
                     Edit
                   </Button>
                 </Grid>
-                <Grid item="true" size={{ xs: 12, sm: 5, md: 2 }}>
+                <Grid item="true" size={{ xs: 12, sm: 5.7, md: 2 }}>
                   <Button
                     onClick={() => router.push("/home/contacts")}
                     fullWidth

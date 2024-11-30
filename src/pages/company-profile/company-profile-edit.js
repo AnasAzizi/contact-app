@@ -232,13 +232,14 @@ const CompanyProfileEdit = () => {
                 <Typography mb="12px" color="black" fontSize="20px">
                   Country
                 </Typography>
-                <FormControl variant="outlined" fullWidth size="small">
+                <FormControl fullWidth size="small">
                   <InputLabel sx={{ color: "#868E96" }}>
                     Select your country
                   </InputLabel>
                   <Select
                     name="country"
                     onChange={handleChange}
+                    value={formData.country}
                     label="Select your country"
                   >
                     <MenuItem value={"Turkey"}>Turkey</MenuItem>

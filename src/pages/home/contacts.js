@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import ContactTable from "@/components/ContactTable";
 import SecondNavBar from "@/components/SecondNavBar";
@@ -20,7 +20,7 @@ const Contacts = () => {
   const [resetSelection, setResetSelection] = useState(false);
 
   const handleSelectedId = (newSelected) => {
-    setSelectedIds(newSelected); // Update selected IDs
+    setSelectedIds(newSelected);
     console.log("Selected rows in Parent:", newSelected);
   };
 
@@ -42,7 +42,7 @@ const Contacts = () => {
       setOpenSnackbar(true);
       setSnackbarSeverity("success");
       setSnackbarMessage("Deleted contact successfully!");
-      setSelectedIds([]); // Reset selected IDs after successful deletion
+      setSelectedIds([]); 
     },
   });
 
@@ -54,27 +54,17 @@ const Contacts = () => {
       return;
     }
 
-    // Delete each selected contact
     selectedIds.forEach((id) => contactDelete(id));
 
-    // Reset selection after deletion
     setSelectedIds([]);
     setResetSelection(true);
   };
 
-  const { data, error } = useQuery({
+  const { data } = useQuery({
     queryKey: ["contacts"],
     queryFn: ShowContact,
   });
 
-  useEffect(() => {
-    if (data) {
-      console.log("Fetched contacts data:", data);
-    }
-    if (error) {
-      console.error("Error fetching contacts:", error);
-    }
-  }, [data, error]);
 
   if (!data) {
     return <div>No data available.</div>;
@@ -95,13 +85,15 @@ const Contacts = () => {
           <Grid
             container
             item="true"
-            justifyContent={{ xs: "space-between", md: "flex-end" }}
+            justifyContent={{ md: "flex-end" }}
             size={{ xs: 12, md: 9, lg: 8.5 }}
-            gap={{ md: "25px", xs: "10px" }}
+            gap={{ md: "25px" }}
+            rowSpacing={{xs:"13px",md:"0px"}}
+            columnSpacing={{xs:"13px",md:"0px"}}
           >
-            <Grid item="true" size={{ xs: 5.8, md: 1.2, lg: 1 }}>
+            <Grid item="true" size={{ xs: 6, md: 1.2, lg: 1 }}>
               <Button
-                onClick={handleDelete} // Trigger delete function
+                onClick={handleDelete} 
                 fullWidth
                 sx={{
                   fontSize: "18px",
@@ -115,7 +107,7 @@ const Contacts = () => {
               </Button>
             </Grid>
 
-            <Grid item="true" size={{ xs: 5.8, md: 2.2, lg: 1.7 }}>
+            <Grid item="true" size={{ xs: 6, md: 2.2, lg: 1.7 }}>
               <Button
                 onClick={() => router.push("/contacts/export-via-email")}
                 fullWidth
@@ -131,7 +123,7 @@ const Contacts = () => {
               </Button>
             </Grid>
 
-            <Grid item="true" size={{ xs: 5.8, md: 2.5, lg: 2 }}>
+            <Grid item="true" size={{ xs: 6, md: 2.5, lg: 2 }}>
               <Button
                 onClick={() => router.push("/contacts/send-email")}
                 fullWidth
@@ -146,7 +138,8 @@ const Contacts = () => {
                 Send Email
               </Button>
             </Grid>
-            <Grid item="true" size={{ xs: 5.8, md: 2.7, lg: 2.5 }}>
+            
+            <Grid item="true" size={{ xs: 6, md: 2.7, lg: 2.5 }}>
               <Button
                 onClick={() => router.push("/contacts/create-new")}
                 fullWidth

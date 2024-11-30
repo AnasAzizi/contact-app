@@ -11,7 +11,6 @@ import {
   Button,
   TextField,
   FormControl,
-  OutlinedInput,
   Box,
   Switch,
   Alert,
@@ -38,7 +37,6 @@ const Edit = () => {
     mobileNumber: "",
     address: "",
     addressTwo: "",
-    imageUrl: "",
     status: "Active",
   });
 
@@ -58,7 +56,6 @@ const Edit = () => {
         mobileNumber: contact.mobileNumber || "",
         address: contact.address || "",
         addressTwo: contact.addressTwo || "",
-        imageUrl: contact.imageUrl || "",
         status: contact.status || "Active",
       });
     }
@@ -84,6 +81,19 @@ const Edit = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const hasEmptyField = Object.entries(formData).some(
+      ([key, value]) =>
+        !["mobileNumber", "addressTwo", "emailTwo"].includes(key) &&
+        (value === null || value === undefined || value === "")
+    );
+
+    if (hasEmptyField) {
+      setOpenSnackbar(true);
+      setSnackbarSeverity("error");
+      setSnackbarMessage("Please fill in all required fields.");
+      return;
+    }
     contactEdit(formData);
   };
 
@@ -204,8 +214,9 @@ const Edit = () => {
                   <Typography mb="12px" color="black" fontSize="20px">
                     First name
                   </Typography>
-                  <FormControl size="small" variant="outlined" fullWidth>
-                    <OutlinedInput
+                  <FormControl fullWidth>
+                    <TextField
+                      size="small"
                       name="firstName"
                       onChange={handleChange}
                       value={formData.firstName}
@@ -217,8 +228,9 @@ const Edit = () => {
                   <Typography mb="12px" color="black" fontSize="20px">
                     Last name
                   </Typography>
-                  <FormControl size="small" variant="outlined" fullWidth>
-                    <OutlinedInput
+                  <FormControl fullWidth>
+                    <TextField
+                      size="small"
                       name="lastName"
                       onChange={handleChange}
                       value={formData.lastName}
@@ -230,8 +242,9 @@ const Edit = () => {
                   <Typography mb="12px" color="black" fontSize="20px">
                     Email
                   </Typography>
-                  <FormControl size="small" variant="outlined" fullWidth>
-                    <OutlinedInput
+                  <FormControl fullWidth>
+                    <TextField
+                      size="small"
                       name="email"
                       onChange={handleChange}
                       value={formData.email}
@@ -243,39 +256,44 @@ const Edit = () => {
                   <Typography mb="12px" color="black" fontSize="20px">
                     Phone
                   </Typography>
-                  <FormControl size="small" variant="outlined" fullWidth>
-                    <OutlinedInput
+                  <FormControl fullWidth>
+                    <TextField
+                      size="small"
                       name="phoneNumber"
                       onChange={handleChange}
                       value={formData.phoneNumber}
                       type="number"
-                    ></OutlinedInput>
+                    ></TextField>
                   </FormControl>
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                   <Typography mb="12px" color="black" fontSize="20px">
                     Email 2
                   </Typography>
-                  <FormControl size="small" variant="outlined" fullWidth>
-                    <OutlinedInput
+                  <FormControl fullWidth>
+                    <TextField
+                      size="small"
                       name="emailTwo"
+                      placeholder="abc@gmail.com"
                       onChange={handleChange}
                       value={formData.emailTwo}
                       type="text"
-                    ></OutlinedInput>
+                    ></TextField>
                   </FormControl>
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                   <Typography mb="12px" color="black" fontSize="20px">
                     Mobile
                   </Typography>
-                  <FormControl size="small" variant="outlined" fullWidth>
-                    <OutlinedInput
+                  <FormControl fullWidth>
+                    <TextField
+                      size="small"
                       name="mobileNumber"
+                      placeholder="123-456-789-01"
                       onChange={handleChange}
                       value={formData.mobileNumber}
                       type="text"
-                    ></OutlinedInput>
+                    ></TextField>
                   </FormControl>
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
@@ -284,7 +302,6 @@ const Edit = () => {
                   </Typography>
                   <TextField
                     fullWidth
-                    placeholder="Address"
                     multiline
                     rows={3}
                     name="address"
@@ -315,7 +332,7 @@ const Edit = () => {
                 ml={{ md: "27px" }}
                 gap={{ xs: 3, md: 10 }}
               >
-                <Grid item="true" size={{ xs: 12, sm: 5, md: 2 }}>
+                <Grid item="true" size={{ xs: 12, sm: 5.7, md: 2 }}>
                   <Button
                     type="submit"
                     fullWidth
@@ -330,7 +347,7 @@ const Edit = () => {
                     Save
                   </Button>
                 </Grid>
-                <Grid item="true" size={{ xs: 12, sm: 5, md: 2 }}>
+                <Grid item="true" size={{ xs: 12, sm: 5.7, md: 2 }}>
                   <Button
                     onClick={() => router.push(`/contacts/view/${id}`)}
                     fullWidth

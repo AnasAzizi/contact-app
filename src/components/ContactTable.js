@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import { useMutation } from "@tanstack/react-query";
+import { toggleFavorite } from "@/pages/api/contact";
+import TablePagination from "./TablePagination";
 import {
   Table,
   TableBody,
@@ -20,15 +24,11 @@ import {
   Tooltip,
   IconButton,
 } from "@mui/material";
+import Grid from "@mui/material/Grid2";
 import { styled } from "@mui/system";
-import { useRouter } from "next/router";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
-import Grid from "@mui/material/Grid2";
 import FileCopyOutlinedIcon from "@mui/icons-material/FileCopyOutlined";
-import TablePagination from "./TablePagination";
-import { useMutation } from "@tanstack/react-query";
-import { toggleFavorite } from "@/pages/api/contact";
 
 const StatusChip = styled(Chip)(({ statuscolor }) => ({
   backgroundColor: statuscolor,
@@ -93,7 +93,6 @@ const ContactTable = ({
   });
 
   const handleStarClick = (id) => {
-    console.log("id", id);
     setStarred((prevStarred) => ({
       ...prevStarred,
       [id]: !prevStarred[id],
@@ -150,9 +149,15 @@ const ContactTable = ({
                 <Checkbox size="medium" />
               </Grid>
               <Grid item="true">
-                <StarBorderOutlinedIcon
-                  sx={{ fontSize: "30px", color: "#707070" }}
-                />
+              <Button onClick={() => handleStarClick(row.id)}>
+                        {starred[row.id] ? (
+                          <StarOutlinedIcon sx={{ fontSize: "35px" }} />
+                        ) : (
+                          <StarBorderOutlinedIcon
+                            sx={{ fontSize: "35px", color: "black" }}
+                          />
+                        )}
+                      </Button>
               </Grid>
             </Grid>
             <Divider />
@@ -222,7 +227,7 @@ const ContactTable = ({
           <TableHead>
             <TableRow>
               <TableCell padding="checkbox">
-                <Checkbox color="primary" />
+                <Checkbox  color="primary" />
               </TableCell>
               {headCells.map((headCell) => (
                 <TableCell key={headCell.id} align="center">

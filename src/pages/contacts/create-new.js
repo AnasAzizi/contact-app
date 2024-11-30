@@ -78,10 +78,10 @@ const CreateNew = () => {
   const getErrorMessage = (error) => {
     if (error.response && error.response.status === 403) {
       return "Validation errors occurred. Email is taken.";
-    } else if (error.response && error.response.status === 500) {
-      return "An unexpected server error occurred. Please try again later.";
+    } else if (error.response && error.response.status === 400) {
+      return "One of the entered emails is already associated with a contact.";
     } else {
-      return "Registration failed. Please check your input and try again.";
+      return "An unexpected server error occurred. Please try again later.";
     }
   };
 
@@ -215,7 +215,7 @@ const CreateNew = () => {
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                   <Typography mb="12px" color="black" fontSize="20px">
-                    Last name<span style={{ color: "#C70000" }}>*</span>
+                    Last name  <span style={{ color: "#C70000" }}>*</span>
                   </Typography>
                   <FormControl
                     error={!!errors.LastName}

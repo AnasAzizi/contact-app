@@ -81,7 +81,7 @@ const EditUser = () => {
     <>
       <Container maxWidth="xl">
         <SecondNavBar
-          path={`Home / Contacts /${formData.firstName} ${formData.lastName}`}
+          path={`Home / Users /${formData.firstName} ${formData.lastName}`}
         />
         <Card
           sx={{
@@ -134,7 +134,7 @@ const EditUser = () => {
               <FormControl size="small" variant="outlined" fullWidth>
                 <OutlinedInput
                   name="firstName"
-                  sx={{ color: "gray" }}
+                  // sx={{ color: "gray" }}
                   value={formData.firstName}
                   onChange={handleChange}
                   type="text"
@@ -147,7 +147,7 @@ const EditUser = () => {
               </Typography>
               <FormControl size="small" variant="outlined" fullWidth>
                 <OutlinedInput
-                  sx={{ color: "gray" }}
+                  // sx={{ color: "gray" }}
                   name="lastName"
                   onChange={handleChange}
                   value={formData.lastName}
@@ -162,7 +162,7 @@ const EditUser = () => {
               <FormControl size="small" variant="outlined" fullWidth>
                 <OutlinedInput
                   name="email"
-                  sx={{ color: "gray" }}
+                  // sx={{ color: "gray" }}
                   onChange={handleChange}
                   value={formData.email}
                   type="email"
@@ -175,7 +175,7 @@ const EditUser = () => {
               </Typography>
               <FormControl size="small" variant="outlined" fullWidth>
                 <OutlinedInput
-                  sx={{ color: "gray" }}
+                  // sx={{ color: "gray" }}
                   name="phoneNumber"
                   onChange={handleChange}
                   value={formData.phoneNumber}
@@ -188,14 +188,21 @@ const EditUser = () => {
                 User Type
               </Typography>
               <FormControl size="small" variant="outlined" fullWidth>
-                {/* <InputLabel>{contact.role}</InputLabel> */}
-                <Select></Select>
+                <Select
+                  name="role"
+                  onChange={handleChange}
+                  value={formData.role}
+                >
+                  <MenuItem value={"User"}>user</MenuItem>
+                  <MenuItem value={"Admin"}>Admin</MenuItem>
+                  <MenuItem value={"Owner"}>Owner</MenuItem>
+                </Select>
               </FormControl>
             </Grid>
             <Grid container item="true" direction="row" size={12} pt="30px">
               <Grid item="true" size={{ xs: 6, md: 2 }}>
                 <Button
-                type="submit"
+                  type="submit"
                   fullWidth
                   variant="contained"
                   sx={{
