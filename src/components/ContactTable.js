@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -37,9 +37,17 @@ const StatusChip = styled(Chip)(({ statuscolor }) => ({
   fontSize: "16px",
 }));
 
-const ContactTable = ({ data, onSelectRows, search }) => {
-  const [selected, setSelected] = useState([]);
+const ContactTable = ({
+  data,
+  onSelectRows,
+  search,
+  resetSelection,
+  onResetComplete,
+}) => {
+  const [selectedId, setSelectedId] = useState([]);
   const [starred, setStarred] = useState({});
+  const [tooltipText, setTooltipText] = useState("Copy");
+
   const router = useRouter();
 
   // for Pagination
@@ -65,26 +73,24 @@ const ContactTable = ({ data, onSelectRows, search }) => {
     }
   };
 
-  const [tooltipText, setTooltipText] = useState("Copy");
-
-  const handleClickIcon = () => {
-    setTooltipText("Copied!");
-    setTimeout(() => setTooltipText("Copy"), 2000);
-  };
-
   const handleCheckboxClick = (event, id) => {
     event.stopPropagation();
-    const newSelected = selected.includes(id)
-      ? selected.filter((item) => item !== id)
-      : [...selected, id];
+    const newSelected = selectedId.includes(id)
+      ? selectedId.filter((item) => item !== id)
+      : [...selectedId, id];
 
-    setSelected(newSelected);
+    setSelectedId(newSelected);
     onSelectRows(newSelected);
   };
 
-  const { mutate: mutateToggleFavorite } = useMutation((id) =>
-    toggleFavorite(id)
-  );
+  const handleClickIcon = () => {
+    setTooltipText("Copied!");
+    setTimeout(() => setTooltipText("Copy"), 1000);
+  };
+
+  const { mutateAsync: mutateToggleFavorite } = useMutation({
+    mutationFn: (id) => toggleFavorite(id),
+  });
 
   const handleStarClick = (id) => {
     console.log("id", id);
@@ -107,8 +113,22 @@ const ContactTable = ({ data, onSelectRows, search }) => {
     { id: "action", label: "Action" },
   ];
 
+  useEffect(() => {
+    if (resetSelection) {
+      setSelectedId([]);
+      onSelectRows([]);
+      if (onResetComplete) onResetComplete();
+    }
+  }, [resetSelection, onSelectRows, onResetComplete]);
+
+  const handleRowSelection = (newSelectedRows) => {
+    setSelectedId(newSelectedRows);
+    onSelectRows(newSelectedRows);
+  };
+
   return (
     <>
+      {/* for mobile version */}
       {data.map((row, index) => (
         <Card
           key={index}
@@ -220,7 +240,7 @@ const ContactTable = ({ data, onSelectRows, search }) => {
                 return item.firstName.includes(search.toLowerCase());
               })
               .map((row) => {
-                const isItemSelected = selected.includes(row.id);
+                const isItemSelected = selectedId.includes(row.id);
                 return (
                   <TableRow key={row.id} selected={isItemSelected}>
                     <TableCell padding="checkbox">
@@ -276,10 +296,15 @@ const ContactTable = ({ data, onSelectRows, search }) => {
                               },
                             },
                           }}
-                          title="Copy"
+                          title={tooltipText}
                           placement="top"
                         >
-                          <IconButton onClick={handleClickIcon}>
+                          <IconButton
+                            onClick={() => {
+                              navigator.clipboard.writeText(row.email);
+                              handleClickIcon();
+                            }}
+                          >
                             <FileCopyOutlinedIcon
                               sx={{
                                 cursor: "pointer",
@@ -290,6 +315,7 @@ const ContactTable = ({ data, onSelectRows, search }) => {
                         </Tooltip>
                       </Box>
                     </TableCell>
+
                     <TableCell sx={{ fontSize: "19px" }}>
                       {row.phoneNumber}
                     </TableCell>
@@ -321,7 +347,6 @@ const ContactTable = ({ data, onSelectRows, search }) => {
         </Table>
       </TableContainer>
 
-      {/* Pagination Component */}
       <TablePagination
         data={data}
         rowsPerPage={rowsPerPage}

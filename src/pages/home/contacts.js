@@ -15,17 +15,13 @@ import Grid from "@mui/material/Grid2";
 import { ShowContact, deleteContact } from "@/pages/api/contact";
 
 const Contacts = () => {
-  const [selectedRows, setSelectedRows] = useState("");
   const [search, setSearch] = useState("");
+  const [selectedIds, setSelectedIds] = useState([]);
+  const [resetSelection, setResetSelection] = useState(false);
 
-  const handleSelectedRows = (newSelected) => {
+  const handleSelectedId = (newSelected) => {
+    setSelectedIds(newSelected); // Update selected IDs
     console.log("Selected rows in Parent:", newSelected);
-
-    if (Array.isArray(newSelected) && newSelected.length > 1) {
-      setSelectedRows(newSelected.slice(1));
-    } else {
-      setSelectedRows(newSelected);
-    }
   };
 
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -46,18 +42,24 @@ const Contacts = () => {
       setOpenSnackbar(true);
       setSnackbarSeverity("success");
       setSnackbarMessage("Deleted contact successfully!");
+      setSelectedIds([]); // Reset selected IDs after successful deletion
     },
   });
 
-  const handleDelete = (contactId) => {
-    if (contactId.length !== 1) {
+  const handleDelete = () => {
+    if (selectedIds.length === 0) {
       setOpenSnackbar(true);
       setSnackbarSeverity("error");
-      setSnackbarMessage("Select one user, please.");
+      setSnackbarMessage("Please select at least one contact to delete.");
       return;
     }
 
-    contactDelete(contactId);
+    // Delete each selected contact
+    selectedIds.forEach((id) => contactDelete(id));
+
+    // Reset selection after deletion
+    setSelectedIds([]);
+    setResetSelection(true);
   };
 
   const { data, error } = useQuery({
@@ -72,10 +74,10 @@ const Contacts = () => {
     if (error) {
       console.error("Error fetching contacts:", error);
     }
-  }, [data, error]); 
+  }, [data, error]);
 
   if (!data) {
-    return <div>No data available.</div>; 
+    return <div>No data available.</div>;
   }
 
   return (
@@ -99,7 +101,7 @@ const Contacts = () => {
           >
             <Grid item="true" size={{ xs: 5.8, md: 1.2, lg: 1 }}>
               <Button
-                onClick={() => handleDelete(selectedRows)}
+                onClick={handleDelete} // Trigger delete function
                 fullWidth
                 sx={{
                   fontSize: "18px",
@@ -173,16 +175,17 @@ const Contacts = () => {
                 variant="outlined"
                 placeholder="search"
                 type="search"
-                onInput={(e) => setSearch(e.target.value)} 
+                onInput={(e) => setSearch(e.target.value)}
               />
             </FormControl>
           </Grid>
         </Grid>
         <ContactTable
           data={data}
-          favorite={true}
-          onSelectRows={handleSelectedRows}
-          search={search} 
+          onSelectRows={handleSelectedId}
+          search={search}
+          onResetComplete={() => setResetSelection(false)}
+          resetSelection={resetSelection}
         />
       </Container>
       <Snackbar

@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -22,6 +22,8 @@ import {
 import PersonIcon from "@mui/icons-material/Person";
 import CloseIcon from "@mui/icons-material/Close";
 import ReorderIcon from "@mui/icons-material/Reorder";
+import { useQuery } from "@tanstack/react-query";
+import { CurrentUser } from "@/pages/api/user";
 
 const pages = [
   { name: "Home", path: "/home/home-page" },
@@ -67,15 +69,21 @@ const NavBar = () => {
     setOpen(newOpen);
   };
 
-  const [firstName, setFirstName] = useState('');
+  const [firstName, setFirstName] = useState("");
 
   useEffect(() => {
-    const storedName = localStorage.getItem('registeredName');
+    const storedName = localStorage.getItem("registeredName");
     if (storedName) {
       setFirstName(JSON.parse(storedName));
     }
   }, []);
 
+  const { data } = useQuery({
+    queryKey: ["currentuser"],
+    queryFn: CurrentUser,
+  });
+
+  // console.log(data.id);
 
   const DrawerList = (
     <Box onClick={toggleDrawer(false)}>
@@ -146,6 +154,7 @@ const NavBar = () => {
     >
       <Container maxWidth="xl">
         <Toolbar sx={{ py: "5px" }} disableGutters>
+          {/* mobile version */}
           <Box
             sx={{
               display: { xs: "inline-block", md: "none" },
@@ -169,6 +178,7 @@ const NavBar = () => {
             </Drawer>
           </Box>
 
+          {/* logo */}
           <Box
             component="div"
             sx={{
@@ -221,6 +231,7 @@ const NavBar = () => {
             ))}
           </Box>
 
+          {/* profile on desktop */}
           <Box
             sx={{
               flexGrow: 0,
@@ -256,7 +267,19 @@ const NavBar = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem
+                  key={setting}
+                  onClick={() => {
+                    handleCloseUserMenu();
+                    if (setting === "Log out") {
+                      localStorage.removeItem("jwtToken");
+                      router.push("/auth/sign-in");
+                    }
+                    if (setting === "My Profile") {
+                      router.push(`/users/view/${data.id}`)
+                    }
+                  }}
+                >
                   <Typography
                     sx={{
                       textAlign: "left",

@@ -39,10 +39,7 @@ const CreateNew = () => {
     mobileNumber: "",
     Address: "",
     AddressTwo: "",
-    Image: ""
   });
-
-  console.log("Image",formData.Image)
 
   const [errors, setErrors] = useState({});
 
@@ -88,19 +85,6 @@ const CreateNew = () => {
     }
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      if (file.size > 5 * 1024 * 1024) {
-        setSnackbarSeverity("error");
-        setSnackbarMessage("File size exceeds 5 MB limit.");
-        setOpenSnackbar(true);
-        return;
-      }
-      setFormData((prevData) => ({ ...prevData, Image: file }));
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
@@ -111,9 +95,9 @@ const CreateNew = () => {
         formToSend.append(key, formData[key]);
       }
     }
-    
+
     try {
-      await ContactAdd(formToSend); 
+      await ContactAdd(formToSend);
     } catch (e) {
       console.error(e);
     }
@@ -160,11 +144,7 @@ const CreateNew = () => {
             >
               <Grid item="true" xs={12}>
                 <Avatar
-                  src={
-                    formData.Image
-                      ? URL.createObjectURL(formData.Image)
-                      : "/Placeholder.jpg"
-                  } 
+                  src="/Placeholder.jpg"
                   sx={{ width: 202, height: 202 }}
                 />
               </Grid>
@@ -188,10 +168,8 @@ const CreateNew = () => {
                   Upload new image
                   <input
                     type="file"
-                    name="Image"
                     accept="image/png, image/jpeg"
                     hidden
-                    onChange={handleFileChange}
                   />
                 </Button>
               </Grid>

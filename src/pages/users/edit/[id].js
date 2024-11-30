@@ -20,6 +20,12 @@ import { useRouter } from "next/router";
 const EditUser = () => {
   const router = useRouter();
   const { id } = router.query;
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarSeverity, setSnackbarSeverity] = useState("error");
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const handleSnackbarClose = () => {
+    setOpenSnackbar(false);
+  };
 
   const [formData, setFormData] = useState({
     firstName: "",

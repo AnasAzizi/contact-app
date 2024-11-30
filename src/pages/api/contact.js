@@ -12,7 +12,7 @@ const getToken = () => {
 const AddContact = async (formData, router) => {
   try {
     const token = getToken();
-    console.log("formData text",formData)
+    console.log("formData text", formData);
     const endpoint = "/Contacts";
     const config = {
       headers: {
@@ -124,12 +124,12 @@ const editContact = async (formData, contactId) => {
 const toggleFavorite = async (contactId) => {
   try {
     const token = getToken();
-    const endpoint = `/Contacts/toggle-favorite${contactId}`;
-    console.log("toggle favorite successfully:", contactId);
+    const endpoint = `/Contacts/toggle-favorite/${contactId}`;
 
-    const response = await axios.patch(`${BASE_URL}${endpoint}`, {
+    const response = await axios.patch(`${BASE_URL}${endpoint}`, undefined, {
       headers: {
         Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
     });
     console.log("toggle favorite successfully:", response.data);
@@ -192,5 +192,5 @@ export {
   editContact,
   toggleFavorite,
   EmailSend,
-  Activities
+  Activities,
 };

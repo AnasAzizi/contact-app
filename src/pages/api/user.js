@@ -81,13 +81,17 @@ const UserEdit = async (formData, userId) => {
     const endpoint = `/Users/${userId}`;
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
     };
     console.log("formData test", formData);
     console.log("token test", token);
     console.log("endpoint test", endpoint);
-    const response = await axios.get(`${BASE_URL}${endpoint}`, formData,config);
+    const response = await axios.put(
+      `${BASE_URL}${endpoint}`,
+      formData,
+      config
+    );
     console.log("Edit User:", response.data);
     return response.data;
   } catch (error) {
@@ -95,4 +99,22 @@ const UserEdit = async (formData, userId) => {
     throw error;
   }
 };
-export { ShowUsers, AddUser, UserView, UserEdit };
+
+const CurrentUser = async () => {
+  try {
+    const token = getToken();
+    const endpoint = "/Users/current-user";
+
+    const response = await axios.get(`${BASE_URL}${endpoint}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Error retrieving contacts:", error);
+    throw error;
+  }
+};
+export { ShowUsers, AddUser, UserView, UserEdit, CurrentUser };
