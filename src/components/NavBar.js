@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -24,6 +24,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import ReorderIcon from "@mui/icons-material/Reorder";
 import { useQuery } from "@tanstack/react-query";
 import { CurrentUser } from "@/pages/api/user";
+import { CurrnetUserContext } from "@/Context/Context";
 
 const pages = [
   { name: "Home", path: "/home/home-page" },
@@ -50,6 +51,8 @@ const NavBar = () => {
   const router = useRouter();
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [anchorElNav, setAnchorElNav] = useState(null);
+
+  const currentUser = useContext(CurrnetUserContext);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -83,7 +86,14 @@ const NavBar = () => {
     queryFn: CurrentUser,
   });
 
-  // console.log(data.id);
+  const saveCurrentUser = async () => {
+    if (data) {
+      // Assuming setCurrentUser is async
+      await currentUser.setCurrentUser(data);
+    }
+  };
+
+  saveCurrentUser();
 
   const DrawerList = (
     <Box onClick={toggleDrawer(false)}>
@@ -276,7 +286,7 @@ const NavBar = () => {
                       router.push("/auth/sign-in");
                     }
                     if (setting === "My Profile") {
-                      router.push(`/users/view/${data.id}`)
+                      router.push(`/users/view/${data.id}`);
                     }
                   }}
                 >

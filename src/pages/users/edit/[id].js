@@ -20,12 +20,6 @@ import { useRouter } from "next/router";
 const EditUser = () => {
   const router = useRouter();
   const { id } = router.query;
-  const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [snackbarSeverity, setSnackbarSeverity] = useState("error");
-  const [snackbarMessage, setSnackbarMessage] = useState("");
-  const handleSnackbarClose = () => {
-    setOpenSnackbar(false);
-  };
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -36,26 +30,26 @@ const EditUser = () => {
     role: "",
   });
 
-  const { data: contact } = useQuery({
-    queryKey: ["contact", id],
+  const { data: user } = useQuery({
+    queryKey: ["user"],
     queryFn: () => UserView(id),
   });
 
   useEffect(() => {
-    if (contact) {
+    if (user) {
       setFormData({
-        firstName: contact.firstName || "",
-        lastName: contact.lastName || "",
-        email: contact.email || "",
-        phoneNumber: contact.phoneNumber || "",
-        status: contact.status || "Active",
-        role: contact.role || "",
+        firstName: user.firstName || "",
+        lastName: user.lastName || "",
+        email: user.email || "",
+        phoneNumber: user.phoneNumber || "",
+        status: user.status || "Active",
+        role: user.role || "",
       });
     }
-  }, [contact]);
+  }, [user]);
 
   const { mutateAsync: UserEditMutate } = useMutation({
-    mutationFn: (updatedContact) => UserEdit(updatedContact, id),
+    mutationFn: (updatedUser) => UserEdit(updatedUser, id),
     onSuccess: () => {
       setOpenSnackbar(true);
       setSnackbarSeverity("success");

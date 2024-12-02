@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useContext} from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import ContactTable from "@/components/ContactTable";
 import SecondNavBar from "@/components/SecondNavBar";
@@ -7,11 +7,16 @@ import { useRouter } from "next/router";
 import { Container, FormControl, Button, TextField } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { ShowContact, deleteContact } from "@/pages/api/contact";
+import { CurrnetUserContext } from "@/Context/Context";
 
 const Contacts = () => {
+  const CurrentUser = useContext(CurrnetUserContext);
+  console.log("currentUser role:", CurrentUser.currentUser.role);
+
   const [search, setSearch] = useState("");
   const [selectedIds, setSelectedIds] = useState([]);
   const [resetSelection, setResetSelection] = useState(false);
+
 
   const handleSelectedId = (newSelected) => {
     setSelectedIds(newSelected);
