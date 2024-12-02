@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -6,7 +6,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Chip,
   Button,
   Checkbox,
   Paper,
@@ -20,24 +19,23 @@ import {
   Tooltip,
   IconButton,
 } from "@mui/material";
-import { styled } from "@mui/system";
 import { useRouter } from "next/router";
 import Grid from "@mui/material/Grid2";
 import FileCopyOutlinedIcon from "@mui/icons-material/FileCopyOutlined";
 import TablePagination from "./TablePagination";
+import StatusChip from "./StatusChip";
 
-const StatusChip = styled(Chip)(({ statuscolor }) => ({
-  backgroundColor: statuscolor,
-  borderRadius: "4px",
-  width: "93px",
-  fontSize: "16px",
-}));
-
-const UserTable = ({ data, onSelectRows, search }) => {
-  const [selected, setSelected] = useState([]);
+const UserTable = ({
+  data,
+  onSelectRows,
+  search,
+  resetSelection,
+  onResetComplete,
+}) => {
   const router = useRouter();
-
-  console.log("search", search);
+  const [selected, setSelected] = useState([]);
+  const [selectedId, setSelectedId] = useState([]);
+  const [tooltipText, setTooltipText] = useState("Copy");
 
   // for Pagination
   const [page, setPage] = useState(1);
@@ -62,8 +60,6 @@ const UserTable = ({ data, onSelectRows, search }) => {
     }
   };
 
-  const [tooltipText, setTooltipText] = useState("Copy");
-
   const handleClickIcon = () => {
     setTooltipText("Copied!");
     setTimeout(() => setTooltipText("Copy"), 2000);
@@ -71,12 +67,25 @@ const UserTable = ({ data, onSelectRows, search }) => {
 
   const handleCheckboxClick = (event, id) => {
     event.stopPropagation();
-    const newSelected = selected.includes(id)
-      ? selected.filter((item) => item !== id)
-      : [...selected, id];
+    const newSelected = selectedId.includes(id)
+      ? selectedId.filter((item) => item !== id)
+      : [...selectedId, id];
 
-    setSelected(newSelected);
+    setSelectedId(newSelected);
     onSelectRows(newSelected);
+  };
+
+  useEffect(() => {
+    if (resetSelection) {
+      setSelectedId([]);
+      onSelectRows([]);
+      if (onResetComplete) onResetComplete();
+    }
+  }, [resetSelection, onSelectRows, onResetComplete]);
+
+  const handleRowSelection = (newSelectedRows) => {
+    setSelectedId(newSelectedRows);
+    onSelectRows(newSelectedRows);
   };
 
   const headCells = [
@@ -183,9 +192,7 @@ const UserTable = ({ data, onSelectRows, search }) => {
               </TableCell>
               {headCells.map((headCell) => {
                 return (
-                  <TableCell
-                    key={headCell.id}
-                  >
+                  <TableCell key={headCell.id}>
                     <TableSortLabel
                       sx={{ fontSize: "20px", fontWeight: "bold" }}
                     >
@@ -199,21 +206,21 @@ const UserTable = ({ data, onSelectRows, search }) => {
 
           <TableBody>
             {paginatedData
-            // .filter((item) => {
-            //   return item.firstName.includes(search.toLowerCase());
-            // })
-              .map((row,index) => {
+              .filter((item) => {
+                return item.firstName.includes(search.toLowerCase());
+              })
+              .map((row, index) => {
                 const isItemSelected = selected.includes(row.id);
                 return (
                   <TableRow key={row.id} selected={isItemSelected}>
                     <TableCell padding="checkbox">
                       <Checkbox
-                        checked={isItemSelected}
+                        checked={selectedId.includes(row.id)}
                         onClick={(event) => handleCheckboxClick(event, row.id)}
                       />
                     </TableCell>
                     <TableCell sx={{ fontSize: "21px", fontWeight: "bold" }}>
-                      000{index+1}
+                      000{index + 1}
                     </TableCell>
                     <TableCell sx={{ fontSize: "19px" }}>
                       {row.firstName}
@@ -241,10 +248,15 @@ const UserTable = ({ data, onSelectRows, search }) => {
                               },
                             },
                           }}
-                          title="Copy"
+                          title={tooltipText}
                           placement="top"
                         >
-                          <IconButton onClick={handleClickIcon}>
+                          <IconButton
+                            onClick={() => {
+                              navigator.clipboard.writeText(row.email);
+                              handleClickIcon();
+                            }}
+                          >
                             <FileCopyOutlinedIcon
                               sx={{
                                 cursor: "pointer",

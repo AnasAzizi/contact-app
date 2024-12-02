@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useMutation } from "@tanstack/react-query";
 import { toggleFavorite } from "@/pages/api/contact";
 import TablePagination from "./TablePagination";
+import StatusChip from "./StatusChip";
 import {
   Table,
   TableBody,
@@ -10,7 +11,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Chip,
   Button,
   Checkbox,
   Paper,
@@ -25,17 +25,9 @@ import {
   IconButton,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { styled } from "@mui/system";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
 import FileCopyOutlinedIcon from "@mui/icons-material/FileCopyOutlined";
-
-const StatusChip = styled(Chip)(({ statuscolor }) => ({
-  backgroundColor: statuscolor,
-  borderRadius: "4px",
-  width: "93px",
-  fontSize: "16px",
-}));
 
 const ContactTable = ({
   data,
@@ -44,11 +36,10 @@ const ContactTable = ({
   resetSelection,
   onResetComplete,
 }) => {
+  const router = useRouter();
   const [selectedId, setSelectedId] = useState([]);
   const [starred, setStarred] = useState({});
   const [tooltipText, setTooltipText] = useState("Copy");
-
-  const router = useRouter();
 
   // for Pagination
   const [page, setPage] = useState(1);
@@ -73,6 +64,10 @@ const ContactTable = ({
     }
   };
 
+  const { mutateAsync: mutateToggleFavorite } = useMutation({
+    mutationFn: (id) => toggleFavorite(id),
+  });
+
   const handleCheckboxClick = (event, id) => {
     event.stopPropagation();
     const newSelected = selectedId.includes(id)
@@ -87,10 +82,6 @@ const ContactTable = ({
     setTooltipText("Copied!");
     setTimeout(() => setTooltipText("Copy"), 1000);
   };
-
-  const { mutateAsync: mutateToggleFavorite } = useMutation({
-    mutationFn: (id) => toggleFavorite(id),
-  });
 
   const handleStarClick = (id) => {
     setStarred((prevStarred) => ({
@@ -149,15 +140,15 @@ const ContactTable = ({
                 <Checkbox size="medium" />
               </Grid>
               <Grid item="true">
-              <Button onClick={() => handleStarClick(row.id)}>
-                        {starred[row.id] ? (
-                          <StarOutlinedIcon sx={{ fontSize: "35px" }} />
-                        ) : (
-                          <StarBorderOutlinedIcon
-                            sx={{ fontSize: "35px", color: "black" }}
-                          />
-                        )}
-                      </Button>
+                <Button onClick={() => handleStarClick(row.id)}>
+                  {starred[row.id] ? (
+                    <StarOutlinedIcon sx={{ fontSize: "35px" }} />
+                  ) : (
+                    <StarBorderOutlinedIcon
+                      sx={{ fontSize: "35px", color: "black" }}
+                    />
+                  )}
+                </Button>
               </Grid>
             </Grid>
             <Divider />
@@ -227,7 +218,7 @@ const ContactTable = ({
           <TableHead>
             <TableRow>
               <TableCell padding="checkbox">
-                <Checkbox  color="primary" />
+                <Checkbox color="primary" />
               </TableCell>
               {headCells.map((headCell) => (
                 <TableCell key={headCell.id} align="center">

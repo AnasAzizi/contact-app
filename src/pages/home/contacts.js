@@ -35,7 +35,7 @@ const Contacts = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const { mutate: contactDelete } = useMutation({
+  const { mutateAsync: contactDelete } = useMutation({
     mutationFn: deleteContact,
     onSuccess: () => {
       queryClient.invalidateQueries(["contacts"]);

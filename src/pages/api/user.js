@@ -117,4 +117,22 @@ const CurrentUser = async () => {
     throw error;
   }
 };
-export { ShowUsers, AddUser, UserView, UserEdit, CurrentUser };
+
+const UserDelete = async (userId) => {
+  try {
+    const token = getToken();
+    const endpoint = `/Users/${userId}`;
+    const response = await axios.delete(`${BASE_URL}${endpoint}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log("userId test", userId);
+    console.log("user deleted successfully:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    throw error;
+  }
+};
+export { ShowUsers, AddUser, UserView, UserEdit, CurrentUser ,UserDelete};

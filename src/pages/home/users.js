@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { ShowUsers } from "@/pages/api/user";
+import React, { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { ShowUsers, UserDelete } from "@/pages/api/user";
 import UserTable from "@/components/UserTable";
 import SecondNavBar from "@/components/SecondNavBar";
 import { useRouter } from "next/router";
@@ -10,30 +10,57 @@ import {
   InputLabel,
   OutlinedInput,
   Button,
+  Alert,
+  Snackbar,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
 const Users = () => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [search, setSearch] = useState("");
+  const [selectedIds, setSelectedIds] = useState([]);
+  const [resetSelection, setResetSelection] = useState(false);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarSeverity, setSnackbarSeverity] = useState("error");
+  const [snackbarMessage, setSnackbarMessage] = useState("");
 
-  const { data, error, isLoading } = useQuery({
+  const handleSnackbarClose = () => {
+    setOpenSnackbar(false);
+  };
+
+  const handleSelectedId = (newSelected) => {
+    setSelectedIds(newSelected);
+    console.log("Selected rows in Parent:", newSelected);
+  };
+
+  const { data } = useQuery({
     queryKey: ["getUsers"],
     queryFn: ShowUsers,
   });
 
-  useEffect(() => {
-    if (data) {
-      console.log("Fetched users data:", data);
-    }
-    if (error) {
-      console.error("Error fetching users:", error);
-    }
-  }, [data, error]);
+  const { mutateAsync: UserDeleteMutate } = useMutation({
+    mutationFn: UserDelete,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["getUsers"]);
+      setResetSelection(true);
+      setSelectedIds([]);
+    },
+  });
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  const handleDelete = async () => {
+    if (selectedIds.length === 0) {
+      setOpenSnackbar(true);
+      setSnackbarSeverity("error");
+      setSnackbarMessage("Please select at least one user to delete.");
+      return;
+    }
+    try {
+      await Promise.all(selectedIds.map((id) => UserDeleteMutate(id)));
+    } catch (error) {
+      console.error("Error deleting users:", error);
+    }
+  };
 
   if (!data || data.length === 0) {
     return <div>No data available.</div>;
@@ -79,11 +106,12 @@ const Users = () => {
           >
             <Grid
               item="true"
-              size={{ xs: 6, md: 1.5, lg: 1.5 }}
+              size={{ xs: 4.5, md: 1.5, lg: 1.5 }}
               py={{ xs: 1, md: 0 }}
             >
               <Button
                 fullWidth
+                onClick={handleDelete}
                 color="error"
                 variant="contained"
                 sx={{
@@ -97,7 +125,7 @@ const Users = () => {
             </Grid>
             <Grid
               item="true"
-              size={{ xs: 6, md: 3.8, lg: 2.9 }}
+              size={{ xs: 7.5, md: 3.8, lg: 2.9 }}
               py={{ xs: 1, md: 0 }}
             >
               <Button
@@ -116,8 +144,23 @@ const Users = () => {
             </Grid>
           </Grid>
         </Grid>
-        <UserTable data={data} favorite={false} search={search} />
+        <UserTable
+          onSelectRows={handleSelectedId}
+          onResetComplete={() => setResetSelection(false)}
+          data={data}
+          search={search}
+          resetSelection={resetSelection}
+        />
       </Container>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={5000}
+        onClose={handleSnackbarClose}
+      >
+        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </>
   );
 };
