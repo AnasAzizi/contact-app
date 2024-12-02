@@ -129,11 +129,7 @@ const InviteNewUser = () => {
               <Typography mb="12px" color="black" fontSize="20px">
                 First name <span style={{ color: "#C70000" }}>*</span>
               </Typography>
-              <FormControl
-                error={!!errors.firstName}
-                variant="outlined"
-                fullWidth
-              >
+              <FormControl error={!!errors.firstName} fullWidth size="small">
                 <InputLabel sx={{ color: "#868E96" }}>First Name</InputLabel>
                 <OutlinedInput
                   name="firstName"
@@ -150,11 +146,7 @@ const InviteNewUser = () => {
               <Typography mb="12px" color="black" fontSize="20px">
                 Last name <span style={{ color: "#C70000" }}>*</span>
               </Typography>
-              <FormControl
-                error={!!errors.lastName}
-                variant="outlined"
-                fullWidth
-              >
+              <FormControl error={!!errors.lastName} fullWidth size="small">
                 <InputLabel sx={{ color: "#868E96" }}>Last Name</InputLabel>
                 <OutlinedInput
                   name="lastName"
@@ -171,7 +163,7 @@ const InviteNewUser = () => {
               <Typography mb="12px" color="black" fontSize="20px">
                 Email <span style={{ color: "#C70000" }}>*</span>
               </Typography>
-              <FormControl error={!!errors.email} variant="outlined" fullWidth>
+              <FormControl error={!!errors.email} fullWidth size="small">
                 <InputLabel sx={{ color: "#868E96" }}>
                   mail@gmail.com
                 </InputLabel>
@@ -190,11 +182,7 @@ const InviteNewUser = () => {
               <Typography mb="12px" color="black" fontSize="20px">
                 Phone <span style={{ color: "#C70000" }}>*</span>
               </Typography>
-              <FormControl
-                error={!!errors.phoneNumber}
-                variant="outlined"
-                fullWidth
-              >
+              <FormControl error={!!errors.phoneNumber} fullWidth size="small">
                 <InputLabel sx={{ color: "#868E96" }}>Phone Number</InputLabel>
                 <OutlinedInput
                   name="phoneNumber"
@@ -211,7 +199,7 @@ const InviteNewUser = () => {
               <Typography mb="12px" color="black" fontSize="20px">
                 User Type <span style={{ color: "#C70000" }}>*</span>
               </Typography>
-              <FormControl fullWidth error={!!errors.role}>
+              <FormControl fullWidth size="small" error={!!errors.role}>
                 <InputLabel>Select user type</InputLabel>
                 <Select
                   label="Select user type"
@@ -246,7 +234,6 @@ const InviteNewUser = () => {
                   onClick={() => router.push("/home/users")}
                   fullWidth
                   bgcolor="#4E73DF"
-                  variant="outlined"
                   sx={{
                     textTransform: "none",
                     fontSize: "20px",
