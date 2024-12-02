@@ -1,5 +1,9 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 import { useMutation } from "@tanstack/react-query";
+import { AddUser } from "@/pages/api/user";
+import SecondNavBar from "@/components/SecondNavBar";
+import SnackbarAlert from "@/components/SnackbarAlert";
 import {
   Container,
   Typography,
@@ -11,14 +15,9 @@ import {
   Select,
   MenuItem,
   Box,
-  Alert,
-  Snackbar,
   FormHelperText,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import SecondNavBar from "@/components/SecondNavBar";
-import { useRouter } from "next/router";
-import { AddUser } from "@/pages/api/user";
 
 const InviteNewUser = () => {
   const router = useRouter();
@@ -262,6 +261,12 @@ const InviteNewUser = () => {
           </Grid>
         </Box>
       </Container>
+      <SnackbarAlert
+        open={openSnackbar}
+        severity={snackbarSeverity}
+        message={snackbarMessage}
+        onClose={handleSnackbarClose}
+      />
     </>
   );
 };

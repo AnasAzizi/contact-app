@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useMutation } from "@tanstack/react-query";
+import { resetPassword } from "@/pages/api/auth";
+import SnackbarAlert from "@/components/SnackbarAlert";
 import {
   Box,
   Button,
@@ -10,12 +12,9 @@ import {
   OutlinedInput,
   InputLabel,
   FormControl,
-  Alert,
-  Snackbar,
   FormHelperText,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { resetPassword } from "@/pages/api/auth";
 
 const ResetPassForm = () => {
   const router = useRouter();
@@ -168,15 +167,12 @@ const ResetPassForm = () => {
           <Link href="/auth/sign-in">Back to login</Link>
         </Grid>
       </Grid>
-      <Snackbar
+      <SnackbarAlert
         open={openSnackbar}
-        autoHideDuration={5000}
+        severity={snackbarSeverity}
+        message={snackbarMessage}
         onClose={handleSnackbarClose}
-      >
-        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
+      />
     </>
   );
 };

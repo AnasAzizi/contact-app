@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ShowUsers, UserDelete } from "@/pages/api/user";
 import UserTable from "@/components/UserTable";
 import SecondNavBar from "@/components/SecondNavBar";
+import SnackbarAlert from "@/components/SnackbarAlert";
 import { useRouter } from "next/router";
 import {
   Container,
@@ -10,8 +11,6 @@ import {
   InputLabel,
   OutlinedInput,
   Button,
-  Alert,
-  Snackbar,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
@@ -152,15 +151,12 @@ const Users = () => {
           resetSelection={resetSelection}
         />
       </Container>
-      <Snackbar
+      <SnackbarAlert
         open={openSnackbar}
-        autoHideDuration={5000}
+        severity={snackbarSeverity}
+        message={snackbarMessage}
         onClose={handleSnackbarClose}
-      >
-        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
+      />
     </>
   );
 };

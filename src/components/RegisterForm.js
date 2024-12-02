@@ -1,6 +1,9 @@
-import { useMutation } from "@tanstack/react-query";
 import React, { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/router";
+import { useMutation } from "@tanstack/react-query";
+import { RegisterUser } from "@/pages/api/auth";
+import SnackbarAlert from "@/components/SnackbarAlert";
 import {
   Box,
   Typography,
@@ -13,14 +16,10 @@ import {
   Select,
   MenuItem,
   FormHelperText,
-  Alert,
-  Snackbar,
 } from "@mui/material";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import Grid from "@mui/material/Grid2";
-import Link from "next/link";
-import { RegisterUser } from "@/pages/api/auth";
 
 const RegisterForm = () => {
   const router = useRouter();
@@ -538,15 +537,12 @@ const RegisterForm = () => {
           </Box>
         </Grid>
       </Box>
-      <Snackbar
+      <SnackbarAlert
         open={openSnackbar}
-        autoHideDuration={5000}
+        severity={snackbarSeverity}
+        message={snackbarMessage}
         onClose={handleSnackbarClose}
-      >
-        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
+      />
     </>
   );
 };

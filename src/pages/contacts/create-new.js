@@ -1,7 +1,9 @@
-import { useMutation } from "@tanstack/react-query";
-import SecondNavBar from "@/components/SecondNavBar";
 import React, { useState } from "react";
 import { useRouter } from "next/router";
+import { useMutation } from "@tanstack/react-query";
+import { AddContact } from "@/pages/api/contact";
+import SecondNavBar from "@/components/SecondNavBar";
+import SnackbarAlert from "@/components/SnackbarAlert";
 import {
   Card,
   Container,
@@ -12,19 +14,17 @@ import {
   FormControl,
   InputLabel,
   OutlinedInput,
-  Alert,
-  Snackbar,
   FormHelperText,
   Box,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { AddContact } from "@/pages/api/contact";
 
 const CreateNew = () => {
   const router = useRouter();
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarSeverity, setSnackbarSeverity] = useState("error");
   const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [errors, setErrors] = useState({});
 
   const handleSnackbarClose = () => {
     setOpenSnackbar(false);
@@ -40,8 +40,6 @@ const CreateNew = () => {
     Address: "",
     AddressTwo: "",
   });
-
-  const [errors, setErrors] = useState({});
 
   const validateForm = () => {
     const newErrors = {};
@@ -88,16 +86,8 @@ const CreateNew = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-
-    const formToSend = new FormData();
-    for (let key in formData) {
-      if (formData[key]) {
-        formToSend.append(key, formData[key]);
-      }
-    }
-
     try {
-      await ContactAdd(formToSend);
+      await ContactAdd(formData);
     } catch (e) {
       console.error(e);
     }
@@ -166,11 +156,7 @@ const CreateNew = () => {
                   sx={{ textTransform: "none", boxShadow: "none" }}
                 >
                   Upload new image
-                  <input
-                    type="file"
-                    accept="image/png, image/jpeg"
-                    hidden
-                  />
+                  <input type="file" accept="image/png, image/jpeg" hidden />
                 </Button>
               </Grid>
             </Grid>
@@ -215,7 +201,7 @@ const CreateNew = () => {
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                   <Typography mb="12px" color="black" fontSize="20px">
-                    Last name  <span style={{ color: "#C70000" }}>*</span>
+                    Last name <span style={{ color: "#C70000" }}>*</span>
                   </Typography>
                   <FormControl
                     error={!!errors.LastName}
@@ -396,15 +382,12 @@ const CreateNew = () => {
             </Grid>
           </Grid>
         </Box>
-        <Snackbar
+        <SnackbarAlert
           open={openSnackbar}
-          autoHideDuration={5000}
+          severity={snackbarSeverity}
+          message={snackbarMessage}
           onClose={handleSnackbarClose}
-        >
-          <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
-            {snackbarMessage}
-          </Alert>
-        </Snackbar>
+        />
       </Container>
     </>
   );

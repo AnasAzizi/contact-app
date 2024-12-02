@@ -1,10 +1,10 @@
-import { useMutation } from "@tanstack/react-query";
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import { loginUser } from "@/pages/api/auth";
+import SnackbarAlert from "@/components/SnackbarAlert";
 import {
   Checkbox,
   Box,
@@ -17,11 +17,10 @@ import {
   FormControl,
   IconButton,
   FormHelperText,
-  Alert,
-  Snackbar,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { loginUser } from "@/pages/api/auth";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
 export default function SignInForm() {
   const router = useRouter();
@@ -282,15 +281,12 @@ export default function SignInForm() {
           </Grid>
         </Box>
       </Grid>
-      <Snackbar
+      <SnackbarAlert
         open={openSnackbar}
-        autoHideDuration={5000}
+        severity={snackbarSeverity}
+        message={snackbarMessage}
         onClose={handleSnackbarClose}
-      >
-        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
+      />
     </>
   );
 }

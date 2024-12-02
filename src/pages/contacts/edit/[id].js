@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import SecondNavBar from "@/components/SecondNavBar";
 import { useRouter } from "next/router";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { viewContact, editContact } from "@/pages/api/contact";
+import SecondNavBar from "@/components/SecondNavBar";
+import SnackbarAlert from "@/components/SnackbarAlert";
 import {
   Card,
   Container,
@@ -13,8 +14,6 @@ import {
   FormControl,
   Box,
   Switch,
-  Alert,
-  Snackbar,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
@@ -40,8 +39,13 @@ const Edit = () => {
     status: "Active",
   });
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
   const { data: contact } = useQuery({
-    queryKey: ["contact", id],
+    queryKey: ["contact"],
     queryFn: () => viewContact(id),
   });
 
@@ -61,7 +65,7 @@ const Edit = () => {
     }
   }, [contact]);
 
-  const { mutateAsync: contactEdit } = useMutation({
+  const { mutateAsync: editContactMutate } = useMutation({
     mutationFn: (updatedContact) => editContact(updatedContact, id),
     onSuccess: () => {
       setOpenSnackbar(true);
@@ -73,11 +77,6 @@ const Edit = () => {
       console.error("Error updating contact:", error);
     },
   });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -94,10 +93,8 @@ const Edit = () => {
       setSnackbarMessage("Please fill in all required fields.");
       return;
     }
-    contactEdit(formData);
+    editContactMutate(formData);
   };
-
-  console.log("formData", formData);
 
   return (
     <>
@@ -367,15 +364,12 @@ const Edit = () => {
           </Grid>
         </Box>
       </Container>
-      <Snackbar
+      <SnackbarAlert
         open={openSnackbar}
-        autoHideDuration={5000}
+        severity={snackbarSeverity}
+        message={snackbarMessage}
         onClose={handleSnackbarClose}
-      >
-        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
+      />
     </>
   );
 };

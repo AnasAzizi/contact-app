@@ -2,15 +2,9 @@ import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import ContactTable from "@/components/ContactTable";
 import SecondNavBar from "@/components/SecondNavBar";
+import SnackbarAlert from "@/components/SnackbarAlert";
 import { useRouter } from "next/router";
-import {
-  Container,
-  FormControl,
-  Button,
-  Alert,
-  Snackbar,
-  TextField,
-} from "@mui/material";
+import { Container, FormControl, Button, TextField } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { ShowContact, deleteContact } from "@/pages/api/contact";
 
@@ -42,7 +36,7 @@ const Contacts = () => {
       setOpenSnackbar(true);
       setSnackbarSeverity("success");
       setSnackbarMessage("Deleted contact successfully!");
-      setSelectedIds([]); 
+      setSelectedIds([]);
     },
   });
 
@@ -64,7 +58,6 @@ const Contacts = () => {
     queryKey: ["contacts"],
     queryFn: ShowContact,
   });
-
 
   if (!data) {
     return <div>No data available.</div>;
@@ -88,12 +81,12 @@ const Contacts = () => {
             justifyContent={{ md: "flex-end" }}
             size={{ xs: 12, md: 9, lg: 8.5 }}
             gap={{ md: "25px" }}
-            rowSpacing={{xs:"13px",md:"0px"}}
-            columnSpacing={{xs:"13px",md:"0px"}}
+            rowSpacing={{ xs: "13px", md: "0px" }}
+            columnSpacing={{ xs: "13px", md: "0px" }}
           >
             <Grid item="true" size={{ xs: 6, md: 1.2, lg: 1 }}>
               <Button
-                onClick={handleDelete} 
+                onClick={handleDelete}
                 fullWidth
                 sx={{
                   fontSize: "18px",
@@ -138,7 +131,7 @@ const Contacts = () => {
                 Send Email
               </Button>
             </Grid>
-            
+
             <Grid item="true" size={{ xs: 6, md: 2.7, lg: 2.5 }}>
               <Button
                 onClick={() => router.push("/contacts/create-new")}
@@ -181,15 +174,12 @@ const Contacts = () => {
           resetSelection={resetSelection}
         />
       </Container>
-      <Snackbar
+      <SnackbarAlert
         open={openSnackbar}
-        autoHideDuration={5000}
+        severity={snackbarSeverity}
+        message={snackbarMessage}
         onClose={handleSnackbarClose}
-      >
-        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
+      />
     </>
   );
 };

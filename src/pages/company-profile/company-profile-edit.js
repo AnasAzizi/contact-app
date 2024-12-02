@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import SecondNavBar from "@/components/SecondNavBar";
-import { useRouter } from "next/router";
+import SnackbarAlert from "@/components/SnackbarAlert";
 import {
   Container,
   Typography,
@@ -13,8 +14,6 @@ import {
   Select,
   MenuItem,
   Box,
-  Alert,
-  Snackbar,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -29,9 +28,8 @@ const CompanyProfileEdit = () => {
     setOpenSnackbar(false);
   };
 
-
   const [formData, setFormData] = useState({
-    id:"",
+    id: "",
     companyName: "",
     vatNumber: "",
     streetOne: "",
@@ -50,7 +48,7 @@ const CompanyProfileEdit = () => {
   useEffect(() => {
     if (Company) {
       setFormData({
-        id:Company.id || "",
+        id: Company.id || "",
         companyName: Company.companyName || "",
         vatNumber: Company.vatNumber || "",
         streetOne: Company.streetOne || "",
@@ -68,11 +66,11 @@ const CompanyProfileEdit = () => {
     onSuccess: () => {
       setOpenSnackbar(true);
       setSnackbarSeverity("success");
-      setSnackbarMessage("Contact updated successful!");
+      setSnackbarMessage("company profile updated successful!");
       router.push("/home/home-page");
     },
     onError: (error) => {
-      console.error("Error updating contact:", error);
+      console.error("Error company profile contact:", error);
     },
   });
 
@@ -85,7 +83,6 @@ const CompanyProfileEdit = () => {
     e.preventDefault();
     EditCompaniesMutate(formData);
   };
-
 
   return (
     <>
@@ -290,6 +287,12 @@ const CompanyProfileEdit = () => {
           </Grid>
         </Box>
       </Container>
+      <SnackbarAlert
+        open={openSnackbar}
+        severity={snackbarSeverity}
+        message={snackbarMessage}
+        onClose={handleSnackbarClose}
+      />
     </>
   );
 };

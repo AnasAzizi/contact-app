@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import { useMutation } from "@tanstack/react-query";
+import { setNewPassword } from "@/pages/api/auth";
+import SnackbarAlert from "@/components/SnackbarAlert";
 import {
   Box,
   Button,
@@ -12,12 +12,11 @@ import {
   InputLabel,
   FormControl,
   IconButton,
-  Alert,
-  Snackbar,
   FormHelperText,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { setNewPassword } from "@/pages/api/auth";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
 const SetPasswordForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -86,7 +85,7 @@ const SetPasswordForm = () => {
     if (!validatePassword()) return;
 
     try {
-      await passwordReset( password );
+      await passwordReset(password);
     } catch (e) {
       console.error(e);
     }
@@ -227,15 +226,12 @@ const SetPasswordForm = () => {
           </Grid>
         </Box>
       </Grid>
-      <Snackbar
+      <SnackbarAlert
         open={openSnackbar}
-        autoHideDuration={5000}
+        severity={snackbarSeverity}
+        message={snackbarMessage}
         onClose={handleSnackbarClose}
-      >
-        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
+      />
     </>
   );
 };
