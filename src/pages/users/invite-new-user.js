@@ -233,6 +233,7 @@ const InviteNewUser = () => {
                 <Button
                   onClick={() => router.push("/home/users")}
                   fullWidth
+                  variant="outlined"
                   bgcolor="#4E73DF"
                   sx={{
                     textTransform: "none",

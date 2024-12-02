@@ -42,6 +42,9 @@ const Users = () => {
     mutationFn: UserDelete,
     onSuccess: () => {
       queryClient.invalidateQueries(["getUsers"]);
+      setOpenSnackbar(true);
+      setSnackbarSeverity("success");
+      setSnackbarMessage("Deleted contact successfully!");
       setResetSelection(true);
       setSelectedIds([]);
     },

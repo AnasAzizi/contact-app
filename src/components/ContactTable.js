@@ -123,7 +123,7 @@ const ContactTable = ({
         .filter((item) => {
           return item.firstName.includes(search);
         })
-        .map((row,index) => {
+        .map((row, index) => {
           const isItemSelected = selectedId.includes(row.id);
           return (
             <Card
@@ -143,10 +143,10 @@ const ContactTable = ({
                   sx={{ px: "18px" }}
                 >
                   <Grid item="true">
-                  <Checkbox
-                        checked={isItemSelected}
-                        onClick={(event) => handleCheckboxClick(event, row.id)}
-                      />
+                    <Checkbox
+                      checked={isItemSelected}
+                      onClick={(event) => handleCheckboxClick(event, row.id)}
+                    />
                   </Grid>
                   <Grid item="true">
                     <Button onClick={() => handleStarClick(row.id)}>
@@ -225,7 +225,7 @@ const ContactTable = ({
       >
         <Table>
           <TableHead>
-            <TableRow>
+            <TableRow sx={{ borderBottom: "2px #343A40 solid" }}>
               <TableCell padding="checkbox">
                 <Checkbox color="primary" />
               </TableCell>
@@ -247,7 +247,11 @@ const ContactTable = ({
               .map((row) => {
                 const isItemSelected = selectedId.includes(row.id);
                 return (
-                  <TableRow key={row.id} selected={isItemSelected}>
+                  <TableRow
+                    key={row.id}
+                    selected={isItemSelected}
+                    sx={{ borderBottom: "1px #DDE1E6 solid" }}
+                  >
                     <TableCell padding="checkbox">
                       <Checkbox
                         checked={isItemSelected}

@@ -196,7 +196,7 @@ const UserTable = ({
       >
         <Table>
           <TableHead>
-            <TableRow>
+            <TableRow sx={{ borderBottom: "2px #343A40 solid" }}>
               <TableCell padding="checkbox">
                 <Checkbox color="primary" />
               </TableCell>
@@ -217,12 +217,12 @@ const UserTable = ({
           <TableBody>
             {paginatedData
               .filter((item) => {
-                return item.firstName.includes(search.toLowerCase());
+                return item.firstName.includes(search);
               })
               .map((row, index) => {
                 const isItemSelected = selected.includes(row.id);
                 return (
-                  <TableRow key={row.id} selected={isItemSelected}>
+                  <TableRow key={row.id} selected={isItemSelected} sx={{ borderBottom: "1px #DDE1E6 solid" }}>
                     <TableCell padding="checkbox">
                       <Checkbox
                         checked={selectedId.includes(row.id)}

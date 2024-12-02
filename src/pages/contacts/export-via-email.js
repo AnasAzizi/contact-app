@@ -1,4 +1,5 @@
-import UserTable from "@/components/UserTable";
+import React, { useState } from "react";
+import ContactTable from "@/components/ContactTable";
 import userData from "@/data/userData.json";
 import SecondNavBar from "@/components/SecondNavBar";
 
@@ -12,6 +13,7 @@ import {
 import Grid from "@mui/material/Grid2";
 
 const ExportViaEmail = () => {
+  const [search, setSearch] = useState("");
   return (
     <>
       <Container maxWidth="xl">
@@ -79,7 +81,7 @@ const ExportViaEmail = () => {
             </FormControl>
           </Grid>
         </Grid>
-        <UserTable data={userData} favorite={true} url="/contacts/view" />
+        <ContactTable data={userData} search={search}  />
       </Container>
     </>
   );

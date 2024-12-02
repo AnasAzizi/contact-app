@@ -159,7 +159,7 @@ const Contacts = () => {
               <TextField
                 size="small"
                 variant="outlined"
-                placeholder="search"
+                placeholder="Search"
                 type="search"
                 onInput={(e) => setSearch(e.target.value)}
               />

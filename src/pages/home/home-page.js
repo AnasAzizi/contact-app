@@ -3,6 +3,7 @@ import Image from "next/image";
 import SecondNavBar from "@/components/SecondNavBar";
 import Link from "next/link";
 import { Activities } from "@/pages/api/contact";
+import { ShowContact } from "@/pages/api/contact";
 import { useQuery } from "@tanstack/react-query";
 import {
   Container,
@@ -23,6 +24,35 @@ const HomePage = () => {
     queryKey: ["activities"],
     queryFn: Activities,
   });
+
+  const { data: Contact } = useQuery({
+    queryKey: ["contacts"],
+    queryFn: ShowContact,
+  });
+
+  let counts = { Active: 0, Inactive: 0, email: 0, emailTwo: 0 };
+
+  if (Contact) {
+    counts = Contact.reduce(
+      (acc, item) => {
+        if (item.status === "Active") {
+          acc.Active += 1;
+        } else if (item.status === "Inactive") {
+          acc.Inactive += 1;
+        }
+
+        if (item.email) {
+          acc.email += 1;
+        }
+        if (item.emailTwo) {
+          acc.emailTwo += 1;
+        }
+
+        return acc;
+      },
+      { Active: 0, Inactive: 0, email: 0, emailTwo: 0 } // Initial values
+    );
+  }
 
   if (!data) {
     return <div>No data available.</div>;
@@ -63,7 +93,7 @@ const HomePage = () => {
                       justifyContent: "space-between",
                     }}
                   >
-                    <Typography fontSize={40}>101</Typography>
+                    <Typography fontSize={40}>{counts.Active}</Typography>
                     <Image
                       src="/homePageIcons/arrow-down-circle-fill.svg"
                       alt="arrow-down Icon"
@@ -112,7 +142,7 @@ const HomePage = () => {
                       p: 0,
                     }}
                   >
-                    <Typography fontSize={40}>101</Typography>
+                    <Typography fontSize={40}>{counts.Inactive}</Typography>
                     <Image
                       src="/homePageIcons/arrow-down-circle-fill.svg"
                       alt="arrow-down Icon"
@@ -161,7 +191,7 @@ const HomePage = () => {
                       p: 0,
                     }}
                   >
-                    <Typography fontSize={40}>101</Typography>
+                    <Typography fontSize={40}>{counts.Inactive}</Typography>
                     <Image
                       src="/homePageIcons/email.svg"
                       alt="arrow-down Icon"
@@ -210,7 +240,7 @@ const HomePage = () => {
                       p: 0,
                     }}
                   >
-                    <Typography fontSize={40}>101</Typography>
+                    <Typography fontSize={40}>{counts.emailTwo}</Typography>
                     <Image
                       src="/homePageIcons/x-circle-fill.svg"
                       alt="arrow-down Icon"
@@ -243,6 +273,7 @@ const HomePage = () => {
               </Card>
             </Grid>
           </Grid>
+
           <Grid item="true" size={{ xs: 12, md: 6 }} mt={{ xs: "40px", md: 0 }}>
             <Card
               sx={{
@@ -252,7 +283,7 @@ const HomePage = () => {
                 fontSize: "26px",
               }}
             >
-              <Link href="/home/activities" passHref>
+              <Link href="/home/activities">
                 <Typography
                   sx={{ fontSize: "26px", mt: "20px", ml: "40px", mt: "18px" }}
                 >
