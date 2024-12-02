@@ -100,84 +100,94 @@ const UserTable = ({
 
   return (
     <>
-      {data.map((row, index) => (
-        <Card
-          key={index}
-          sx={{
-            display: { xs: "block", lg: "none" },
-            mb: "19px",
-            minHeight: "274px",
-          }}
-        >
-          <CardContent sx={{ px: "0px", pt: "13px" }}>
-            <Grid
-              container
-              size={12}
-              justifyContent="space-between"
-              alignItems="center"
-              sx={{ px: "18px" }}
+      {paginatedData
+        .filter((item) => {
+          return item.firstName.includes(search);
+        })
+        .map((row, index) => {
+          const isItemSelected = selectedId.includes(row.id);
+          return (
+            <Card
+              key={index}
+              sx={{
+                display: { xs: "block", lg: "none" },
+                mb: "19px",
+                minHeight: "274px",
+              }}
             >
-              <Grid item="true">
-                <Checkbox size="medium" />
-              </Grid>
-            </Grid>
-            <Divider />
-            <Grid
-              container
-              size={12}
-              display="flex"
-              direction="row"
-              justifyContent="space-between"
-              sx={{ mx: "10px" }}
-              mt="20px"
-            >
-              <Grid item="true">
-                <StatusChip label={`#${row.id}`} />
-              </Grid>
-              <Grid item="true">
-                <Avatar
-                  alt={`${row.firstName} ${row.lastName}`}
-                  src={row.imageUrl}
-                  sx={{ width: 80, height: 80, mb: "9px" }}
-                />
-              </Grid>
-              <Grid item="true">
-                <StatusChip
-                  label={row.status}
-                  statuscolor={getStatusColor(row.status)}
-                />
-              </Grid>
-            </Grid>
-            <Grid
-              container
-              direction="column"
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Grid item="true">
-                <Typography fontSize="24px" fontWeight="bold">
-                  {row.firstName}
-                  {row.lastName}
-                </Typography>
-              </Grid>
-              <Grid item="true" size={12}>
-                <Divider orientation="horizontal" />
-              </Grid>
-              <Grid item="true">
-                <Typography fontSize="18px" color="#808080" my="5px">
-                  {row.email}
-                </Typography>
-              </Grid>
-              <Grid item="true">
-                <Typography fontSize="18px" color="#808080">
-                  {row.phoneNumber}
-                </Typography>
-              </Grid>
-            </Grid>
-          </CardContent>
-        </Card>
-      ))}
+              <CardContent sx={{ px: "0px", pt: "13px" }}>
+                <Grid
+                  container
+                  size={12}
+                  justifyContent="space-between"
+                  alignItems="center"
+                  sx={{ px: "18px" }}
+                >
+                  <Grid item="true">
+                    <Checkbox
+                      checked={isItemSelected}
+                      onClick={(event) => handleCheckboxClick(event, row.id)}
+                    />
+                  </Grid>
+                </Grid>
+                <Divider />
+                <Grid
+                  container
+                  size={12}
+                  display="flex"
+                  direction="row"
+                  justifyContent="space-between"
+                  sx={{ mx: "10px" }}
+                  mt="20px"
+                >
+                  <Grid item="true">
+                    <StatusChip label={`#${row.id}`} />
+                  </Grid>
+                  <Grid item="true">
+                    <Avatar
+                      alt={`${row.firstName} ${row.lastName}`}
+                      src={row.imageUrl}
+                      sx={{ width: 80, height: 80, mb: "9px" }}
+                    />
+                  </Grid>
+                  <Grid item="true">
+                    <StatusChip
+                      label={row.status}
+                      statuscolor={getStatusColor(row.status)}
+                    />
+                  </Grid>
+                </Grid>
+                <Grid
+                  container
+                  direction="column"
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <Grid item="true">
+                    <Typography fontSize="24px" fontWeight="bold">
+                      {row.firstName}
+                      {row.lastName}
+                    </Typography>
+                  </Grid>
+                  <Grid item="true" size={12}>
+                    <Divider orientation="horizontal" />
+                  </Grid>
+                  <Grid item="true">
+                    <Typography fontSize="18px" color="#808080" my="5px">
+                      {row.email}
+                    </Typography>
+                  </Grid>
+                  <Grid item="true">
+                    <Typography fontSize="18px" color="#808080">
+                      {row.phoneNumber}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
+          );
+        })}
       <TableContainer
         component={Paper}
         sx={{
@@ -297,7 +307,6 @@ const UserTable = ({
           </TableBody>
         </Table>
       </TableContainer>
-
       {/* Pagination Component */}
       <TablePagination
         data={data}
