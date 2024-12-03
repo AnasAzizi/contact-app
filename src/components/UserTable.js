@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { CurrnetUserContext } from "@/Context/Context";
 import {
   Table,
   TableBody,
@@ -33,6 +34,9 @@ const UserTable = ({
   onResetComplete,
 }) => {
   const router = useRouter();
+  const CurrentUser = useContext(CurrnetUserContext);
+  const userRole = CurrentUser.currentUser.role;
+
   const [selected, setSelected] = useState([]);
   const [selectedId, setSelectedId] = useState([]);
   const [tooltipText, setTooltipText] = useState("Copy");
@@ -101,7 +105,7 @@ const UserTable = ({
   return (
     <>
       {paginatedData
-        .filter((item) => {
+        .filter((item, index) => {
           return item.firstName.includes(search);
         })
         .map((row, index) => {
@@ -116,21 +120,27 @@ const UserTable = ({
               }}
             >
               <CardContent sx={{ px: "0px", pt: "13px" }}>
-                <Grid
-                  container
-                  size={12}
-                  justifyContent="space-between"
-                  alignItems="center"
-                  sx={{ px: "18px" }}
-                >
-                  <Grid item="true">
-                    <Checkbox
-                      checked={isItemSelected}
-                      onClick={(event) => handleCheckboxClick(event, row.id)}
-                    />
-                  </Grid>
-                </Grid>
-                <Divider />
+                {userRole !== "User" && (
+                  <>
+                    <Grid
+                      container
+                      size={12}
+                      justifyContent="space-between"
+                      alignItems="center"
+                      sx={{ px: "18px" }}
+                    >
+                      <Grid item="true">
+                        <Checkbox
+                          checked={isItemSelected}
+                          onClick={(event) =>
+                            handleCheckboxClick(event, row.id)
+                          }
+                        />
+                      </Grid>
+                    </Grid>
+                    <Divider />
+                  </>
+                )}
                 <Grid
                   container
                   size={12}
@@ -141,7 +151,7 @@ const UserTable = ({
                   mt="20px"
                 >
                   <Grid item="true">
-                    <StatusChip label={`#${row.id}`} />
+                    <StatusChip label={1 + index} />
                   </Grid>
                   <Grid item="true">
                     <Avatar
@@ -222,7 +232,11 @@ const UserTable = ({
               .map((row, index) => {
                 const isItemSelected = selected.includes(row.id);
                 return (
-                  <TableRow key={row.id} selected={isItemSelected} sx={{ borderBottom: "1px #DDE1E6 solid" }}>
+                  <TableRow
+                    key={row.id}
+                    selected={isItemSelected}
+                    sx={{ borderBottom: "1px #DDE1E6 solid" }}
+                  >
                     <TableCell padding="checkbox">
                       <Checkbox
                         checked={selectedId.includes(row.id)}

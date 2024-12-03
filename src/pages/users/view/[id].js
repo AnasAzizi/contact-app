@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
+import { CurrnetUserContext } from "@/Context/Context";
 import {
   Container,
   Typography,
@@ -21,6 +22,8 @@ import { UserView } from "@/pages/api/user";
 const ViewUser = () => {
   const router = useRouter();
   const { id } = router.query;
+  const CurrentUser = useContext(CurrnetUserContext);
+  const userRole = CurrentUser.currentUser.role;
   const [contact, setContact] = useState(null);
 
   const { mutateAsync: UserViewMutate } = useMutation({
@@ -76,11 +79,13 @@ const ViewUser = () => {
                 mr: "40px",
               }}
             >
-              <Typography>Unlocked</Typography>
+              <Typography fontSize="20px">
+                {contact.status === "Active" ? "Unlocked" : "Locked"}
+              </Typography>
               <Switch
                 disabled
                 name="status"
-                checked={contact.status === "Active"}
+                checked={contact.status === "Locked"}
               />
             </Box>
           </Card>
@@ -138,22 +143,24 @@ const ViewUser = () => {
               </FormControl>
             </Grid>
             <Grid container item="true" direction="row" size={12} pt="30px">
-              <Grid item="true" size={{ xs: 6, md: 2 }}>
-                <Button
-                  onClick={() => router.push(`/users/edit/${id}`)}
-                  fullWidth
-                  sx={{
-                    textTransform: "none",
-                    fontSize: "20px",
-                    color: "#4E73DF",
-                    borderColor: "#4E73DF",
-                  }}
-                  variant="outlined"
-                  startIcon={<EditOffOutlinedIcon />}
-                >
-                  Edit
-                </Button>
-              </Grid>
+              {userRole !== "User" && (
+                <Grid item="true" size={{ xs: 6, md: 2 }}>
+                  <Button
+                    onClick={() => router.push(`/users/edit/${id}`)}
+                    fullWidth
+                    sx={{
+                      textTransform: "none",
+                      fontSize: "20px",
+                      color: "#4E73DF",
+                      borderColor: "#4E73DF",
+                    }}
+                    variant="outlined"
+                    startIcon={<EditOffOutlinedIcon />}
+                  >
+                    Edit
+                  </Button>
+                </Grid>
+              )}
               <Grid item="true" size={{ xs: 6, md: 2 }}>
                 <Button
                   onClick={() => router.push("/home/users")}

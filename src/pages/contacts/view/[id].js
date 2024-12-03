@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
+import { CurrnetUserContext } from "@/Context/Context";
 import SecondNavBar from "@/components/SecondNavBar";
 import { useRouter } from "next/router";
 import {
@@ -20,6 +21,9 @@ import { viewContact } from "@/pages/api/contact";
 const View = () => {
   const router = useRouter();
   const { id } = router.query;
+  const CurrentUser = useContext(CurrnetUserContext);
+  const userRole = CurrentUser.currentUser.role;
+
   const [contact, setContact] = useState(null);
 
   const { mutateAsync: contactView } = useMutation({
@@ -76,7 +80,10 @@ const View = () => {
                 mr: "40px",
               }}
             >
-              <Typography>Active</Typography>
+              <Typography fontSize="20px">
+                {" "}
+                {contact.status === "Active" ? "Active" : "Inactive"}
+              </Typography>
               <Switch
                 disabled
                 name="status"
@@ -236,21 +243,23 @@ const View = () => {
                 ml={{ md: "27px" }}
                 gap={{ xs: 3, md: 10 }}
               >
-                <Grid item="true" size={{ xs: 12, sm: 5.7, md: 2 }}>
-                  <Button
-                    onClick={() => router.push(`/contacts/edit/${id}`)}
-                    fullWidth
-                    sx={{
-                      textTransform: "none",
-                      fontSize: "20px",
-                      color: "#4E73DF",
-                    }}
-                    variant="outlined"
-                    startIcon={<EditOffOutlinedIcon />}
-                  >
-                    Edit
-                  </Button>
-                </Grid>
+                {userRole !== "User" && (
+                  <Grid item="true" size={{ xs: 12, sm: 5.7, md: 2 }}>
+                    <Button
+                      onClick={() => router.push(`/contacts/edit/${id}`)}
+                      fullWidth
+                      sx={{
+                        textTransform: "none",
+                        fontSize: "20px",
+                        color: "#4E73DF",
+                      }}
+                      variant="outlined"
+                      startIcon={<EditOffOutlinedIcon />}
+                    >
+                      Edit
+                    </Button>
+                  </Grid>
+                )}
                 <Grid item="true" size={{ xs: 12, sm: 5.7, md: 2 }}>
                   <Button
                     onClick={() => router.push("/home/contacts")}

@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { UserView, UserEdit } from "@/pages/api/user";
+import SecondNavBar from "@/components/SecondNavBar";
+import SnackbarAlert from "@/components/SnackbarAlert";
 import {
   Container,
   Typography,
@@ -14,12 +17,16 @@ import {
   Box,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import SecondNavBar from "@/components/SecondNavBar";
-import { useRouter } from "next/router";
 
 const EditUser = () => {
   const router = useRouter();
   const { id } = router.query;
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarSeverity, setSnackbarSeverity] = useState("error");
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const handleSnackbarClose = () => {
+    setOpenSnackbar(false);
+  };
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -104,8 +111,21 @@ const EditUser = () => {
               mr: "40px",
             }}
           >
-            <Typography>Unlocked</Typography>
-            <Switch defaultChecked />
+            <Typography fontSize="20px">
+              {formData.status === "Active" ? "Unlocked" : "Locked"}
+            </Typography>
+            <Switch
+              name="status"
+              checked={formData.status === "Locked"}
+              onChange={(e) =>
+                handleChange({
+                  target: {
+                    name: "status",
+                    value: e.target.checked ? "Locked" : "Active",
+                  },
+                })
+              }
+            />
           </Box>
         </Card>
         <Box component="form" onSubmit={handleSubmit}>
@@ -227,6 +247,12 @@ const EditUser = () => {
           </Grid>
         </Box>
       </Container>
+      <SnackbarAlert
+        open={openSnackbar}
+        severity={snackbarSeverity}
+        message={snackbarMessage}
+        onClose={handleSnackbarClose}
+      />
     </>
   );
 };

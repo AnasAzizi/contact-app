@@ -1,5 +1,6 @@
-import React, { useState,useContext} from "react";
+import React, { useState, useContext } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { CurrnetUserContext } from "@/Context/Context";
 import ContactTable from "@/components/ContactTable";
 import SecondNavBar from "@/components/SecondNavBar";
 import SnackbarAlert from "@/components/SnackbarAlert";
@@ -7,16 +8,14 @@ import { useRouter } from "next/router";
 import { Container, FormControl, Button, TextField } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { ShowContact, deleteContact } from "@/pages/api/contact";
-import { CurrnetUserContext } from "@/Context/Context";
 
 const Contacts = () => {
   const CurrentUser = useContext(CurrnetUserContext);
-  console.log("currentUser role:", CurrentUser.currentUser.role);
+  const userRole = CurrentUser.currentUser.role;
 
   const [search, setSearch] = useState("");
   const [selectedIds, setSelectedIds] = useState([]);
   const [resetSelection, setResetSelection] = useState(false);
-
 
   const handleSelectedId = (newSelected) => {
     setSelectedIds(newSelected);
@@ -89,21 +88,23 @@ const Contacts = () => {
             rowSpacing={{ xs: "13px", md: "0px" }}
             columnSpacing={{ xs: "13px", md: "0px" }}
           >
-            <Grid item="true" size={{ xs: 6, md: 1.2, lg: 1 }}>
-              <Button
-                onClick={handleDelete}
-                fullWidth
-                sx={{
-                  fontSize: "18px",
-                  textTransform: "none",
-                  boxShadow: 0,
-                }}
-                color="error"
-                variant="contained"
-              >
-                Delete
-              </Button>
-            </Grid>
+            {userRole !== "User" && (
+              <Grid item="true" size={{ xs: 6, md: 1.2, lg: 1 }}>
+                <Button
+                  onClick={handleDelete}
+                  fullWidth
+                  sx={{
+                    fontSize: "18px",
+                    textTransform: "none",
+                    boxShadow: 0,
+                  }}
+                  color="error"
+                  variant="contained"
+                >
+                  Delete
+                </Button>
+              </Grid>
+            )}
 
             <Grid item="true" size={{ xs: 6, md: 2.2, lg: 1.7 }}>
               <Button
@@ -136,22 +137,23 @@ const Contacts = () => {
                 Send Email
               </Button>
             </Grid>
-
-            <Grid item="true" size={{ xs: 6, md: 2.7, lg: 2.5 }}>
-              <Button
-                onClick={() => router.push("/contacts/create-new")}
-                fullWidth
-                sx={{
-                  bgcolor: { xs: "#4E73DF", md: "#28A745" },
-                  fontSize: "18px",
-                  textTransform: "none",
-                  boxShadow: 0,
-                }}
-                variant="contained"
-              >
-                Create New
-              </Button>
-            </Grid>
+            {userRole !== "User" && (
+              <Grid item="true" size={{ xs: 6, md: 2.7, lg: 2.5 }}>
+                <Button
+                  onClick={() => router.push("/contacts/create-new")}
+                  fullWidth
+                  sx={{
+                    bgcolor: { xs: "#4E73DF", md: "#28A745" },
+                    fontSize: "18px",
+                    textTransform: "none",
+                    boxShadow: 0,
+                  }}
+                  variant="contained"
+                >
+                  Create New
+                </Button>
+              </Grid>
+            )}
           </Grid>
           <Grid item="true" size={{ xs: 12, md: 3, lg: 3.5 }}>
             <FormControl

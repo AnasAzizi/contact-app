@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { GetCompanies } from "@/pages/api/companies";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { CurrnetUserContext } from "@/Context/Context";
 import SecondNavBar from "@/components/SecondNavBar";
 import {
   Container,
@@ -21,8 +22,10 @@ import EditOffOutlinedIcon from "@mui/icons-material/EditOffOutlined";
 
 const CompanyProfile = () => {
   const router = useRouter();
+  const CurrentUser = useContext(CurrnetUserContext);
+  const userRole = CurrentUser.currentUser.role;
 
-  const { data, error } = useQuery({
+  const { data } = useQuery({
     queryKey: ["companies"],
     queryFn: GetCompanies,
   });
@@ -31,9 +34,8 @@ const CompanyProfile = () => {
     return <div>No data available.</div>;
   }
 
-  console.log("data",data)
   return (
-    <> 
+    <>
       <Container maxWidth="xl">
         <SecondNavBar path="Home / Company Profile" />
         <Card
@@ -148,23 +150,25 @@ const CompanyProfile = () => {
               </FormControl>
             </Grid>
             <Grid item="true" size={{ xs: 8, md: 5, lg: 3.1 }}>
-              <Button
-                onClick={() =>
-                  router.push("/company-profile/company-profile-edit")
-                }
-                fullWidth
-                sx={{
-                  mt: "26px",
-                  textTransform: "none",
-                  fontSize: "20px",
-                  color: "#4E73DF",
-                  borderColor: "#4E73DF",
-                }}
-                variant="outlined"
-                startIcon={<EditOffOutlinedIcon />}
-              >
-                Edit
-              </Button>
+              {userRole !== "User" && (
+                <Button
+                  onClick={() =>
+                    router.push("/company-profile/company-profile-edit")
+                  }
+                  fullWidth
+                  sx={{
+                    mt: "26px",
+                    textTransform: "none",
+                    fontSize: "20px",
+                    color: "#4E73DF",
+                    borderColor: "#4E73DF",
+                  }}
+                  variant="outlined"
+                  startIcon={<EditOffOutlinedIcon />}
+                >
+                  Edit
+                </Button>
+              )}
             </Grid>
           </Grid>
           <Grid item="true" size={4}>
@@ -179,8 +183,8 @@ const CompanyProfile = () => {
               <Image
                 src={"/map.png"}
                 alt="logo"
-                layout="fill"
-                objectFit="cover"
+                fill={true}
+                object-fit="cover"
                 priority={true}
               />
             </Box>

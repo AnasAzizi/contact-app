@@ -43,6 +43,7 @@ const SendEmail = () => {
       setOpenSnackbar(true);
       setSnackbarSeverity("success");
       setSnackbarMessage("Email send successful!");
+      router.push("/home/contacts");
     },
     onError: (error) => {
       console.error("Error registering:", error);
@@ -99,7 +100,6 @@ const SendEmail = () => {
                 py={{ xs: 1, md: 0 }}
               >
                 <Button
-                  onClick={() => router.push("/home/contacts")}
                   type="submit"
                   variant="contained"
                   fullWidth
@@ -121,24 +121,26 @@ const SendEmail = () => {
             columnSpacing={4}
             rowSpacing={3}
             size={12}
-            py="32px"
+            py="39px"
             pl="35px"
-            pr="44px"
+            pr="49px"
+            flexDirection="column"
+            alignItems="flex-end"
           >
-            <Grid item="true" size={12}>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: "32px",
-                }}
-              >
+            <Grid container alignItems="center" item="true" size={12}>
+              <Grid item="true" size={1}>
                 <Typography
-                  sx={{ color: "black", fontWeight: "bold", fontSize: "20px" }}
+                  sx={{
+                    color: "black",
+                    fontWeight: "bold",
+                    fontSize: "20px",
+                    textAlign: "right",
+                  }}
                 >
                   To:
                 </Typography>
+              </Grid>
+              <Grid item="true" size={11}>
                 <TextField
                   error={!!error.to}
                   size="small"
@@ -148,22 +150,22 @@ const SendEmail = () => {
                   placeholder="abc@xyz.com"
                   helperText={error.to}
                 />
-              </Box>
+              </Grid>
             </Grid>
-            <Grid item="true" size={6}>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: "32px",
-                }}
-              >
+            <Grid container alignItems="center" item="true" size={12}>
+              <Grid item="true" size={1}>
                 <Typography
-                  sx={{ color: "black", fontWeight: "bold", fontSize: "20px" }}
+                  sx={{
+                    color: "black",
+                    fontWeight: "bold",
+                    fontSize: "20px",
+                    textAlign: "right",
+                  }}
                 >
                   CC:
                 </Typography>
+              </Grid>
+              <Grid item="true" size={5.3}>
                 <TextField
                   size="small"
                   name="cc"
@@ -171,22 +173,15 @@ const SendEmail = () => {
                   fullWidth
                   placeholder="abc@xyz.com"
                 />
-              </Box>
-            </Grid>
-            <Grid item="true" size={6}>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: "32px",
-                }}
-              >
+              </Grid>
+              <Grid item="true" size={0.7}>
                 <Typography
                   sx={{ color: "black", fontWeight: "bold", fontSize: "20px" }}
                 >
                   BCC:
                 </Typography>
+              </Grid>
+              <Grid item="true" size={5}>
                 <TextField
                   size="small"
                   name="bcc"
@@ -194,22 +189,22 @@ const SendEmail = () => {
                   fullWidth
                   placeholder="abc@xyz.com"
                 />
-              </Box>
+              </Grid>
             </Grid>
-            <Grid item="true" size={12}>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: "32px",
-                }}
-              >
+            <Grid container alignItems="center" item="true" size={12}>
+              <Grid item="true" size={1}>
                 <Typography
-                  sx={{ color: "black", fontWeight: "bold", fontSize: "20px" }}
+                  sx={{
+                    color: "black",
+                    fontWeight: "bold",
+                    fontSize: "20px",
+                    textAlign: "right",
+                  }}
                 >
                   Subject:
                 </Typography>
+              </Grid>
+              <Grid item="true" size={11}>
                 <TextField
                   size="small"
                   name="subject"
@@ -217,9 +212,9 @@ const SendEmail = () => {
                   fullWidth
                   placeholder="abc@xyz.com"
                 />
-              </Box>
+              </Grid>
             </Grid>
-            <Grid item="true" size={12} ml={8}>
+            <Grid item="true" size={11}>
               <TextField
                 name="body"
                 onChange={handleChange}

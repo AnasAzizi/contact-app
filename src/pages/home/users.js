@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ShowUsers, UserDelete } from "@/pages/api/user";
+import { CurrnetUserContext } from "@/Context/Context";
 import UserTable from "@/components/UserTable";
 import SecondNavBar from "@/components/SecondNavBar";
 import SnackbarAlert from "@/components/SnackbarAlert";
@@ -23,6 +24,8 @@ const Users = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarSeverity, setSnackbarSeverity] = useState("error");
   const [snackbarMessage, setSnackbarMessage] = useState("");
+  const CurrentUser = useContext(CurrnetUserContext);
+  const userRole = CurrentUser.currentUser.role;
 
   const handleSnackbarClose = () => {
     setOpenSnackbar(false);
@@ -80,6 +83,7 @@ const Users = () => {
               variant="outlined"
               sx={{
                 bgcolor: "white",
+                mb: { xs: "10px", md: 0 },
               }}
             >
               <InputLabel
@@ -97,54 +101,56 @@ const Users = () => {
               />
             </FormControl>
           </Grid>
-          <Grid
-            container
-            justifyContent="flex-end"
-            alignItems="center"
-            item="true"
-            size={{ xs: 12, md: 8.5, lg: 9.5 }}
-            direction={{ xs: "row-reverse", md: "row" }}
-            columnSpacing="22px"
-          >
+          {userRole !== "User" && (
             <Grid
+              container
+              justifyContent="flex-end"
+              alignItems="center"
               item="true"
-              size={{ xs: 4.5, md: 1.5, lg: 1.5 }}
-              py={{ xs: 1, md: 0 }}
+              size={{ xs: 12, md: 8.5, lg: 9.5 }}
+              direction={{ xs: "row-reverse", md: "row" }}
+              columnSpacing="22px"
             >
-              <Button
-                fullWidth
-                onClick={handleDelete}
-                color="error"
-                variant="contained"
-                sx={{
-                  fontSize: "18px",
-                  textTransform: "none",
-                  boxShadow: "none",
-                }}
+              <Grid
+                item="true"
+                size={{ xs: 4.5, md: 1.5, lg: 1.5 }}
+                mb={{ xs: "10px", md: 0 }}
               >
-                Delete
-              </Button>
-            </Grid>
-            <Grid
-              item="true"
-              size={{ xs: 7.5, md: 3.8, lg: 2.9 }}
-              py={{ xs: 1, md: 0 }}
-            >
-              <Button
-                onClick={() => router.push("/users/invite-new-user")}
-                variant="contained"
-                fullWidth
-                sx={{
-                  bgcolor: "#4E73DF",
-                  fontSize: "18px",
-                  textTransform: "none",
-                  boxShadow: "none",
-                }}
+                <Button
+                  fullWidth
+                  onClick={handleDelete}
+                  color="error"
+                  variant="contained"
+                  sx={{
+                    fontSize: "18px",
+                    textTransform: "none",
+                    boxShadow: "none",
+                  }}
+                >
+                  Delete
+                </Button>
+              </Grid>
+              <Grid
+                item="true"
+                size={{ xs: 7.5, md: 3.8, lg: 2.9 }}
+                mb={{ xs: "10px", md: 0 }}
               >
-                Invite New User
-              </Button>
+                <Button
+                  onClick={() => router.push("/users/invite-new-user")}
+                  variant="contained"
+                  fullWidth
+                  sx={{
+                    bgcolor: "#4E73DF",
+                    fontSize: "18px",
+                    textTransform: "none",
+                    boxShadow: "none",
+                  }}
+                >
+                  Invite New User
+                </Button>
+              </Grid>
             </Grid>
-          </Grid>
+          )}
         </Grid>
         <UserTable
           onSelectRows={handleSelectedId}

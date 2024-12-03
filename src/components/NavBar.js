@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -72,28 +72,14 @@ const NavBar = () => {
     setOpen(newOpen);
   };
 
-  const [firstName, setFirstName] = useState("");
-
-  useEffect(() => {
-    const storedName = localStorage.getItem("registeredName");
-    if (storedName) {
-      setFirstName(JSON.parse(storedName));
-    }
-  }, []);
-
-  const { data } = useQuery({
+  const { data, isLoading: userIsLoading } = useQuery({
     queryKey: ["currentuser"],
     queryFn: CurrentUser,
   });
 
-  const saveCurrentUser = async () => {
-    if (data) {
-      // Assuming setCurrentUser is async
-      await currentUser.setCurrentUser(data);
-    }
-  };
-
-  saveCurrentUser();
+  if (data) {
+    currentUser.setCurrentUser(data);
+  }
 
   const DrawerList = (
     <Box onClick={toggleDrawer(false)}>
@@ -259,11 +245,20 @@ const NavBar = () => {
                 color="#ffffff"
                 startIcon={<PersonIcon style={{ fontSize: "36px" }} />}
               >
-                {firstName}
+                {currentUser.currentUser
+                  ? currentUser.currentUser.firstName
+                  : "Guest"}
               </Button>
             </Tooltip>
             <Menu
-              sx={{ mt: "56px" }}
+              sx={{
+                mt: "59px",
+                "& .MuiPaper-root": {
+                  boxShadow: 0,
+                  py: "3px",
+                  border: "#E0E0E0 solid 1px",
+                },
+              }}
               anchorEl={anchorElUser}
               anchorOrigin={{
                 vertical: "top",
@@ -278,12 +273,13 @@ const NavBar = () => {
             >
               {settings.map((setting) => (
                 <MenuItem
+                  sx={{ px: 0, my: "5px", width: "200px" }}
                   key={setting}
                   onClick={() => {
                     handleCloseUserMenu();
                     if (setting === "Log out") {
-                      localStorage.removeItem("jwtToken");
                       router.push("/auth/sign-in");
+                      localStorage.removeItem("jwtToken");
                     }
                     if (setting === "My Profile") {
                       router.push(`/users/view/${data.id}`);

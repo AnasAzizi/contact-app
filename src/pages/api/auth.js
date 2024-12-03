@@ -12,11 +12,6 @@ const RegisterUser = async (formData, router) => {
     });
     if (response.status === 200) {
       console.log("Registration successful:", response);
-      const firstName = formData.firstName;
-
-      if (firstName) {
-        localStorage.setItem("registeredName", JSON.stringify(firstName));
-      }
       router.push("/auth/sign-in");
     }
     return response;
@@ -85,10 +80,10 @@ const setNewPassword = async (password, router) => {
   try {
     const endpoint = `/reset-password?id=${id}&code=${code}`;
     const payload = {
-      setPassword: true, 
-      password, 
-      id:id,
-      code:code
+      setPassword: true,
+      password,
+      id: id,
+      code: code,
     };
 
     const response = await axios.post(`${BASE_URL}${endpoint}`, payload, {

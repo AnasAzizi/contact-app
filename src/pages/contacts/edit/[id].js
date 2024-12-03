@@ -129,7 +129,9 @@ const Edit = () => {
               mr: "40px",
             }}
           >
-            <Typography>Active</Typography>
+            <Typography fontSize="20px">
+              {formData.status === "Active" ? "Active" : "Inactive"}
+            </Typography>
             <Switch
               checked={formData.status === "Active"}
               onChange={(e) =>

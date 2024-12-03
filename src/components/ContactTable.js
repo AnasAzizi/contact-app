@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useMutation } from "@tanstack/react-query";
 import { toggleFavorite } from "@/pages/api/contact";
+import { CurrnetUserContext } from "@/Context/Context";
 import TablePagination from "./TablePagination";
 import StatusChip from "./StatusChip";
 import {
@@ -37,6 +38,9 @@ const ContactTable = ({
   onResetComplete,
 }) => {
   const router = useRouter();
+  const CurrentUser = useContext(CurrnetUserContext);
+  const userRole = CurrentUser.currentUser.role;
+
   const [selectedId, setSelectedId] = useState([]);
   const [starred, setStarred] = useState({});
   const [tooltipText, setTooltipText] = useState("Copy");
@@ -93,7 +97,7 @@ const ContactTable = ({
 
   const headCells = [
     { id: "id", label: "ID" },
-    { id: "favorite", label: "Favorite" },
+    ...(userRole !== "User" ? [{ id: "favorite", label: "Favorite" }] : []),
     { id: "image", label: "Image" },
     { id: "firstName", label: "First Name" },
     { id: "lastName", label: "Last Name" },
@@ -135,32 +139,38 @@ const ContactTable = ({
               }}
             >
               <CardContent sx={{ px: "0px", pt: "13px" }}>
-                <Grid
-                  container
-                  size={12}
-                  justifyContent="space-between"
-                  alignItems="center"
-                  sx={{ px: "18px" }}
-                >
-                  <Grid item="true">
-                    <Checkbox
-                      checked={isItemSelected}
-                      onClick={(event) => handleCheckboxClick(event, row.id)}
-                    />
-                  </Grid>
-                  <Grid item="true">
-                    <Button onClick={() => handleStarClick(row.id)}>
-                      {starred[row.id] ? (
-                        <StarOutlinedIcon sx={{ fontSize: "35px" }} />
-                      ) : (
-                        <StarBorderOutlinedIcon
-                          sx={{ fontSize: "35px", color: "black" }}
+                {userRole !== "User" && (
+                  <>
+                    <Grid
+                      container
+                      size={12}
+                      justifyContent="space-between"
+                      alignItems="center"
+                      sx={{ px: "18px" }}
+                    >
+                      <Grid item="true">
+                        <Checkbox
+                          checked={isItemSelected}
+                          onClick={(event) =>
+                            handleCheckboxClick(event, row.id)
+                          }
                         />
-                      )}
-                    </Button>
-                  </Grid>
-                </Grid>
-                <Divider />
+                      </Grid>
+                      <Grid item="true">
+                        <Button onClick={() => handleStarClick(row.id)}>
+                          {starred[row.id] ? (
+                            <StarOutlinedIcon sx={{ fontSize: "35px" }} />
+                          ) : (
+                            <StarBorderOutlinedIcon
+                              sx={{ fontSize: "35px", color: "black" }}
+                            />
+                          )}
+                        </Button>
+                      </Grid>
+                    </Grid>
+                    <Divider />
+                  </>
+                )}
                 <Grid
                   container
                   size={12}
@@ -226,11 +236,22 @@ const ContactTable = ({
         <Table>
           <TableHead>
             <TableRow sx={{ borderBottom: "2px #343A40 solid" }}>
-              <TableCell padding="checkbox">
-                <Checkbox color="primary" />
-              </TableCell>
+              {userRole !== "User" && (
+                <TableCell padding="checkbox">
+                  <Checkbox color="primary" />
+                </TableCell>
+              )}
               {headCells.map((headCell) => (
-                <TableCell key={headCell.id} align="center">
+                <TableCell
+                  key={headCell.id}
+                  align={
+                    headCell.id === "email"
+                      ? "center"
+                      : userRole !== "User"
+                      ? "center"
+                      : "left"
+                  }
+                >
                   <TableSortLabel sx={{ fontSize: "20px", fontWeight: "bold" }}>
                     {headCell.label}
                   </TableSortLabel>
@@ -252,26 +273,32 @@ const ContactTable = ({
                     selected={isItemSelected}
                     sx={{ borderBottom: "1px #DDE1E6 solid" }}
                   >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={isItemSelected}
-                        onClick={(event) => handleCheckboxClick(event, row.id)}
-                      />
-                    </TableCell>
+                    {userRole !== "User" && (
+                      <TableCell padding="checkbox">
+                        <Checkbox
+                          checked={isItemSelected}
+                          onClick={(event) =>
+                            handleCheckboxClick(event, row.id)
+                          }
+                        />
+                      </TableCell>
+                    )}
                     <TableCell sx={{ fontSize: "21px", fontWeight: "bold" }}>
                       {row.id}
                     </TableCell>
-                    <TableCell>
-                      <Button onClick={() => handleStarClick(row.id)}>
-                        {starred[row.id] ? (
-                          <StarOutlinedIcon sx={{ fontSize: "35px" }} />
-                        ) : (
-                          <StarBorderOutlinedIcon
-                            sx={{ fontSize: "35px", color: "black" }}
-                          />
-                        )}
-                      </Button>
-                    </TableCell>
+                    {userRole !== "User" && (
+                      <TableCell>
+                        <Button onClick={() => handleStarClick(row.id)}>
+                          {starred[row.id] ? (
+                            <StarOutlinedIcon sx={{ fontSize: "35px" }} />
+                          ) : (
+                            <StarBorderOutlinedIcon
+                              sx={{ fontSize: "35px", color: "black" }}
+                            />
+                          )}
+                        </Button>
+                      </TableCell>
+                    )}
                     <TableCell>
                       <Avatar
                         alt={`${row.firstName} ${row.lastName}`}
