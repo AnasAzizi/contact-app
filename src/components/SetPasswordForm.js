@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useMutation } from "@tanstack/react-query";
-import { setNewPassword } from "@/pages/api/auth";
+import { SetNewPassword } from "@/pages/api/auth";
 import SnackbarAlert from "@/components/SnackbarAlert";
 import {
   Box,
@@ -59,8 +59,8 @@ const SetPasswordForm = () => {
     setOpenSnackbar(false);
   };
 
-  const { mutateAsync: passwordReset } = useMutation({
-    mutationFn: (password) => setNewPassword(password, router),
+  const { mutateAsync: SetNewPasswordMutate } = useMutation({
+    mutationFn: (password) => SetNewPassword(password, router),
     onSuccess: () => {
       setOpenSnackbar(true);
       setSnackbarSeverity("success");
@@ -85,7 +85,7 @@ const SetPasswordForm = () => {
     if (!validatePassword()) return;
 
     try {
-      await passwordReset(password);
+      await SetNewPasswordMutate(password);
     } catch (e) {
       console.error(e);
     }

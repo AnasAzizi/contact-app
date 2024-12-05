@@ -14,7 +14,7 @@ const RegisterUser = async (formData) => {
   }
 };
 
-const loginUser = async (formData) => {
+const LoginUser = async (formData) => {
   try {
     const endpoint = "/login";
     const response = await axiosClient.post(`${endpoint}`, formData);
@@ -29,7 +29,7 @@ const loginUser = async (formData) => {
   }
 };
 
-const resetPassword = async (email) => {
+const ResetPassword = async (email) => {
   try {
     const endpoint = "/forgot-password";
     const payload = { Email: email };
@@ -45,13 +45,9 @@ const resetPassword = async (email) => {
   }
 };
 
-const setNewPassword = async (password, router) => {
+const SetNewPassword = async (password, router) => {
   const id = router.query.id;
   const code = router.query.code;
-
-  console.log("id", id);
-  console.log("code", code);
-
   try {
     const endpoint = `/reset-password?id=${id}&code=${code}`;
     const payload = {
@@ -72,4 +68,4 @@ const setNewPassword = async (password, router) => {
   }
 };
 
-export { RegisterUser, loginUser, resetPassword, setNewPassword };
+export { RegisterUser, LoginUser, ResetPassword, SetNewPassword };

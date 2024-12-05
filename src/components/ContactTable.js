@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useMutation } from "@tanstack/react-query";
-import { toggleFavorite } from "@/pages/api/contact";
+import { ToggleFavorite } from "@/pages/api/contact";
 import { CurrnetUserContext } from "@/Context/Context";
 import TablePagination from "./TablePagination";
 import StatusChip from "./StatusChip";
@@ -68,8 +68,8 @@ const ContactTable = ({
     }
   };
 
-  const { mutateAsync: mutateToggleFavorite } = useMutation({
-    mutationFn: (id) => toggleFavorite(id),
+  const { mutateAsync: ToggleFavoriteMutate } = useMutation({
+    mutationFn: (id) => ToggleFavorite(id),
   });
 
   const handleCheckboxClick = (event, id) => {
@@ -92,7 +92,7 @@ const ContactTable = ({
       ...prevStarred,
       [id]: !prevStarred[id],
     }));
-    mutateToggleFavorite(id);
+    ToggleFavoriteMutate(id);
   };
 
   const headCells = [

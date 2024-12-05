@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { viewContact, editContact } from "@/pages/api/contact";
+import { ViewContact, EditContact } from "@/pages/api/contact";
 import SecondNavBar from "@/components/SecondNavBar";
 import SnackbarAlert from "@/components/SnackbarAlert";
 import {
@@ -46,7 +46,7 @@ const Edit = () => {
 
   const { data: contact } = useQuery({
     queryKey: ["contact"],
-    queryFn: () => viewContact(id),
+    queryFn: () => ViewContact(id),
   });
 
   useEffect(() => {
@@ -65,8 +65,8 @@ const Edit = () => {
     }
   }, [contact]);
 
-  const { mutateAsync: editContactMutate } = useMutation({
-    mutationFn: (updatedContact) => editContact(updatedContact, id),
+  const { mutateAsync: EditContactMutate } = useMutation({
+    mutationFn: (updatedContact) => EditContact(updatedContact, id),
     onSuccess: () => {
       setOpenSnackbar(true);
       setSnackbarSeverity("success");
@@ -93,7 +93,7 @@ const Edit = () => {
       setSnackbarMessage("Please fill in all required fields.");
       return;
     }
-    editContactMutate(formData);
+    EditContactMutate(formData);
   };
 
   return (

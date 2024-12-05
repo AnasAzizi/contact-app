@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import EditOffOutlinedIcon from "@mui/icons-material/EditOffOutlined";
-import { viewContact } from "@/pages/api/contact";
+import { ViewContact } from "@/pages/api/contact";
 
 const View = () => {
   const router = useRouter();
@@ -26,14 +26,14 @@ const View = () => {
 
   const [contact, setContact] = useState(null);
 
-  const { mutateAsync: contactView } = useMutation({
-    mutationFn: () => viewContact(id),
+  const { mutateAsync: ViewContactMutate } = useMutation({
+    mutationFn: () => ViewContact(id),
   });
 
   useEffect(() => {
     const fetchContact = async () => {
       try {
-        const data = await contactView();
+        const data = await ViewContactMutate();
         console.log("data", data);
         setContact(data);
       } catch (err) {
@@ -44,7 +44,7 @@ const View = () => {
     if (id) {
       fetchContact();
     }
-  }, [id, contactView]);
+  }, [id, ViewContactMutate]);
 
   return (
     <>

@@ -1,6 +1,4 @@
 import React from "react";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/700.css";
 import Image from "next/image";
 import Box from "@mui/material/Box";
 import ResetPassForm from "@/components/ResetPassForm";

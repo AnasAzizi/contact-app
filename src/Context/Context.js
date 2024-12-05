@@ -35,10 +35,8 @@ export default function CurrnetUserProvider({ children }) {
 
   useEffect(() => {
     if (token) {
-      // localStorage.setItem("jwtToken", token);
       Cookies.set("jwtToken", token, { expires: 7, path: '/' });
     } else {
-      // localStorage.removeItem("jwtToken");
       Cookies.remove("jwtToken", { path: '/' });
     }
   }, [token]);

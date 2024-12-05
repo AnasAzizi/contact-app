@@ -38,7 +38,7 @@ const ShowContact = async () => {
   }
 };
 
-const deleteContact = async (contactId) => {
+const DeleteContact = async (contactId) => {
   try {
     const endpoint = `/Contacts/${contactId}`;
     const response = await axiosClient.delete(`${endpoint}`);
@@ -51,7 +51,7 @@ const deleteContact = async (contactId) => {
   }
 };
 
-const viewContact = async (contactId) => {
+const ViewContact = async (contactId) => {
   try {
     const endpoint = `/Contacts/${contactId}`;
 
@@ -65,7 +65,7 @@ const viewContact = async (contactId) => {
   }
 };
 
-const editContact = async (formData, contactId) => {
+const EditContact = async (formData, contactId) => {
   try {
     const endpoint = `/Contacts/${contactId}`;
     const config = {
@@ -83,7 +83,7 @@ const editContact = async (formData, contactId) => {
   }
 };
 
-const toggleFavorite = async (contactId) => {
+const ToggleFavorite = async (contactId) => {
   try {
     const endpoint = `/Contacts/toggle-favorite/${contactId}`;
 
@@ -131,10 +131,10 @@ const Activities = async () => {
 export {
   AddContact,
   ShowContact,
-  deleteContact,
-  viewContact,
-  editContact,
-  toggleFavorite,
+  DeleteContact,
+  ViewContact,
+  EditContact,
+  ToggleFavorite,
   EmailSend,
   Activities,
 };

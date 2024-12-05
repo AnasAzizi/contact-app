@@ -46,9 +46,6 @@ const UserView = async (userId) => {
 const UserEdit = async (formData, userId) => {
   try {
     const endpoint = `/Users/${userId}`;
-
-    console.log("formData test", formData);
-    console.log("endpoint test", endpoint);
     const response = await axiosClient.put(`${endpoint}`, formData);
     console.log("Edit User:", response.data);
     return response.data;
@@ -73,7 +70,6 @@ const UserDelete = async (userId) => {
   try {
     const endpoint = `/Users/${userId}`;
     const response = await axiosClient.delete(`${endpoint}`);
-    console.log("userId test", userId);
     console.log("user deleted successfully:", response.data);
     return response.data;
   } catch (error) {

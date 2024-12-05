@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { loginUser } from "@/pages/api/auth";
+import { LoginUser } from "@/pages/api/auth";
 import SnackbarAlert from "@/components/SnackbarAlert";
 import {
   Checkbox,
@@ -60,8 +60,8 @@ export default function SignInForm() {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const { mutateAsync: userLogin } = useMutation({
-    mutationFn: (data) => loginUser(data, router),
+  const { mutateAsync: LoginUserMutate } = useMutation({
+    mutationFn: (data) => LoginUser(data, router),
     onSuccess: (data) => {
       setToken(data);
       setOpenSnackbar(true);
@@ -91,7 +91,7 @@ export default function SignInForm() {
     e.preventDefault();
     if (!validateForm()) return;
     try {
-      await userLogin(formData);
+      await LoginUserMutate(formData);
     } catch (e) {
       console.error(e);
     }

@@ -78,7 +78,7 @@ const RegisterForm = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const { mutateAsync: userRegister } = useMutation({
+  const { mutateAsync: RegisterUserMutate } = useMutation({
     mutationFn: (data) => RegisterUser(data),
     onSuccess: () => {
       setOpenSnackbar(true);
@@ -108,7 +108,7 @@ const RegisterForm = () => {
     e.preventDefault();
     if (!validateForm()) return;
     try {
-      await userRegister(formData);
+      await RegisterUserMutate(formData);
     } catch (e) {
       console.error(e);
     }

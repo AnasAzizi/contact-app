@@ -7,7 +7,7 @@ import SnackbarAlert from "@/components/SnackbarAlert";
 import { useRouter } from "next/router";
 import { Container, FormControl, Button, TextField } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { ShowContact, deleteContact } from "@/pages/api/contact";
+import { ShowContact, DeleteContact } from "@/pages/api/contact";
 
 const Contacts = () => {
   const currentUser = useContext(CurrnetUserContext);
@@ -34,8 +34,8 @@ const Contacts = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const { mutateAsync: contactDelete } = useMutation({
-    mutationFn: deleteContact,
+  const { mutateAsync: DeleteContactMutate } = useMutation({
+    mutationFn: DeleteContact,
     onSuccess: () => {
       queryClient.invalidateQueries(["contacts"]);
       setOpenSnackbar(true);
@@ -52,9 +52,7 @@ const Contacts = () => {
       setSnackbarMessage("Please select at least one contact to delete.");
       return;
     }
-
-    selectedIds.forEach((id) => contactDelete(id));
-
+    selectedIds.forEach((id) => DeleteContactMutate(id));
     setSelectedIds([]);
     setResetSelection(true);
   };

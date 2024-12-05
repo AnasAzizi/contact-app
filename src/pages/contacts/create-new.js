@@ -58,14 +58,13 @@ const CreateNew = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const { mutateAsync: ContactAdd } = useMutation({
+  const { mutateAsync: ContactAddMutate } = useMutation({
     mutationFn: (data) => AddContact(data),
     onSuccess: () => {
       setOpenSnackbar(true);
       setSnackbarSeverity("success");
       setSnackbarMessage("User added successful!");
       router.push("/home/contacts");
-
     },
     onError: (error) => {
       console.error("Error registering:", error);
@@ -89,7 +88,7 @@ const CreateNew = () => {
     e.preventDefault();
     if (!validateForm()) return;
     try {
-      await ContactAdd(formData);
+      await ContactAddMutate(formData);
     } catch (e) {
       console.error(e);
     }

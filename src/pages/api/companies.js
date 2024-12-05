@@ -1,12 +1,9 @@
-import axiosClient from "@/pages/api/axiosClient"
-
+import axiosClient from "@/pages/api/axiosClient";
 
 const GetCompanies = async () => {
   try {
     const endpoint = "/Companies";
-
     const response = await axiosClient.get(`${endpoint}`);
-
     return response.data;
   } catch (error) {
     console.error("Error retrieving contacts:", error);
@@ -17,10 +14,7 @@ const GetCompanies = async () => {
 const EditCompanies = async (formData) => {
   try {
     const endpoint = `/Companies`;
-    const response = await axiosClient.put(
-      `${endpoint}`,
-      formData
-    );
+    const response = await axiosClient.put(`${endpoint}`, formData);
     console.log("Edit User:", response.data);
     return response.data;
   } catch (error) {
@@ -29,5 +23,4 @@ const EditCompanies = async (formData) => {
   }
 };
 
-
-export { GetCompanies,EditCompanies };
+export { GetCompanies, EditCompanies };
