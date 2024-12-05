@@ -29,6 +29,7 @@ export default function CurrnetUserProvider({ children }) {
   useEffect(() => {
     if (currentUserData) {
       setCurrentUser(currentUserData);
+      Cookies.set("userRole", currentUserData.role, { expires: 7, path: '/' });
     }
   }, [currentUserData]);
 

@@ -275,6 +275,7 @@ const NavBar = () => {
                       router.push("/auth/sign-in");
                       setToken("");
                       Cookies.remove("jwtToken");
+                      Cookies.remove("userRole", { path: '/' });
                       setCurrentUser("");
                     }
                     if (setting === "My Profile") {
