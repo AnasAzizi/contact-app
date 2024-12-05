@@ -59,11 +59,13 @@ const CreateNew = () => {
   };
 
   const { mutateAsync: ContactAdd } = useMutation({
-    mutationFn: (data) => AddContact(data, router),
+    mutationFn: (data) => AddContact(data),
     onSuccess: () => {
       setOpenSnackbar(true);
       setSnackbarSeverity("success");
-      setSnackbarMessage("Registration successful!");
+      setSnackbarMessage("User added successful!");
+      router.push("/home/contacts");
+
     },
     onError: (error) => {
       console.error("Error registering:", error);

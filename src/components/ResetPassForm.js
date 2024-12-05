@@ -41,11 +41,12 @@ const ResetPassForm = () => {
   };
 
   const { mutateAsync: passwordReset } = useMutation({
-    mutationFn: (email) => resetPassword(email, router),
+    mutationFn: (email) => resetPassword(email),
     onSuccess: () => {
       setOpenSnackbar(true);
       setSnackbarSeverity("success");
       setSnackbarMessage("Registration successful!");
+      router.push("/auth/reset-password");
     },
     onError: (error) => {
       console.error("Error registering:", error);

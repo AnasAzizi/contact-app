@@ -34,8 +34,8 @@ const UserTable = ({
   onResetComplete,
 }) => {
   const router = useRouter();
-  const CurrentUser = useContext(CurrnetUserContext);
-  const userRole = CurrentUser.currentUser.role;
+  const currentUser = useContext(CurrnetUserContext);
+  const userRole = currentUser.currentUser.role;
 
   const [selected, setSelected] = useState([]);
   const [selectedId, setSelectedId] = useState([]);

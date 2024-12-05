@@ -1,25 +1,9 @@
-import axios from "axios";
-
-const BASE_URL = "https://ms.itmd-b1.com:5123/api";
-
-const getToken = () => {
-  if (typeof window !== "undefined") {
-    return localStorage.getItem("jwtToken");
-  }
-  return null;
-};
+import axiosClient from "@/pages/api/axiosClient";
 
 const ShowUsers = async () => {
   try {
-    const token = getToken();
     const endpoint = "/Users";
-
-    const response = await axios.get(`${BASE_URL}${endpoint}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
+    const response = await axiosClient.get(`${endpoint}`);
     return response.data;
   } catch (error) {
     console.error("Error retrieving contacts:", error);
@@ -27,17 +11,11 @@ const ShowUsers = async () => {
   }
 };
 
-const AddUser = async (formData, router) => {
+const AddUser = async (formData) => {
   try {
-    const token = getToken();
     const endpoint = "/Users";
-
-    const response = await axios
-      .post(`${BASE_URL}${endpoint}`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+    const response = await axiosClient
+      .post(`${endpoint}`, formData)
       .then((res) => {
         console.log("Response data:", res.data);
         return res;
@@ -46,10 +24,6 @@ const AddUser = async (formData, router) => {
         console.error("Error in POST request:", err.response.data);
         throw err;
       });
-
-    if (response.status === 200) {
-      router.push("/home/users");
-    }
     return response;
   } catch (error) {
     console.error("Error adding contact:", error);
@@ -59,14 +33,8 @@ const AddUser = async (formData, router) => {
 
 const UserView = async (userId) => {
   try {
-    const token = getToken();
     const endpoint = `/Users/${userId}`;
-    const response = await axios.get(`${BASE_URL}${endpoint}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
+    const response = await axiosClient.get(`${endpoint}`);
     console.log("View User:", response.data);
     return response.data;
   } catch (error) {
@@ -77,21 +45,11 @@ const UserView = async (userId) => {
 
 const UserEdit = async (formData, userId) => {
   try {
-    const token = getToken();
     const endpoint = `/Users/${userId}`;
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
+
     console.log("formData test", formData);
-    console.log("token test", token);
     console.log("endpoint test", endpoint);
-    const response = await axios.put(
-      `${BASE_URL}${endpoint}`,
-      formData,
-      config
-    );
+    const response = await axiosClient.put(`${endpoint}`, formData);
     console.log("Edit User:", response.data);
     return response.data;
   } catch (error) {
@@ -102,15 +60,8 @@ const UserEdit = async (formData, userId) => {
 
 const CurrentUser = async () => {
   try {
-    const token = getToken();
     const endpoint = "/Users/current-user";
-
-    const response = await axios.get(`${BASE_URL}${endpoint}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
+    const response = await axiosClient.get(`${endpoint}`);
     return response.data;
   } catch (error) {
     console.error("Error retrieving contacts:", error);
@@ -120,13 +71,8 @@ const CurrentUser = async () => {
 
 const UserDelete = async (userId) => {
   try {
-    const token = getToken();
     const endpoint = `/Users/${userId}`;
-    const response = await axios.delete(`${BASE_URL}${endpoint}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axiosClient.delete(`${endpoint}`);
     console.log("userId test", userId);
     console.log("user deleted successfully:", response.data);
     return response.data;
@@ -135,4 +81,4 @@ const UserDelete = async (userId) => {
     throw error;
   }
 };
-export { ShowUsers, AddUser, UserView, UserEdit, CurrentUser ,UserDelete};
+export { ShowUsers, AddUser, UserView, UserEdit, CurrentUser, UserDelete };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useMutation } from "@tanstack/react-query";
@@ -21,9 +21,11 @@ import {
 import Grid from "@mui/material/Grid2";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import { CurrnetUserContext } from "@/Context/Context";
 
 export default function SignInForm() {
   const router = useRouter();
+  const { setToken } = useContext(CurrnetUserContext);
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -60,10 +62,12 @@ export default function SignInForm() {
 
   const { mutateAsync: userLogin } = useMutation({
     mutationFn: (data) => loginUser(data, router),
-    onSuccess: () => {
+    onSuccess: (data) => {
+      setToken(data);
       setOpenSnackbar(true);
       setSnackbarSeverity("success");
       setSnackbarMessage("Registration successful!");
+      router.push("/home/home-page")
     },
     onError: (error) => {
       console.error("Error registering:", error);

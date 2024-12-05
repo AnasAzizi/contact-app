@@ -1,18 +1,11 @@
-import axios from "axios";
+import axiosClient from "@/pages/api/axiosClient";
 
-const BASE_URL = "https://ms.itmd-b1.com:5123/api";
-
-const RegisterUser = async (formData, router) => {
+const RegisterUser = async (formData) => {
   try {
     const endpoint = "/register";
-    const response = await axios.post(`${BASE_URL}${endpoint}`, formData, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await axiosClient.post(`${endpoint}`, formData);
     if (response.status === 200) {
       console.log("Registration successful:", response);
-      router.push("/auth/sign-in");
     }
     return response;
   } catch (error) {
@@ -21,46 +14,28 @@ const RegisterUser = async (formData, router) => {
   }
 };
 
-const loginUser = async (formData, router) => {
+const loginUser = async (formData) => {
   try {
     const endpoint = "/login";
-    const response = await axios.post(`${BASE_URL}${endpoint}`, formData, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await axiosClient.post(`${endpoint}`, formData);
     if (response.status === 200) {
       console.log("Login successful:", response);
       const token = response.data.token;
-
-      if (token) {
-        localStorage.setItem("jwtToken", token);
-      } else {
-        console.warn("Missing JWT token in login response.");
-      }
-      router.push("/home/home-page");
+      return token;
     }
-    return response;
   } catch (error) {
     console.error("Error:", error);
     throw error;
   }
 };
 
-const resetPassword = async (email, router) => {
+const resetPassword = async (email) => {
   try {
     const endpoint = "/forgot-password";
     const payload = { Email: email };
-
-    const response = await axios.post(`${BASE_URL}${endpoint}`, payload, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
+    const response = await axiosClient.post(`${endpoint}`, payload);
     if (response.status === 200) {
       console.log("Sending email successful:", response);
-      router.push("/auth/reset-password");
     }
 
     return response;
@@ -85,16 +60,9 @@ const setNewPassword = async (password, router) => {
       id: id,
       code: code,
     };
-
-    const response = await axios.post(`${BASE_URL}${endpoint}`, payload, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
+    const response = await axiosClient.post(`${endpoint}`, payload);
     if (response.status === 200) {
       console.log("Reset password successful:", response);
-      // router.push("/auth/sign-in");
     }
 
     return response;

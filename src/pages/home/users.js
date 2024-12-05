@@ -24,8 +24,8 @@ const Users = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarSeverity, setSnackbarSeverity] = useState("error");
   const [snackbarMessage, setSnackbarMessage] = useState("");
-  const CurrentUser = useContext(CurrnetUserContext);
-  const userRole = CurrentUser.currentUser.role;
+  const currentUser = useContext(CurrnetUserContext);
+  const userRole = currentUser.currentUser.role;
 
   const handleSnackbarClose = () => {
     setOpenSnackbar(false);
@@ -33,7 +33,6 @@ const Users = () => {
 
   const handleSelectedId = (newSelected) => {
     setSelectedIds(newSelected);
-    console.log("Selected rows in Parent:", newSelected);
   };
 
   const { data } = useQuery({

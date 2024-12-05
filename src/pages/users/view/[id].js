@@ -22,8 +22,8 @@ import { UserView } from "@/pages/api/user";
 const ViewUser = () => {
   const router = useRouter();
   const { id } = router.query;
-  const CurrentUser = useContext(CurrnetUserContext);
-  const userRole = CurrentUser.currentUser.role;
+  const currentUser = useContext(CurrnetUserContext);
+  const userRole = currentUser.currentUser.role;
   const [contact, setContact] = useState(null);
 
   const { mutateAsync: UserViewMutate } = useMutation({

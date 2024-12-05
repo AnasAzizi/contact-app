@@ -22,9 +22,9 @@ import {
 import PersonIcon from "@mui/icons-material/Person";
 import CloseIcon from "@mui/icons-material/Close";
 import ReorderIcon from "@mui/icons-material/Reorder";
-import { useQuery } from "@tanstack/react-query";
-import { CurrentUser } from "@/pages/api/user";
 import { CurrnetUserContext } from "@/Context/Context";
+import Cookies from 'js-cookie';
+
 
 const pages = [
   { name: "Home", path: "/home/home-page" },
@@ -52,7 +52,12 @@ const NavBar = () => {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [anchorElNav, setAnchorElNav] = useState(null);
 
-  const currentUser = useContext(CurrnetUserContext);
+  const { currentUser, setToken,setCurrentUser } = useContext(CurrnetUserContext);
+
+
+  // if (userIsLoading) {
+  //   return <p>Loading user...</p>;
+  // }
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -71,15 +76,6 @@ const NavBar = () => {
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
-
-  const { data, isLoading: userIsLoading } = useQuery({
-    queryKey: ["currentuser"],
-    queryFn: CurrentUser,
-  });
-
-  if (data) {
-    currentUser.setCurrentUser(data);
-  }
 
   const DrawerList = (
     <Box onClick={toggleDrawer(false)}>
@@ -245,9 +241,7 @@ const NavBar = () => {
                 color="#ffffff"
                 startIcon={<PersonIcon style={{ fontSize: "36px" }} />}
               >
-                {currentUser.currentUser
-                  ? currentUser.currentUser.firstName
-                  : "Guest"}
+                {currentUser.firstName ? currentUser.firstName : "Guest"}
               </Button>
             </Tooltip>
             <Menu
@@ -279,10 +273,12 @@ const NavBar = () => {
                     handleCloseUserMenu();
                     if (setting === "Log out") {
                       router.push("/auth/sign-in");
-                      localStorage.removeItem("jwtToken");
+                      setToken("");
+                      Cookies.remove("jwtToken");
+                      setCurrentUser("");
                     }
                     if (setting === "My Profile") {
-                      router.push(`/users/view/${data.id}`);
+                      router.push(`/users/view/${currentUser.id}`);
                     }
                   }}
                 >

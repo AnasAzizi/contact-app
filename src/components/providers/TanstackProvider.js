@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState,useContext } from "react";
+import { CurrnetUserContext } from "@/Context/Context";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const TanstackProvider = ({ children }) => {
   const [queryClint] = useState(() => new QueryClient());
+  const {token}=useContext(CurrnetUserContext)
 
   return (
     <QueryClientProvider client={queryClint}>

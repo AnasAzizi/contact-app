@@ -1,28 +1,17 @@
-import axios from "axios";
+import axiosClient from "@/pages/api/axiosClient";
 
-const BASE_URL = "https://ms.itmd-b1.com:5123/api";
-
-const getToken = () => {
-  if (typeof window !== "undefined") {
-    return localStorage.getItem("jwtToken");
-  }
-  return null;
-};
-
-const AddContact = async (formData, router) => {
+const AddContact = async (formData) => {
   try {
-    const token = getToken();
     console.log("formData text", formData);
     const endpoint = "/Contacts";
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`,
         "Content-Type": "multipart/form-data",
       },
     };
 
-    const response = await axios
-      .post(`${BASE_URL}${endpoint}`, formData, config)
+    const response = await axiosClient
+      .post(`${endpoint}`, formData, config)
       .then((res) => {
         console.log("Response data:", res.data);
         return res;
@@ -31,12 +20,6 @@ const AddContact = async (formData, router) => {
         console.error("Error in POST request:", err.response.data);
         throw err;
       });
-
-    if (response.status === 200) {
-      setTimeout(() => {
-        router.push("/home/contacts");
-      }, 500);
-    }
     return response;
   } catch (error) {
     console.error("Error adding contact:", error);
@@ -46,15 +29,8 @@ const AddContact = async (formData, router) => {
 
 const ShowContact = async () => {
   try {
-    const token = getToken();
     const endpoint = "/Contacts";
-
-    const response = await axios.get(`${BASE_URL}${endpoint}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
+    const response = await axiosClient.get(`${endpoint}`);
     return response.data;
   } catch (error) {
     console.error("Error retrieving contacts:", error);
@@ -64,13 +40,8 @@ const ShowContact = async () => {
 
 const deleteContact = async (contactId) => {
   try {
-    const token = getToken();
     const endpoint = `/Contacts/${contactId}`;
-    const response = await axios.delete(`${BASE_URL}${endpoint}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axiosClient.delete(`${endpoint}`);
     console.log("contactId", contactId);
     console.log("Contact deleted successfully:", response.data);
     return response.data;
@@ -82,13 +53,9 @@ const deleteContact = async (contactId) => {
 
 const viewContact = async (contactId) => {
   try {
-    const token = getToken();
     const endpoint = `/Contacts/${contactId}`;
-    const response = await axios.get(`${BASE_URL}${endpoint}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+
+    const response = await axiosClient.get(`${endpoint}`);
 
     console.log("View User:", response.data);
     return response.data;
@@ -100,19 +67,14 @@ const viewContact = async (contactId) => {
 
 const editContact = async (formData, contactId) => {
   try {
-    const token = getToken();
     const endpoint = `/Contacts/${contactId}`;
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`,
         "Content-Type": "multipart/form-data",
       },
     };
-    const response = await axios.put(
-      `${BASE_URL}${endpoint}`,
-      formData,
-      config
-    );
+    console.log("test formData:", formData);
+    const response = await axiosClient.put(`${endpoint}`, formData, config);
     console.log("Edit User:", response.data);
     return response.data;
   } catch (error) {
@@ -123,15 +85,9 @@ const editContact = async (formData, contactId) => {
 
 const toggleFavorite = async (contactId) => {
   try {
-    const token = getToken();
     const endpoint = `/Contacts/toggle-favorite/${contactId}`;
 
-    const response = await axios.patch(`${BASE_URL}${endpoint}`, undefined, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await axiosClient.patch(`${endpoint}`);
     console.log("toggle favorite successfully:", response.data);
     return response.data;
   } catch (error) {
@@ -142,16 +98,9 @@ const toggleFavorite = async (contactId) => {
 
 const EmailSend = async (formData) => {
   try {
-    const token = getToken();
     const endpoint = "/Contacts/send-email";
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
-    const response = await axios
-      .post(`${BASE_URL}${endpoint}`, formData, config)
+    const response = await axiosClient
+      .post(`${endpoint}`, formData)
       .then((res) => {
         console.log("Response data:", res.data);
         return res;
@@ -168,14 +117,9 @@ const EmailSend = async (formData) => {
 
 const Activities = async () => {
   try {
-    const token = getToken();
     const endpoint = "/logs";
 
-    const response = await axios.get(`${BASE_URL}${endpoint}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axiosClient.get(`${endpoint}`);
 
     return response.data;
   } catch (error) {

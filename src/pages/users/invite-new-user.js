@@ -62,6 +62,7 @@ const InviteNewUser = () => {
       setOpenSnackbar(true);
       setSnackbarSeverity("success");
       setSnackbarMessage("Registration successful!");
+      router.push("/home/users");
     },
     onError: (error) => {
       console.error("Error registering:", error);

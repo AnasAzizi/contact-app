@@ -10,8 +10,9 @@ import Grid from "@mui/material/Grid2";
 import { ShowContact, deleteContact } from "@/pages/api/contact";
 
 const Contacts = () => {
-  const CurrentUser = useContext(CurrnetUserContext);
-  const userRole = CurrentUser.currentUser.role;
+  const currentUser = useContext(CurrnetUserContext);
+  const userRole = currentUser.currentUser.role;
+
 
   const [search, setSearch] = useState("");
   const [selectedIds, setSelectedIds] = useState([]);

@@ -1,25 +1,11 @@
-import axios from "axios";
+import axiosClient from "@/pages/api/axiosClient"
 
-const BASE_URL = "https://ms.itmd-b1.com:5123/api";
-
-const getToken = () => {
-  if (typeof window !== "undefined") {
-    return localStorage.getItem("jwtToken");
-  }
-  return null;
-};
 
 const GetCompanies = async () => {
   try {
-    const token = getToken();
     const endpoint = "/Companies";
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
 
-    const response = await axios.get(`${BASE_URL}${endpoint}`,config);
+    const response = await axiosClient.get(`${endpoint}`);
 
     return response.data;
   } catch (error) {
@@ -30,18 +16,10 @@ const GetCompanies = async () => {
 
 const EditCompanies = async (formData) => {
   try {
-    const token = getToken();
     const endpoint = `/Companies`;
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    console.log("test formData:",formData)
-    const response = await axios.put(
-      `${BASE_URL}${endpoint}`,
-      formData,
-      config
+    const response = await axiosClient.put(
+      `${endpoint}`,
+      formData
     );
     console.log("Edit User:", response.data);
     return response.data;

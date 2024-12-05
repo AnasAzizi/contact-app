@@ -79,11 +79,12 @@ const RegisterForm = () => {
   };
 
   const { mutateAsync: userRegister } = useMutation({
-    mutationFn: (data) => RegisterUser(data, router),
+    mutationFn: (data) => RegisterUser(data),
     onSuccess: () => {
       setOpenSnackbar(true);
       setSnackbarSeverity("success");
       setSnackbarMessage("Registration successful!");
+      router.push("/auth/sign-in");
     },
     onError: (error) => {
       console.error("Error registering:", error);

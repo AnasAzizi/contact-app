@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Activities } from "@/pages/api/contact";
+import { useQuery } from "@tanstack/react-query";
+import { CurrnetUserContext } from "@/Context/Context";
 import {
   TableBody,
   TableCell,
@@ -9,13 +12,28 @@ import {
 } from "@mui/material";
 
 const ActiveTable = ({ line, data, rowLimit }) => {
-  const reversedData = [...data].reverse();
+
+  const { currentUser: userRole, userIsLoading } = useContext(CurrnetUserContext);
+
+  const { data: activeData, isLoading: activitiesIsLoading } = useQuery({
+    queryKey: ["activities"],
+    queryFn: Activities,
+    enabled: userRole.role === "Owner" || userRole.role === "Admin",
+  });
+
+  const tableData = data || activeData;
+
+  if (!tableData || activitiesIsLoading) {
+    return null;
+  }
+
+  const reversedData = [...tableData].reverse();
   const displayedData = rowLimit
     ? reversedData.slice(0, rowLimit)
     : reversedData;
 
   const formatDate = (timestamp) => {
-    return new Date(timestamp).toISOString().split("T")[0]; // Extract YYYY-MM-DD
+    return new Date(timestamp).toISOString().split("T")[0]; 
   };
   const getStatusColor = (status) => {
     switch (status) {

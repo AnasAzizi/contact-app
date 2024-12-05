@@ -1,9 +1,8 @@
 import React, { useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { CurrnetUserContext } from "@/Context/Context";
-import { Activities } from "@/pages/api/contact";
 import { ShowContact } from "@/pages/api/contact";
+import { CurrnetUserContext } from "@/Context/Context";
 import { useQuery } from "@tanstack/react-query";
 import SecondNavBar from "@/components/SecondNavBar";
 import ActiveTable from "@/components/ActiveTable";
@@ -21,16 +20,9 @@ import Grid from "@mui/material/Grid2";
 import NorthIcon from "@mui/icons-material/North";
 
 const HomePage = () => {
-  const CurrentUser = useContext(CurrnetUserContext);
-  const userRole = CurrentUser.currentUser.role;
+  const { currentUser: userRole } =
+    useContext(CurrnetUserContext);
 
-  console.log("userRole", userRole);
-
-  const { data, isLoading: activitiesIsLoading } = useQuery({
-    queryKey: ["activities"],
-    queryFn: Activities,
-    enabled: userRole !== "User" && userRole !== undefined,
-  });
 
   const { data: Contact } = useQuery({
     queryKey: ["contacts"],
@@ -61,19 +53,8 @@ const HomePage = () => {
     );
   }
 
-  if (userRole !== "User") {
-    if (!data) {
-      return <div>No data available.</div>;
-    }
-  }
-
   return (
     <>
-      {activitiesIsLoading ? (
-        <Typography variant="h6" sx={{ textAlign: "center", color: "black" }}>
-          Loading...
-        </Typography>
-      ) : (
         <Container maxWidth="xl">
           <SecondNavBar path="Statistical Dashboard" />
           <Grid
@@ -287,7 +268,8 @@ const HomePage = () => {
                 </Card>
               </Grid>
             </Grid>
-            {userRole !== "User" && (
+            {userRole.role !== "User" &&
+             (
               <>
                 <Grid
                   item="true"
@@ -325,15 +307,15 @@ const HomePage = () => {
                     }}
                   >
                     <Table>
-                      <ActiveTable line={false} data={data} rowLimit={6} />
+                      <ActiveTable line={false}  rowLimit={6} />
                     </Table>
                   </TableContainer>
                 </Grid>
               </>
-            )}
+            )
+            }
           </Grid>
         </Container>
-      )}
     </>
   );
 };
