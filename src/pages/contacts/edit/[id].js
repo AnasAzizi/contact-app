@@ -4,6 +4,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { ViewContact, EditContact } from "@/pages/api/contact";
 import SecondNavBar from "@/components/SecondNavBar";
 import SnackbarAlert from "@/components/SnackbarAlert";
+import FormValidator from "@/components/FormValidator";
 import {
   Card,
   Container,
@@ -37,6 +38,11 @@ const Edit = () => {
     address: "",
     addressTwo: "",
     status: "Active",
+  });
+
+  const emptyFields = FormValidator({
+    formData,
+    excludedFields: ["mobileNumber", "addressTwo", "emailTwo"],
   });
 
   const handleChange = (e) => {
@@ -80,17 +86,13 @@ const Edit = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const hasEmptyField = Object.entries(formData).some(
-      ([key, value]) =>
-        !["mobileNumber", "addressTwo", "emailTwo"].includes(key) &&
-        (value === null || value === undefined || value === "")
-    );
-
-    if (hasEmptyField) {
+  
+    if (emptyFields.length > 0) {
       setOpenSnackbar(true);
       setSnackbarSeverity("error");
-      setSnackbarMessage("Please fill in all required fields.");
+      setSnackbarMessage(
+        `Please fill the following required fields: ${emptyFields.join(", ")}`
+      );
       return;
     }
     EditContactMutate(formData);

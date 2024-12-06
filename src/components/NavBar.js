@@ -23,8 +23,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import CloseIcon from "@mui/icons-material/Close";
 import ReorderIcon from "@mui/icons-material/Reorder";
 import { CurrnetUserContext } from "@/Context/Context";
-import Cookies from 'js-cookie';
-
+import Cookies from "js-cookie";
 
 const pages = [
   { name: "Home", path: "/home/home-page" },
@@ -32,32 +31,28 @@ const pages = [
   { name: "Company Profile", path: "/home/company-profile" },
   { name: "Users", path: "/home/users" },
 ];
-const NavbarPages = [
-  { name: "Home", path: "/home/home-page" },
-  { name: "Contact", path: "/home/contacts" },
-  { name: "Company Profile", path: "/home/company-profile" },
-  { name: "Users", path: "/home/users" },
-  {
-    name: "Username",
-    path: "/home/username",
-    icon: <PersonIcon sx={{ fontSize: "24px", mr: "8px" }} />,
-  },
-  { name: "My Profile", path: "/home/my-profile" },
-  { name: "Log Out", path: "/home/logout" },
-];
-const settings = ["My Profile", "Log out"];
 
 const NavBar = () => {
   const router = useRouter();
+  const { currentUser, setToken, setCurrentUser } =
+    useContext(CurrnetUserContext);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [anchorElNav, setAnchorElNav] = useState(null);
 
-  const { currentUser, setToken,setCurrentUser } = useContext(CurrnetUserContext);
-
-
-  // if (userIsLoading) {
-  //   return <p>Loading user...</p>;
-  // }
+  const NavbarPages = [
+    { name: "Home", path: "/home/home-page" },
+    { name: "Contact", path: "/home/contacts" },
+    { name: "Company Profile", path: "/home/company-profile" },
+    { name: "Users", path: "/home/users" },
+    {
+      name: `${currentUser.firstName}`,
+      path: `/users/view/${currentUser.id}`,
+      icon: <PersonIcon sx={{ fontSize: "24px", mr: "8px" }} />,
+    },
+    { name: "My Profile", path: `/users/view/${currentUser.id}` },
+    { name: "Log Out", path: "/home/logout" },
+  ];
+  const settings = ["My Profile", "Log out"];
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -275,7 +270,7 @@ const NavBar = () => {
                       router.push("/auth/sign-in");
                       setToken("");
                       Cookies.remove("jwtToken");
-                      Cookies.remove("userRole", { path: '/' });
+                      Cookies.remove("userRole", { path: "/" });
                       setCurrentUser("");
                     }
                     if (setting === "My Profile") {

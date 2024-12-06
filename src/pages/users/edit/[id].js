@@ -4,6 +4,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { UserView, UserEdit } from "@/pages/api/user";
 import SecondNavBar from "@/components/SecondNavBar";
 import SnackbarAlert from "@/components/SnackbarAlert";
+import FormValidator from "@/components/FormValidator";
 import {
   Container,
   Typography,
@@ -36,6 +37,12 @@ const EditUser = () => {
     status: "",
     role: "",
   });
+
+  const emptyFields = FormValidator({
+    formData,
+    excludedFields: ["role", "status", "phoneNumber"],
+  });
+
 
   const { data: user } = useQuery({
     queryKey: ["user"],
@@ -75,6 +82,15 @@ const EditUser = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (emptyFields.length > 0) {
+      setOpenSnackbar(true);
+      setSnackbarSeverity("error");
+      setSnackbarMessage(
+        `Please fill the following required fields: ${emptyFields.join(", ")}`
+      );
+      return;
+    }
     UserEditMutate(formData);
   };
 

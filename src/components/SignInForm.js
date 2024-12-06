@@ -5,6 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { LoginUser } from "@/pages/api/auth";
 import SnackbarAlert from "@/components/SnackbarAlert";
+import FormValidator from "@/components/FormValidator";
 import {
   Checkbox,
   Box,
@@ -16,7 +17,6 @@ import {
   InputLabel,
   FormControl,
   IconButton,
-  FormHelperText,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
@@ -41,19 +41,9 @@ export default function SignInForm() {
     password: "",
   });
 
-  const [errors, setErrors] = useState({});
-  const [termsAccepted, setTermsAccepted] = useState(false);
-
-  const validateForm = () => {
-    const newErrors = {};
-    if (!formData.email) newErrors.email = "Email is required.";
-    if (!formData.password || formData.password.length < 8)
-      newErrors.password = "Password most be 8";
-
-    // if (!termsAccepted) newErrors.terms = "You must accept the terms.";
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+  const emptyFields = FormValidator({
+    formData,
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -67,7 +57,7 @@ export default function SignInForm() {
       setOpenSnackbar(true);
       setSnackbarSeverity("success");
       setSnackbarMessage("Registration successful!");
-      router.push("/home/home-page")
+      router.push("/home/home-page");
     },
     onError: (error) => {
       console.error("Error registering:", error);
@@ -89,7 +79,15 @@ export default function SignInForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm()) return;
+
+    if (emptyFields.length > 0) {
+      setOpenSnackbar(true);
+      setSnackbarSeverity("error");
+      setSnackbarMessage(
+        `Please fill the following required fields: ${emptyFields.join(", ")}`
+      );
+      return;
+    }
     try {
       await LoginUserMutate(formData);
     } catch (e) {
@@ -143,7 +141,6 @@ export default function SignInForm() {
             alignItems="center"
           >
             <FormControl
-              error={!!errors.email}
               size="small"
               variant="outlined"
               sx={{ minWidth: { xs: "306px", md: "371px" } }}
@@ -158,7 +155,6 @@ export default function SignInForm() {
                 label="Email="
                 type="email"
               />
-              {errors.email && <FormHelperText>{errors.email}</FormHelperText>}
             </FormControl>
           </Grid>
           <Grid
@@ -168,7 +164,6 @@ export default function SignInForm() {
             alignItems="center"
           >
             <FormControl
-              error={!!errors.password}
               onChange={handleChange}
               size="small"
               sx={{
@@ -189,16 +184,13 @@ export default function SignInForm() {
                 endAdornment={
                   <IconButton onClick={handleClickShowPassword} edge="end">
                     {showPassword ? (
-                      <VisibilityOffOutlinedIcon />
-                    ) : (
                       <VisibilityOutlinedIcon />
+                    ) : (
+                      <VisibilityOffOutlinedIcon />
                     )}
                   </IconButton>
                 }
               />
-              {errors.password && (
-                <FormHelperText>{errors.password}</FormHelperText>
-              )}
             </FormControl>
           </Grid>
           <Grid

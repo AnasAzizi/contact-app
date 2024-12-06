@@ -156,9 +156,9 @@ const SetPasswordForm = () => {
                 endAdornment={
                   <IconButton onClick={handleClickShowPassword} edge="end">
                     {showPassword ? (
-                      <VisibilityOffOutlinedIcon />
-                    ) : (
                       <VisibilityOutlinedIcon />
+                    ) : (
+                      <VisibilityOffOutlinedIcon />
                     )}
                   </IconButton>
                 }
@@ -196,9 +196,9 @@ const SetPasswordForm = () => {
                     edge="end"
                   >
                     {showConfirmPassword ? (
-                      <VisibilityOffOutlinedIcon />
-                    ) : (
                       <VisibilityOutlinedIcon />
+                    ) : (
+                      <VisibilityOffOutlinedIcon />
                     )}
                   </IconButton>
                 }

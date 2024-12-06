@@ -4,12 +4,12 @@ import { useMutation } from "@tanstack/react-query";
 import { EmailSend } from "@/pages/api/contact";
 import SecondNavBar from "@/components/SecondNavBar";
 import SnackbarAlert from "@/components/SnackbarAlert";
+import FormValidator from "@/components/FormValidator";
 import { Container, Button, Box, Typography, TextField } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
 const SendEmail = () => {
   const router = useRouter();
-  const [error, setError] = useState({});
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarSeverity, setSnackbarSeverity] = useState("error");
   const [snackbarMessage, setSnackbarMessage] = useState("");
@@ -24,13 +24,10 @@ const SendEmail = () => {
     body: "",
   });
 
-  const validateEmail = () => {
-    if (!formData.to) {
-      setError({ to: "Email is required." });
-      return false;
-    }
-    return true;
-  };
+  const emptyFields = FormValidator({
+    formData,
+    excludedFields: ["cc", "bcc"],
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -55,12 +52,21 @@ const SendEmail = () => {
     },
   });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (!validateEmail()) return;
-    await EmailSendMutate(formData);
+    
+    if (emptyFields.length > 0) {
+      setOpenSnackbar(true);
+      setSnackbarSeverity("error");
+      setSnackbarMessage(
+        `Please fill the following required fields: ${emptyFields.join(", ")}`
+      );
+      return;
+    }
+  
+    EmailSendMutate(formData); 
   };
-
+  
   return (
     <>
       <Container maxWidth="xl">
@@ -142,13 +148,11 @@ const SendEmail = () => {
               </Grid>
               <Grid item="true" size={11}>
                 <TextField
-                  error={!!error.to}
                   size="small"
                   name="to"
                   onChange={handleChange}
                   fullWidth
                   placeholder="abc@xyz.com"
-                  helperText={error.to}
                 />
               </Grid>
             </Grid>

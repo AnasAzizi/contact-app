@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import SecondNavBar from "@/components/SecondNavBar";
+import FormValidator from "@/components/FormValidator";
 import SnackbarAlert from "@/components/SnackbarAlert";
 import {
   Container,
@@ -39,6 +40,11 @@ const CompanyProfileEdit = () => {
     zip: "",
     country: "",
   });
+
+  const emptyFields = FormValidator({
+    formData,
+  });
+
 
   const { data: Company } = useQuery({
     queryKey: ["Company"],
@@ -81,6 +87,16 @@ const CompanyProfileEdit = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (emptyFields.length > 0) {
+      setOpenSnackbar(true);
+      setSnackbarSeverity("error");
+      setSnackbarMessage(
+        `Please fill all fields.`
+      );
+      return;
+    }
+
     EditCompaniesMutate(formData);
   };
 
