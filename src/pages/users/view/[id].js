@@ -6,15 +6,16 @@ import {
   Typography,
   FormControl,
   InputLabel,
-  OutlinedInput,
   Button,
   Card,
   Select,
   Switch,
   Box,
+  MenuItem,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import SecondNavBar from "@/components/SecondNavBar";
+import CustomTextField from "@/components/CustomTextField";
 import EditOffOutlinedIcon from "@mui/icons-material/EditOffOutlined";
 import { useRouter } from "next/router";
 import { UserView } from "@/pages/api/user";
@@ -105,33 +106,49 @@ const ViewUser = () => {
               <Typography mb="12px" color="black" fontSize="20px">
                 First name
               </Typography>
-              <FormControl size="small" variant="outlined" fullWidth disabled>
-                <OutlinedInput value={contact.firstName} type="text" />
-              </FormControl>
+              <CustomTextField
+                fullWidth
+                name="firstName"
+                defaultValue={contact.firstName}
+                disabled
+                type="text"
+              />
             </Grid>
             <Grid item="true" size={{ xs: 12, md: 6 }}>
               <Typography mb="12px" color="black" fontSize="20px">
                 Last name
               </Typography>
-              <FormControl size="small" variant="outlined" fullWidth disabled>
-                <OutlinedInput value={contact.lastName} type="text" />
-              </FormControl>
+              <CustomTextField
+                fullWidth
+                name="lastName"
+                defaultValue={contact.lastName}
+                disabled
+                type="text"
+              />
             </Grid>
             <Grid item="true" size={{ xs: 12, md: 4 }}>
               <Typography mb="12px" color="black" fontSize="20px">
                 Email
               </Typography>
-              <FormControl size="small" variant="outlined" fullWidth disabled>
-                <OutlinedInput value={contact.email} type="email" />
-              </FormControl>
+              <CustomTextField
+                fullWidth
+                name="email"
+                defaultValue={contact.email}
+                disabled
+                type="email"
+              />
             </Grid>
             <Grid item="true" size={{ xs: 12, md: 4 }}>
               <Typography mb="12px" color="black" fontSize="20px">
                 Phone
               </Typography>
-              <FormControl size="small" variant="outlined" fullWidth disabled>
-                <OutlinedInput value={contact.phoneNumber} type="number" />
-              </FormControl>
+              <CustomTextField
+                fullWidth
+                name="phoneNumber"
+                defaultValue={contact.phoneNumber}
+                disabled
+                type="number"
+              />
             </Grid>
             <Grid item="true" size={{ xs: 12, md: 4 }}>
               <Typography mb="12px" color="black" fontSize="20px">
@@ -139,7 +156,11 @@ const ViewUser = () => {
               </Typography>
               <FormControl size="small" variant="outlined" fullWidth disabled>
                 <InputLabel>{contact.role}</InputLabel>
-                <Select></Select>
+                <Select>
+                  <MenuItem>Admin</MenuItem>
+                  <MenuItem>Owner</MenuItem>
+                  <MenuItem>User</MenuItem>
+                </Select>
               </FormControl>
             </Grid>
             <Grid container item="true" direction="row" size={12} pt="30px">

@@ -9,6 +9,12 @@ export default function CurrnetUserProvider({ children }) {
   const [currentUser, setCurrentUser] = useState({});
   const [token, setToken] = useState(null);
 
+  useEffect(() => {
+    if (token) {
+      Cookies.set("jwtToken", token, { expires: 1, path: '/' });
+    } 
+  }, [token]);
+
     // from chatGPT
     useEffect(() => {
       const savedToken = Cookies.get('jwtToken');
@@ -29,17 +35,11 @@ export default function CurrnetUserProvider({ children }) {
   useEffect(() => {
     if (currentUserData) {
       setCurrentUser(currentUserData);
-      Cookies.set("userRole", currentUserData.role, { expires: 7, path: '/' });
+      Cookies.set("userRole", currentUserData.role, { expires: 1, path: '/' });
     }
   }, [currentUserData]);
 
-  useEffect(() => {
-    if (token) {
-      Cookies.set("jwtToken", token, { expires: 7, path: '/' });
-    } else {
-      Cookies.remove("jwtToken", { path: '/' });
-    }
-  }, [token]);
+
 
   return (
     <CurrnetUserContext.Provider

@@ -5,7 +5,8 @@ import { EmailSend } from "@/pages/api/contact";
 import SecondNavBar from "@/components/SecondNavBar";
 import SnackbarAlert from "@/components/SnackbarAlert";
 import FormValidator from "@/components/FormValidator";
-import { Container, Button, Box, Typography, TextField } from "@mui/material";
+import CustomTextField from "@/components/CustomTextField";
+import { Container, Button, Box, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
 const SendEmail = () => {
@@ -54,7 +55,7 @@ const SendEmail = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (emptyFields.length > 0) {
       setOpenSnackbar(true);
       setSnackbarSeverity("error");
@@ -63,10 +64,10 @@ const SendEmail = () => {
       );
       return;
     }
-  
-    EmailSendMutate(formData); 
+
+    EmailSendMutate(formData);
   };
-  
+
   return (
     <>
       <Container maxWidth="xl">
@@ -147,11 +148,10 @@ const SendEmail = () => {
                 </Typography>
               </Grid>
               <Grid item="true" size={11}>
-                <TextField
-                  size="small"
+                <CustomTextField
+                  fullWidth
                   name="to"
                   onChange={handleChange}
-                  fullWidth
                   placeholder="abc@xyz.com"
                 />
               </Grid>
@@ -170,11 +170,10 @@ const SendEmail = () => {
                 </Typography>
               </Grid>
               <Grid item="true" size={5.3}>
-                <TextField
-                  size="small"
+                <CustomTextField
+                  fullWidth
                   name="cc"
                   onChange={handleChange}
-                  fullWidth
                   placeholder="abc@xyz.com"
                 />
               </Grid>
@@ -186,11 +185,10 @@ const SendEmail = () => {
                 </Typography>
               </Grid>
               <Grid item="true" size={5}>
-                <TextField
-                  size="small"
+                <CustomTextField
+                  fullWidth
                   name="bcc"
                   onChange={handleChange}
-                  fullWidth
                   placeholder="abc@xyz.com"
                 />
               </Grid>
@@ -209,17 +207,16 @@ const SendEmail = () => {
                 </Typography>
               </Grid>
               <Grid item="true" size={11}>
-                <TextField
-                  size="small"
+                <CustomTextField
                   name="subject"
-                  onChange={handleChange}
                   fullWidth
+                  onChange={handleChange}
                   placeholder="abc@xyz.com"
                 />
               </Grid>
             </Grid>
             <Grid item="true" size={11}>
-              <TextField
+              <CustomTextField
                 name="body"
                 onChange={handleChange}
                 fullWidth

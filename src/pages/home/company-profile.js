@@ -5,17 +5,17 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { CurrnetUserContext } from "@/Context/Context";
 import SecondNavBar from "@/components/SecondNavBar";
+import CustomTextField from "@/components/CustomTextField";
 import {
   Container,
   Typography,
   Button,
   FormControl,
   InputLabel,
-  OutlinedInput,
   Card,
   Select,
-  MenuItem,
   Box,
+  MenuItem
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import EditOffOutlinedIcon from "@mui/icons-material/EditOffOutlined";
@@ -81,72 +81,97 @@ const CompanyProfile = () => {
               <Typography mb="12px" color="black" fontSize="20px">
                 Company name
               </Typography>
-              <FormControl size="small" variant="outlined" fullWidth disabled>
-                <OutlinedInput value={data.companyName} type="text" />
-              </FormControl>
+              <CustomTextField
+                fullWidth
+                name="companyName"
+                defaultValue={data.companyName}
+                disabled
+              />
             </Grid>
 
             <Grid size={{ xs: 12, md: 6 }}>
               <Typography mb="12px" color="black" fontSize="20px">
                 VAT Number
               </Typography>
-              <FormControl size="small" variant="outlined" fullWidth disabled>
-                <OutlinedInput value={data.vatNumber} type="text" />
-              </FormControl>
+              <CustomTextField
+                fullWidth
+                name="vatNumber"
+                defaultValue={data.vatNumber}
+                disabled
+              />
             </Grid>
 
             <Grid size={{ xs: 12, md: 6 }}>
               <Typography mb="12px" color="black" fontSize="20px">
                 Street
               </Typography>
-              <FormControl size="small" variant="outlined" fullWidth disabled>
-                <OutlinedInput value={data.streetOne} type="text" />
-              </FormControl>
+              <CustomTextField
+                fullWidth
+                name="streetOne"
+                defaultValue={data.streetOne}
+                disabled
+              />
             </Grid>
 
             <Grid size={{ xs: 12, md: 6 }}>
               <Typography mb="12px" color="black" fontSize="20px">
                 Street 2
               </Typography>
-              <FormControl size="small" variant="outlined" fullWidth disabled>
-                <OutlinedInput value={data.streetTwo} type="text" />
-              </FormControl>
+              <CustomTextField
+                fullWidth
+                name="streetTwo"
+                defaultValue={data.streetTwo}
+                disabled
+              />
             </Grid>
 
             <Grid size={{ xs: 12, md: 6 }}>
               <Typography mb="12px" color="black" fontSize="20px">
                 City
               </Typography>
-              <FormControl size="small" variant="outlined" fullWidth disabled>
-                <OutlinedInput value={data.city} type="text" />
-              </FormControl>
+              <CustomTextField
+                fullWidth
+                name="city"
+                defaultValue={data.city}
+                disabled
+              />
             </Grid>
 
             <Grid size={{ xs: 12, md: 6 }}>
               <Typography mb="12px" color="black" fontSize="20px">
                 State
               </Typography>
-              <FormControl size="small" variant="outlined" fullWidth disabled>
-                <OutlinedInput value={data.state} type="text" />
-              </FormControl>
+              <CustomTextField
+                fullWidth
+                name="state"
+                defaultValue={data.state}
+                disabled
+              />
             </Grid>
 
             <Grid size={{ xs: 12, md: 6 }}>
               <Typography mb="12px" color="black" fontSize="20px">
                 Zip
               </Typography>
-              <FormControl size="small" variant="outlined" fullWidth disabled>
-                <OutlinedInput value={data.zip} type="text" />
-              </FormControl>
+              <CustomTextField
+                fullWidth
+                name="zip"
+                defaultValue={data.zip}
+                disabled
+              />
             </Grid>
 
             <Grid size={{ xs: 12, md: 6 }}>
               <Typography mb="12px" color="black" fontSize="20px">
                 Country
               </Typography>
-              <FormControl size="small" variant="outlined" fullWidth disabled>
+              <FormControl size="small" fullWidth disabled>
                 <InputLabel>{data.country}</InputLabel>
-                <Select></Select>
+                <Select>
+                  <MenuItem>Turkey</MenuItem>
+                  <MenuItem>Syria</MenuItem>
+                  <MenuItem>Moroco</MenuItem>
+                </Select>
               </FormControl>
             </Grid>
             <Grid item="true" size={{ xs: 8, md: 5, lg: 3.1 }}>

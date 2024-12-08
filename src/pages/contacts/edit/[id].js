@@ -5,14 +5,13 @@ import { ViewContact, EditContact } from "@/pages/api/contact";
 import SecondNavBar from "@/components/SecondNavBar";
 import SnackbarAlert from "@/components/SnackbarAlert";
 import FormValidator from "@/components/FormValidator";
+import CustomTextField from "@/components/CustomTextField";
 import {
   Card,
   Container,
   Typography,
   Avatar,
   Button,
-  TextField,
-  FormControl,
   Box,
   Switch,
 } from "@mui/material";
@@ -86,7 +85,6 @@ const Edit = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
     if (emptyFields.length > 0) {
       setOpenSnackbar(true);
       setSnackbarSeverity("error");
@@ -215,113 +213,106 @@ const Edit = () => {
                   <Typography mb="12px" color="black" fontSize="20px">
                     First name
                   </Typography>
-                  <FormControl fullWidth>
-                    <TextField
-                      size="small"
-                      name="firstName"
-                      onChange={handleChange}
-                      value={formData.firstName}
-                      type="text"
-                    />
-                  </FormControl>
+                  <CustomTextField
+                    fullWidth
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                    placeholder="Enter your first name"
+                  />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                   <Typography mb="12px" color="black" fontSize="20px">
                     Last name
                   </Typography>
-                  <FormControl fullWidth>
-                    <TextField
-                      size="small"
-                      name="lastName"
-                      onChange={handleChange}
-                      value={formData.lastName}
-                      type="text"
-                    />
-                  </FormControl>
+                  <CustomTextField
+                    fullWidth
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                    placeholder="Enter your first name"
+                  />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                   <Typography mb="12px" color="black" fontSize="20px">
                     Email
                   </Typography>
-                  <FormControl fullWidth>
-                    <TextField
-                      size="small"
-                      name="email"
-                      onChange={handleChange}
-                      value={formData.email}
-                      type="email"
-                    />
-                  </FormControl>
+                  <CustomTextField
+                    fullWidth
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="Enter your email"
+                    type="email"
+                  />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                   <Typography mb="12px" color="black" fontSize="20px">
                     Phone
                   </Typography>
-                  <FormControl fullWidth>
-                    <TextField
-                      size="small"
-                      name="phoneNumber"
-                      onChange={handleChange}
-                      value={formData.phoneNumber}
-                      type="number"
-                    ></TextField>
-                  </FormControl>
+                  <CustomTextField
+                    fullWidth
+                    name="phoneNumber"
+                    value={formData.phoneNumber}
+                    onChange={handleChange}
+                    placeholder="Enter your phoneNumber"
+                    type="number"
+                  />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                   <Typography mb="12px" color="black" fontSize="20px">
                     Email 2
                   </Typography>
-                  <FormControl fullWidth>
-                    <TextField
-                      size="small"
-                      name="emailTwo"
-                      placeholder="abc@gmail.com"
-                      onChange={handleChange}
-                      value={formData.emailTwo}
-                      type="text"
-                    ></TextField>
-                  </FormControl>
+                  <CustomTextField
+                    fullWidth
+                    name="emailTwo"
+                    value={formData.emailTwo}
+                    onChange={handleChange}
+                    placeholder="abc@gmail.com"
+                    type="email"
+                  />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                   <Typography mb="12px" color="black" fontSize="20px">
                     Mobile
                   </Typography>
-                  <FormControl fullWidth>
-                    <TextField
-                      size="small"
-                      name="mobileNumber"
-                      placeholder="123-456-789-01"
-                      onChange={handleChange}
-                      value={formData.mobileNumber}
-                      type="text"
-                    ></TextField>
-                  </FormControl>
+                  <CustomTextField
+                    fullWidth
+                    name="mobileNumber"
+                    value={formData.mobileNumber}
+                    onChange={handleChange}
+                    placeholder="123-456-789-01"
+                    type="number"
+                  />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                   <Typography mb="12px" color="black" fontSize="20px">
                     Address
                   </Typography>
-                  <TextField
+                  <CustomTextField
                     fullWidth
                     multiline
-                    rows={3}
+                    rows={4}
                     name="address"
-                    onChange={handleChange}
+                    placeholder="Address  "
                     value={formData.address}
+                    onChange={handleChange}
+                    type="text"
                   />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                   <Typography mb="12px" color="black" fontSize="20px">
                     Address 2
                   </Typography>
-                  <TextField
+                  <CustomTextField
                     fullWidth
-                    placeholder="Address 2"
                     multiline
-                    rows={3}
+                    rows={4}
+                    placeholder="Address 2"
                     name="addressTwo"
-                    onChange={handleChange}
                     value={formData.addressTwo}
+                    onChange={handleChange}
+                    type="text"
                   />
                 </Grid>
               </Grid>

@@ -4,13 +4,11 @@ import Image from "next/image";
 import SecondNavBar from "@/components/SecondNavBar";
 import FormValidator from "@/components/FormValidator";
 import SnackbarAlert from "@/components/SnackbarAlert";
+import CustomTextField from "@/components/CustomTextField";
 import {
   Container,
   Typography,
   Button,
-  FormControl,
-  InputLabel,
-  OutlinedInput,
   Card,
   Select,
   MenuItem,
@@ -44,7 +42,6 @@ const CompanyProfileEdit = () => {
   const emptyFields = FormValidator({
     formData,
   });
-
 
   const { data: Company } = useQuery({
     queryKey: ["Company"],
@@ -91,9 +88,7 @@ const CompanyProfileEdit = () => {
     if (emptyFields.length > 0) {
       setOpenSnackbar(true);
       setSnackbarSeverity("error");
-      setSnackbarMessage(
-        `Please fill all fields.`
-      );
+      setSnackbarMessage("Please fill all fields.");
       return;
     }
 
@@ -147,119 +142,108 @@ const CompanyProfileEdit = () => {
                 <Typography mb="12px" color="black" fontSize="20px">
                   Company name
                 </Typography>
-                <FormControl size="small" fullWidth>
-                  <OutlinedInput
-                    name="companyName"
-                    onChange={handleChange}
-                    value={formData.companyName}
-                    type="text"
-                  />
-                </FormControl>
+                <CustomTextField
+                  fullWidth
+                  name="companyName"
+                  value={formData.companyName}
+                  type="text"
+                  onChange={handleChange}
+                />
               </Grid>
 
               <Grid size={{ xs: 12, md: 6 }}>
                 <Typography mb="12px" color="black" fontSize="20px">
                   VAT Number
                 </Typography>
-                <FormControl fullWidth size="small">
-                  <OutlinedInput
-                    name="vatNumber"
-                    onChange={handleChange}
-                    value={formData.vatNumber}
-                    type="text"
-                  />
-                </FormControl>
+                <CustomTextField
+                  fullWidth
+                  name="vatNumber"
+                  value={formData.vatNumber}
+                  type="text"
+                  onChange={handleChange}
+                />
               </Grid>
 
               <Grid size={{ xs: 12, md: 6 }}>
                 <Typography mb="12px" color="black" fontSize="20px">
                   Street
                 </Typography>
-                <FormControl fullWidth size="small">
-                  <OutlinedInput
-                    name="streetOne"
-                    onChange={handleChange}
-                    value={formData.streetOne}
-                    type="text"
-                  />
-                </FormControl>
+                <CustomTextField
+                  fullWidth
+                  name="streetOne"
+                  value={formData.streetOne}
+                  type="text"
+                  onChange={handleChange}
+                />
               </Grid>
 
               <Grid size={{ xs: 12, md: 6 }}>
                 <Typography mb="12px" color="black" fontSize="20px">
                   Street 2
                 </Typography>
-                <FormControl fullWidth size="small">
-                  <OutlinedInput
-                    name="streetTwo"
-                    onChange={handleChange}
-                    value={formData.streetTwo}
-                    type="text"
-                  />
-                </FormControl>
+                <CustomTextField
+                  fullWidth
+                  name="streetTwo"
+                  value={formData.streetTwo}
+                  type="text"
+                  onChange={handleChange}
+                />
               </Grid>
 
               <Grid size={{ xs: 12, md: 6 }}>
                 <Typography mb="12px" color="black" fontSize="20px">
                   City
                 </Typography>
-                <FormControl variant="outlined" fullWidth size="small">
-                  <OutlinedInput
-                    name="city"
-                    onChange={handleChange}
-                    value={formData.city}
-                    type="text"
-                  />
-                </FormControl>
+                <CustomTextField
+                  fullWidth
+                  name="city"
+                  value={formData.city}
+                  type="text"
+                  onChange={handleChange}
+                />
               </Grid>
 
               <Grid size={{ xs: 12, md: 6 }}>
                 <Typography mb="12px" color="black" fontSize="20px">
                   State
                 </Typography>
-                <FormControl fullWidth size="small">
-                  <OutlinedInput
-                    name="state"
-                    onChange={handleChange}
-                    value={formData.state}
-                    type="text"
-                  />
-                </FormControl>
+                <CustomTextField
+                  fullWidth
+                  name="state"
+                  value={formData.state}
+                  type="text"
+                  onChange={handleChange}
+                />
               </Grid>
 
               <Grid size={{ xs: 12, md: 6 }}>
                 <Typography mb="12px" color="black" fontSize="20px">
                   Zip
                 </Typography>
-                <FormControl variant="outlined" fullWidth size="small">
-                  <OutlinedInput
-                    name="zip"
-                    onChange={handleChange}
-                    value={formData.zip}
-                    type="text"
-                  />
-                </FormControl>
+                <CustomTextField
+                  fullWidth
+                  name="zip"
+                  value={formData.zip}
+                  type="text"
+                  onChange={handleChange}
+                />
               </Grid>
 
               <Grid size={{ xs: 12, md: 6 }}>
                 <Typography mb="12px" color="black" fontSize="20px">
                   Country
                 </Typography>
-                <FormControl fullWidth size="small">
-                  <InputLabel sx={{ color: "#868E96" }}>
-                    Select your country
-                  </InputLabel>
-                  <Select
-                    name="country"
-                    onChange={handleChange}
-                    value={formData.country}
-                    label="Select your country"
-                  >
-                    <MenuItem value={"Turkey"}>Turkey</MenuItem>
-                    <MenuItem value={"Syria"}>Syria</MenuItem>
-                    <MenuItem value={"Moroco"}>Moroco</MenuItem>
-                  </Select>
-                </FormControl>
+                <Select
+                  fullWidth
+                  size="small"
+                  name="country"
+                  onChange={handleChange}
+                  value={formData.country}
+                >
+                  <MenuItem value={"Turkey"}>Turkey</MenuItem>
+                  <MenuItem value={"Syria"}>Syria</MenuItem>
+                  <MenuItem value={"Moroco"}>Moroco</MenuItem>
+                </Select>
               </Grid>
               <Grid item="true" size={{ xs: 8, md: 5, lg: 3.1 }}>
                 <Button

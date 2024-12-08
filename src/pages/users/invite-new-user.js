@@ -4,18 +4,18 @@ import { useMutation } from "@tanstack/react-query";
 import { AddUser } from "@/pages/api/user";
 import SecondNavBar from "@/components/SecondNavBar";
 import SnackbarAlert from "@/components/SnackbarAlert";
+import FormValidator from "@/components/FormValidator";
+import CustomTextField from "@/components/CustomTextField";
 import {
   Container,
   Typography,
   FormControl,
   InputLabel,
-  OutlinedInput,
   Button,
   Card,
   Select,
   MenuItem,
   Box,
-  FormHelperText,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
@@ -37,19 +37,9 @@ const InviteNewUser = () => {
     role: "",
   });
 
-  const [errors, setErrors] = useState({});
-
-  const validateForm = () => {
-    const newErrors = {};
-    if (!formData.firstName) newErrors.firstName = "First name is required.";
-    if (!formData.lastName) newErrors.lastName = "Last name is required.";
-    if (!formData.email) newErrors.email = "Email is required.";
-    if (!formData.phoneNumber)
-      newErrors.phoneNumber = "PhoneNumber is required.";
-    if (!formData.role) newErrors.role = "role is required.";
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+  const emptyFields = FormValidator({
+    formData,
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -61,11 +51,11 @@ const InviteNewUser = () => {
     onSuccess: () => {
       setOpenSnackbar(true);
       setSnackbarSeverity("success");
-      setSnackbarMessage("Registration successful!");
+      setSnackbarMessage("Invited user successful!");
       router.push("/home/users");
     },
     onError: (error) => {
-      console.error("Error registering:", error);
+      console.error("Error Invite user:", error);
       setOpenSnackbar(true);
       setSnackbarSeverity(error.response?.status === 403 ? "error" : "warning");
       setSnackbarMessage(getErrorMessage(error));
@@ -82,14 +72,15 @@ const InviteNewUser = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (!validateForm()) return;
-    try {
-      await AddUserMutate(formData);
-    } catch (e) {
-      console.error(e);
+    if (emptyFields.length > 0) {
+      setOpenSnackbar(true);
+      setSnackbarSeverity("error");
+      setSnackbarMessage("Please fill all fields.");
+      return;
     }
+    AddUserMutate(formData);
   };
 
   return (
@@ -130,79 +121,57 @@ const InviteNewUser = () => {
               <Typography mb="12px" color="black" fontSize="20px">
                 First name <span style={{ color: "#C70000" }}>*</span>
               </Typography>
-              <FormControl error={!!errors.firstName} fullWidth size="small">
-                <InputLabel sx={{ color: "#868E96" }}>First Name</InputLabel>
-                <OutlinedInput
-                  name="firstName"
-                  onChange={handleChange}
-                  label="First Name"
-                  type="text"
-                />
-                {errors.firstName && (
-                  <FormHelperText>{errors.firstName}</FormHelperText>
-                )}
-              </FormControl>
+              <CustomTextField
+                fullWidth
+                name="firstName"
+                onChange={handleChange}
+                placeholder="First Name"
+              />
             </Grid>
             <Grid item="true" size={{ xs: 12, md: 6 }}>
               <Typography mb="12px" color="black" fontSize="20px">
                 Last name <span style={{ color: "#C70000" }}>*</span>
               </Typography>
-              <FormControl error={!!errors.lastName} fullWidth size="small">
-                <InputLabel sx={{ color: "#868E96" }}>Last Name</InputLabel>
-                <OutlinedInput
-                  name="lastName"
-                  onChange={handleChange}
-                  label="Last Name"
-                  type="text"
-                />
-                {errors.lastName && (
-                  <FormHelperText>{errors.lastName}</FormHelperText>
-                )}
-              </FormControl>
+              <CustomTextField
+                fullWidth
+                name="lastName"
+                onChange={handleChange}
+                placeholder="Last Name"
+              />
             </Grid>
             <Grid item="true" size={{ xs: 12, md: 4 }}>
               <Typography mb="12px" color="black" fontSize="20px">
                 Email <span style={{ color: "#C70000" }}>*</span>
               </Typography>
-              <FormControl error={!!errors.email} fullWidth size="small">
-                <InputLabel sx={{ color: "#868E96" }}>
-                  mail@gmail.com
-                </InputLabel>
-                <OutlinedInput
-                  name="email"
-                  onChange={handleChange}
-                  label="mail@gmail.com"
-                  type="email"
-                />
-                {errors.email && (
-                  <FormHelperText>{errors.email}</FormHelperText>
-                )}
-              </FormControl>
+              <CustomTextField
+                fullWidth
+                name="email"
+                onChange={handleChange}
+                placeholder="mail@gmail.com"
+                type="email"
+              />
             </Grid>
             <Grid item="true" size={{ xs: 12, md: 4 }}>
               <Typography mb="12px" color="black" fontSize="20px">
                 Phone <span style={{ color: "#C70000" }}>*</span>
               </Typography>
-              <FormControl error={!!errors.phoneNumber} fullWidth size="small">
-                <InputLabel sx={{ color: "#868E96" }}>Phone Number</InputLabel>
-                <OutlinedInput
-                  name="phoneNumber"
-                  onChange={handleChange}
-                  label="Phone Number"
-                  type="number"
-                />
-                {errors.phoneNumber && (
-                  <FormHelperText>{errors.phoneNumber}</FormHelperText>
-                )}
-              </FormControl>
+              <CustomTextField
+                fullWidth
+                name="phoneNumber"
+                onChange={handleChange}
+                placeholder="Phone Number"
+                type="number"
+              />
             </Grid>
             <Grid item="true" size={{ xs: 12, md: 4 }}>
               <Typography mb="12px" color="black" fontSize="20px">
                 User Type <span style={{ color: "#C70000" }}>*</span>
               </Typography>
-              <FormControl fullWidth size="small" error={!!errors.role}>
+              <FormControl fullWidth size="small">
                 <InputLabel>Select user type</InputLabel>
                 <Select
+                  fullWidth
+                  size="small"
                   label="Select user type"
                   name="role"
                   value={formData.role}
@@ -212,7 +181,6 @@ const InviteNewUser = () => {
                   <MenuItem value={"Admin"}>Admin</MenuItem>
                   <MenuItem value={"Owner"}>Owner</MenuItem>
                 </Select>
-                {errors.role && <FormHelperText>{errors.role}</FormHelperText>}
               </FormControl>
             </Grid>
             <Grid container item="true" direction="row" size={12} pt="30px">

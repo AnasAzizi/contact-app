@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { CurrnetUserContext } from "@/Context/Context";
 import SecondNavBar from "@/components/SecondNavBar";
+import CustomTextField from "@/components/CustomTextField";
 import { useRouter } from "next/router";
 import {
   Card,
@@ -9,8 +10,6 @@ import {
   Typography,
   Avatar,
   Button,
-  TextField,
-  FormControl,
   Box,
   Switch,
 } from "@mui/material";
@@ -81,7 +80,6 @@ const View = () => {
               }}
             >
               <Typography fontSize="20px">
-                {" "}
                 {contact.status === "Active" ? "Active" : "Inactive"}
               </Typography>
               <Switch
@@ -136,101 +134,91 @@ const View = () => {
                   <Typography mb="12px" color="black" fontSize="20px">
                     First name
                   </Typography>
-                  <FormControl variant="outlined" fullWidth>
-                    <TextField
-                      size="small"
-                      defaultValue={contact.firstName || ""}
-                      type="text"
-                      disabled
-                    />
-                  </FormControl>
+                  <CustomTextField
+                    fullWidth
+                    name="firstName"
+                    defaultValue={contact.firstName || ""}
+                    disabled
+                  />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                   <Typography mb="12px" color="black" fontSize="20px">
                     Last name
                   </Typography>
-                  <FormControl fullWidth>
-                    <TextField
-                      size="small"
-                      defaultValue={contact.lastName || ""}
-                      type="text"
-                      disabled
-                    />
-                  </FormControl>
+                  <CustomTextField
+                    fullWidth
+                    name="lastName"
+                    defaultValue={contact.lastName || ""}
+                    disabled
+                  />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                   <Typography mb="12px" color="black" fontSize="20px">
                     Email
                   </Typography>
-                  <FormControl fullWidth>
-                    <TextField
-                      size="small"
-                      defaultValue={contact.email || ""}
-                      type="text"
-                      disabled
-                    />
-                  </FormControl>
+                  <CustomTextField
+                    fullWidth
+                    name="email"
+                    defaultValue={contact.email || ""}
+                    disabled
+                  />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                   <Typography mb="12px" color="black" fontSize="20px">
                     Phone
                   </Typography>
-                  <FormControl fullWidth>
-                    <TextField
-                      size="small"
-                      defaultValue={contact.phoneNumber || ""}
-                      type="text"
-                      disabled
-                    />
-                  </FormControl>
+                  <CustomTextField
+                    fullWidth
+                    name="phoneNumber"
+                    defaultValue={contact.phoneNumber || ""}
+                    disabled
+                  />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                   <Typography mb="12px" color="black" fontSize="20px">
                     Email 2
                   </Typography>
-                  <FormControl fullWidth>
-                    <TextField
-                      size="small"
-                      defaultValue={contact.emailTwo || ""}
-                      type="text"
-                      disabled
-                    />
-                  </FormControl>
+                  <CustomTextField
+                    fullWidth
+                    name="emailTwo"
+                    defaultValue={contact.emailTwo || ""}
+                    disabled
+                  />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                   <Typography mb="12px" color="black" fontSize="20px">
                     Mobile
                   </Typography>
-                  <FormControl fullWidth>
-                    <TextField
-                      size="small"
-                      defaultValue={contact.mobileNumber || ""}
-                      type="text"
-                      disabled
-                    />
-                  </FormControl>
+                  <CustomTextField
+                    fullWidth
+                    name="mobileNumber"
+                    defaultValue={contact.mobileNumber || ""}
+                    disabled
+                  />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                   <Typography mb="12px" color="black" fontSize="20px">
                     Address
                   </Typography>
-                  <TextField
+                  <CustomTextField
                     fullWidth
                     multiline
-                    rows={3}
-                    value={contact.address || ""}
+                    rows={4}
+                    name="address"
                     disabled
+                    value={contact.address || ""}
                   />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                   <Typography mb="12px" color="black" fontSize="20px">
                     Address 2
                   </Typography>
-                  <TextField
+                  <CustomTextField
                     fullWidth
-                    disabled
                     multiline
-                    rows={3}
+                    rows={4}
+                    name="addressTwo"
+                    disabled
                     value={contact.addressTwo || ""}
                   />
                 </Grid>

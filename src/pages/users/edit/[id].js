@@ -5,11 +5,10 @@ import { UserView, UserEdit } from "@/pages/api/user";
 import SecondNavBar from "@/components/SecondNavBar";
 import SnackbarAlert from "@/components/SnackbarAlert";
 import FormValidator from "@/components/FormValidator";
+import CustomTextField from "@/components/CustomTextField";
 import {
   Container,
   Typography,
-  FormControl,
-  OutlinedInput,
   Button,
   Card,
   Select,
@@ -42,7 +41,6 @@ const EditUser = () => {
     formData,
     excludedFields: ["role", "status", "phoneNumber"],
   });
-
 
   const { data: user } = useQuery({
     queryKey: ["user"],
@@ -161,73 +159,65 @@ const EditUser = () => {
               <Typography mb="12px" color="black" fontSize="20px">
                 First name
               </Typography>
-              <FormControl size="small" variant="outlined" fullWidth>
-                <OutlinedInput
-                  name="firstName"
-                  // sx={{ color: "gray" }}
-                  value={formData.firstName}
-                  onChange={handleChange}
-                  type="text"
-                />
-              </FormControl>
+              <CustomTextField
+                fullWidth
+                name="firstName"
+                value={formData.firstName}
+                type="text"
+                onChange={handleChange}
+              />
             </Grid>
             <Grid item="true" size={{ xs: 12, md: 6 }}>
               <Typography mb="12px" color="black" fontSize="20px">
                 Last name
               </Typography>
-              <FormControl size="small" variant="outlined" fullWidth>
-                <OutlinedInput
-                  // sx={{ color: "gray" }}
-                  name="lastName"
-                  onChange={handleChange}
-                  value={formData.lastName}
-                  type="text"
-                />
-              </FormControl>
+              <CustomTextField
+                fullWidth
+                name="lastName"
+                value={formData.lastName}
+                type="text"
+                onChange={handleChange}
+              />
             </Grid>
             <Grid item="true" size={{ xs: 12, md: 4 }}>
               <Typography mb="12px" color="black" fontSize="20px">
                 Email
               </Typography>
-              <FormControl size="small" variant="outlined" fullWidth>
-                <OutlinedInput
-                  name="email"
-                  // sx={{ color: "gray" }}
-                  onChange={handleChange}
-                  value={formData.email}
-                  type="email"
-                />
-              </FormControl>
+              <CustomTextField
+                fullWidth
+                name="email"
+                value={formData.email}
+                type="text"
+                onChange={handleChange}
+              />
             </Grid>
             <Grid item="true" size={{ xs: 12, md: 4 }}>
               <Typography mb="12px" color="black" fontSize="20px">
                 Phone
               </Typography>
-              <FormControl size="small" variant="outlined" fullWidth>
-                <OutlinedInput
-                  // sx={{ color: "gray" }}
-                  name="phoneNumber"
-                  onChange={handleChange}
-                  value={formData.phoneNumber}
-                  type="number"
-                />
-              </FormControl>
+              <CustomTextField
+                fullWidth
+                name="phoneNumber"
+                value={formData.phoneNumber}
+                type="number"
+                onChange={handleChange}
+              />
             </Grid>
             <Grid item="true" size={{ xs: 12, md: 4 }}>
               <Typography mb="12px" color="black" fontSize="20px">
                 User Type
               </Typography>
-              <FormControl size="small" variant="outlined" fullWidth>
-                <Select
-                  name="role"
-                  onChange={handleChange}
-                  value={formData.role}
-                >
-                  <MenuItem value={"User"}>user</MenuItem>
-                  <MenuItem value={"Admin"}>Admin</MenuItem>
-                  <MenuItem value={"Owner"}>Owner</MenuItem>
-                </Select>
-              </FormControl>
+              <Select
+                size="small"
+                fullWidth
+                name="role"
+                onChange={handleChange}
+                value={formData.role}
+              >
+                <MenuItem value={"User"}>user</MenuItem>
+                <MenuItem value={"Admin"}>Admin</MenuItem>
+                <MenuItem value={"Owner"}>Owner</MenuItem>
+              </Select>
             </Grid>
             <Grid container item="true" direction="row" size={12} pt="30px">
               <Grid item="true" size={{ xs: 6, md: 2 }}>

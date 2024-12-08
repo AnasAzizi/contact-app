@@ -91,7 +91,7 @@ const RegisterForm = () => {
     if (emptyFields.length > 0) {
       setOpenSnackbar(true);
       setSnackbarSeverity("error");
-      setSnackbarMessage(`Please fill all fields.`);
+      setSnackbarMessage("Please fill all fields.");
       return;
     }
     try {

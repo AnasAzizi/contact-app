@@ -4,17 +4,14 @@ import { useMutation } from "@tanstack/react-query";
 import { AddContact } from "@/pages/api/contact";
 import SecondNavBar from "@/components/SecondNavBar";
 import SnackbarAlert from "@/components/SnackbarAlert";
+import CustomTextField from "@/components/CustomTextField";
+import FormValidator from "@/components/FormValidator";
 import {
   Card,
   Container,
   Typography,
   Avatar,
   Button,
-  TextField,
-  FormControl,
-  InputLabel,
-  OutlinedInput,
-  FormHelperText,
   Box,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
@@ -24,7 +21,6 @@ const CreateNew = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarSeverity, setSnackbarSeverity] = useState("error");
   const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [errors, setErrors] = useState({});
 
   const handleSnackbarClose = () => {
     setOpenSnackbar(false);
@@ -41,17 +37,9 @@ const CreateNew = () => {
     AddressTwo: "",
   });
 
-  const validateForm = () => {
-    const newErrors = {};
-    if (!formData.FirstName) newErrors.FirstName = "First name is required.";
-    if (!formData.LastName) newErrors.LastName = "Last name is required.";
-    if (!formData.Email) newErrors.Email = "Email is required.";
-    if (!formData.phoneNumber)
-      newErrors.phoneNumber = "PhoneNumber is required.";
-    if (!formData.Address) newErrors.Address = "Address is required.";
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+  const emptyFields = FormValidator({
+    formData,
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -84,14 +72,15 @@ const CreateNew = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (!validateForm()) return;
-    try {
-      await ContactAddMutate(formData);
-    } catch (e) {
-      console.error(e);
+    if (emptyFields.length > 0) {
+      setOpenSnackbar(true);
+      setSnackbarSeverity("error");
+      setSnackbarMessage("Please fill all fields.");
+      return;
     }
+    ContactAddMutate(formData);
   };
 
   return (
@@ -182,166 +171,98 @@ const CreateNew = () => {
                   <Typography mb="12px" color="black" fontSize="20px">
                     First name <span style={{ color: "#C70000" }}>*</span>
                   </Typography>
-                  <FormControl
-                    error={!!errors.FirstName}
-                    size="small"
-                    variant="outlined"
+                  <CustomTextField
                     fullWidth
-                  >
-                    <InputLabel sx={{ color: "#868E96" }}>First</InputLabel>
-                    <OutlinedInput
-                      name="FirstName"
-                      onChange={handleChange}
-                      label="First"
-                      type="text"
-                    />
-                    {errors.FirstName && (
-                      <FormHelperText>{errors.FirstName}</FormHelperText>
-                    )}
-                  </FormControl>
+                    name="FirstName"
+                    onChange={handleChange}
+                    placeholder="First"
+                  />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                   <Typography mb="12px" color="black" fontSize="20px">
                     Last name <span style={{ color: "#C70000" }}>*</span>
                   </Typography>
-                  <FormControl
-                    error={!!errors.LastName}
-                    size="small"
-                    variant="outlined"
+                  <CustomTextField
                     fullWidth
-                  >
-                    <InputLabel sx={{ color: "#868E96" }}>Last</InputLabel>
-                    <OutlinedInput
-                      name="LastName"
-                      onChange={handleChange}
-                      label="Last"
-                      type="text"
-                    />
-                    {errors.LastName && (
-                      <FormHelperText>{errors.LastName}</FormHelperText>
-                    )}
-                  </FormControl>
+                    name="LastName"
+                    onChange={handleChange}
+                    placeholder="Last"
+                  />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                   <Typography mb="12px" color="black" fontSize="20px">
                     Email
                   </Typography>
-                  <FormControl
-                    error={!!errors.Email}
-                    size="small"
-                    variant="outlined"
+                  <CustomTextField
                     fullWidth
-                  >
-                    <InputLabel sx={{ color: "#868E96" }}>
-                      name@example.com
-                    </InputLabel>
-                    <OutlinedInput
-                      name="Email"
-                      onChange={handleChange}
-                      label="name@example.com"
-                      type="email"
-                    />
-                    {errors.Email && (
-                      <FormHelperText>{errors.Email}</FormHelperText>
-                    )}
-                  </FormControl>
+                    name="Email"
+                    onChange={handleChange}
+                    placeholder="name@example.com"
+                    type="email"
+                  />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                   <Typography mb="12px" color="black" fontSize="20px">
                     Phone <span style={{ color: "#C70000" }}>*</span>
                   </Typography>
-                  <FormControl
-                    error={!!errors.phoneNumber}
-                    size="small"
-                    variant="outlined"
+                  <CustomTextField
                     fullWidth
-                  >
-                    <InputLabel sx={{ color: "#868E96" }}>
-                      555-123-4567
-                    </InputLabel>
-                    <OutlinedInput
-                      name="phoneNumber"
-                      onChange={handleChange}
-                      label="555-123-4567"
-                      type="number"
-                    ></OutlinedInput>
-                    {errors.phoneNumber && (
-                      <FormHelperText>{errors.phoneNumber}</FormHelperText>
-                    )}
-                  </FormControl>
+                    name="phoneNumber"
+                    onChange={handleChange}
+                    placeholder="555-123-4567"
+                    type="number"
+                  />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                   <Typography mb="12px" color="black" fontSize="20px">
                     Email 2
                   </Typography>
-                  <FormControl
-                    error={!!errors.EmailTwo}
-                    size="small"
-                    variant="outlined"
+                  <CustomTextField
                     fullWidth
-                  >
-                    <InputLabel sx={{ color: "#868E96" }}>
-                      name@example.com
-                    </InputLabel>
-                    <OutlinedInput
-                      name="EmailTwo"
-                      onChange={handleChange}
-                      label="name@example.com"
-                      type="text"
-                    ></OutlinedInput>
-                    {errors.EmailTwo && (
-                      <FormHelperText>{errors.EmailTwo}</FormHelperText>
-                    )}
-                  </FormControl>
+                    name="EmailTwo"
+                    onChange={handleChange}
+                    placeholder="name@example.com"
+                    type="email"
+                  />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                   <Typography mb="12px" color="black" fontSize="20px">
                     Mobile
                   </Typography>
-                  <FormControl size="small" variant="outlined" fullWidth>
-                    <InputLabel sx={{ color: "#868E96" }}>
-                      555-123-4567
-                    </InputLabel>
-                    <OutlinedInput
-                      name="mobileNumber"
-                      onChange={handleChange}
-                      label="555-123-4567"
-                      type="number"
-                    ></OutlinedInput>
-                  </FormControl>
+                  <CustomTextField
+                    fullWidth
+                    name="mobileNumber"
+                    onChange={handleChange}
+                    placeholder="555-123-4567"
+                    type="number"
+                  />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                   <Typography mb="12px" color="black" fontSize="20px">
                     Address
                   </Typography>
-                  <TextField
-                    name="Address"
-                    error={!!errors.Address}
-                    onChange={handleChange}
+                  <CustomTextField
                     fullWidth
-                    placeholder="Address"
                     multiline
-                    rows={3}
-                    label="Address"
+                    rows={4}
+                    name="Address"
+                    onChange={handleChange}
+                    type="text"
+                    placeholder="Address"
                   />
-                  {errors.Address && (
-                    <FormHelperText sx={{ color: "#f44336" }}>
-                      {errors.Address}
-                    </FormHelperText>
-                  )}
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                   <Typography mb="12px" color="black" fontSize="20px">
                     Address 2
                   </Typography>
-                  <TextField
-                    onChange={handleChange}
-                    name="AddressTwo"
-                    label="address 2"
+                  <CustomTextField
                     fullWidth
-                    placeholder="Address 2"
                     multiline
-                    rows={3}
+                    rows={4}
+                    name="AddressTwo"
+                    onChange={handleChange}
+                    type="text"
+                    placeholder="Address 2"
                   />
                 </Grid>
               </Grid>
