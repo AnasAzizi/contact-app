@@ -1,19 +1,21 @@
 import React, { useState, useContext } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { CurrnetUserContext } from "@/Context/Context";
+import { useRouter } from "next/router";
 import ContactTable from "@/components/ContactTable";
 import SecondNavBar from "@/components/SecondNavBar";
 import SnackbarAlert from "@/components/SnackbarAlert";
-import { useRouter } from "next/router";
+import Loader from "@/components/Loader";
+import Head from "next/head";
 import { Container, FormControl, Button, TextField } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { ShowContact, DeleteContact } from "@/pages/api/contact";
 
 const Contacts = () => {
   const currentUser = useContext(CurrnetUserContext);
+  const router = useRouter();
+  const queryClient = useQueryClient();
   const userRole = currentUser.currentUser.role;
-
-
   const [search, setSearch] = useState("");
   const [selectedIds, setSelectedIds] = useState([]);
   const [resetSelection, setResetSelection] = useState(false);
@@ -26,13 +28,9 @@ const Contacts = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarSeverity, setSnackbarSeverity] = useState("error");
   const [snackbarMessage, setSnackbarMessage] = useState("");
-
   const handleSnackbarClose = () => {
     setOpenSnackbar(false);
   };
-
-  const router = useRouter();
-  const queryClient = useQueryClient();
 
   const { mutateAsync: DeleteContactMutate } = useMutation({
     mutationFn: DeleteContact,
@@ -41,7 +39,6 @@ const Contacts = () => {
       setOpenSnackbar(true);
       setSnackbarSeverity("success");
       setSnackbarMessage("Deleted contact successfully!");
-      setSelectedIds([]);
     },
   });
 
@@ -53,21 +50,21 @@ const Contacts = () => {
       return;
     }
     selectedIds.forEach((id) => DeleteContactMutate(id));
-    setSelectedIds([]);
     setResetSelection(true);
   };
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["contacts"],
     queryFn: ShowContact,
   });
 
-  if (!data) {
-    return <div>No data available.</div>;
-  }
-
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <>
+      <Head>
+        <title>Contact</title>
+      </Head>
       <Container maxWidth="xl">
         <SecondNavBar path="Home / Contacts" />
 
@@ -176,7 +173,6 @@ const Contacts = () => {
           data={data}
           onSelectRows={handleSelectedId}
           search={search}
-          onResetComplete={() => setResetSelection(false)}
           resetSelection={resetSelection}
         />
       </Container>

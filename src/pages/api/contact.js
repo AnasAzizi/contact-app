@@ -2,7 +2,6 @@ import axiosClient from "@/pages/api/axiosClient";
 
 const AddContact = async (formData) => {
   try {
-    console.log("formData text", formData);
     const endpoint = "/Contacts";
     const config = {
       headers: {
@@ -13,7 +12,6 @@ const AddContact = async (formData) => {
     const response = await axiosClient
       .post(`${endpoint}`, formData, config)
       .then((res) => {
-        console.log("Response data:", res.data);
         return res;
       })
       .catch((err) => {
@@ -42,8 +40,6 @@ const DeleteContact = async (contactId) => {
   try {
     const endpoint = `/Contacts/${contactId}`;
     const response = await axiosClient.delete(`${endpoint}`);
-    console.log("contactId", contactId);
-    console.log("Contact deleted successfully:", response.data);
     return response.data;
   } catch (error) {
     console.error("Error deleting contact:", error);
@@ -56,8 +52,6 @@ const ViewContact = async (contactId) => {
     const endpoint = `/Contacts/${contactId}`;
 
     const response = await axiosClient.get(`${endpoint}`);
-
-    console.log("View User:", response.data);
     return response.data;
   } catch (error) {
     console.error("Error View contact:", error);
@@ -73,9 +67,7 @@ const EditContact = async (formData, contactId) => {
         "Content-Type": "multipart/form-data",
       },
     };
-    console.log("test formData:", formData);
     const response = await axiosClient.put(`${endpoint}`, formData, config);
-    console.log("Edit User:", response.data);
     return response.data;
   } catch (error) {
     console.error("Error Edit contact:", error);

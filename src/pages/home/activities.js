@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { Activities } from "@/pages/api/contact";
 import { useQuery } from "@tanstack/react-query";
+import Head from "next/head";
+import Loader from "@/components/Loader";
+import SecondNavBar from "@/components/SecondNavBar";
+import ActiveTable from "@/components/ActiveTable";
+import TablePagination from "@/components/TablePagination";
 import {
   Table,
   TableCell,
@@ -10,9 +15,6 @@ import {
   Paper,
   Container,
 } from "@mui/material";
-import SecondNavBar from "@/components/SecondNavBar";
-import ActiveTable from "@/components/ActiveTable";
-import TablePagination from "@/components/TablePagination";
 
 const ActivitiesPage = () => {
   const [page, setPage] = useState(1);
@@ -23,7 +25,7 @@ const ActivitiesPage = () => {
   });
 
   if (!data) {
-    return <div>No data available.</div>;
+    return <Loader />;
   }
 
   const rowsPerPage = 10;
@@ -34,6 +36,9 @@ const ActivitiesPage = () => {
 
   return (
     <>
+      <Head>
+        <title>Activities</title>
+      </Head>
       <Container maxWidth="xl">
         <SecondNavBar path="Home / Activities" />
         <TableContainer
@@ -91,7 +96,7 @@ const ActivitiesPage = () => {
                 </TableCell>
               </TableRow>
             </TableHead>
-            <ActiveTable data={paginatedData} line={true} />
+            <ActiveTable data={paginatedData} />
           </Table>
         </TableContainer>
         <TablePagination

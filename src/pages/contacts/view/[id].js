@@ -1,9 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useMutation } from "@tanstack/react-query";
 import { CurrnetUserContext } from "@/Context/Context";
+import { useMutation } from "@tanstack/react-query";
+import { ViewContact } from "@/pages/api/contact";
+import { useRouter } from "next/router";
+import Head from "next/head";
 import SecondNavBar from "@/components/SecondNavBar";
 import CustomTextField from "@/components/CustomTextField";
-import { useRouter } from "next/router";
+import Loader from "@/components/Loader";
 import {
   Card,
   Container,
@@ -15,7 +18,6 @@ import {
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import EditOffOutlinedIcon from "@mui/icons-material/EditOffOutlined";
-import { ViewContact } from "@/pages/api/contact";
 
 const View = () => {
   const router = useRouter();
@@ -25,15 +27,13 @@ const View = () => {
 
   const [contact, setContact] = useState(null);
 
-  const { mutateAsync: ViewContactMutate } = useMutation({
+  const { mutateAsync: ViewContactMutate, isPending } = useMutation({
     mutationFn: () => ViewContact(id),
   });
-
   useEffect(() => {
     const fetchContact = async () => {
       try {
         const data = await ViewContactMutate();
-        console.log("data", data);
         setContact(data);
       } catch (err) {
         console.error("Error fetching contact:", err);
@@ -43,10 +43,15 @@ const View = () => {
     if (id) {
       fetchContact();
     }
-  }, [id, ViewContactMutate]);
+  }, [id]);
 
-  return (
+  return isPending ? (
+    <Loader />
+  ) : (
     <>
+      <Head>
+        <title>View Contact</title>
+      </Head>
       {contact && (
         <Container maxWidth="xl">
           <SecondNavBar
@@ -79,7 +84,7 @@ const View = () => {
                 mr: "40px",
               }}
             >
-              <Typography fontSize="20px">
+              <Typography fontSize="20px" sx={{ pr: "18px" }}>
                 {contact.status === "Active" ? "Active" : "Inactive"}
               </Typography>
               <Switch

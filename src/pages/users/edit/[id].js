@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { UserView, UserEdit } from "@/pages/api/user";
+import { useRouter } from "next/router";
+import Head from "next/head";
 import SecondNavBar from "@/components/SecondNavBar";
 import SnackbarAlert from "@/components/SnackbarAlert";
 import FormValidator from "@/components/FormValidator";
 import CustomTextField from "@/components/CustomTextField";
+import Loader from "@/components/Loader";
 import {
   Container,
   Typography,
@@ -42,7 +44,7 @@ const EditUser = () => {
     excludedFields: ["role", "status", "phoneNumber"],
   });
 
-  const { data: user } = useQuery({
+  const { data: user, isLoading } = useQuery({
     queryKey: ["user"],
     queryFn: () => UserView(id),
   });
@@ -92,8 +94,13 @@ const EditUser = () => {
     UserEditMutate(formData);
   };
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <>
+      <Head>
+        <title>Edit User</title>
+      </Head>
       <Container maxWidth="xl">
         <SecondNavBar
           path={`Home / Users /${formData.firstName} ${formData.lastName}`}

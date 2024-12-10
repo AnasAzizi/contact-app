@@ -35,7 +35,6 @@ const ContactTable = ({
   onSelectRows,
   search,
   resetSelection,
-  onResetComplete,
 }) => {
   const router = useRouter();
   const currentUser = useContext(CurrnetUserContext);
@@ -89,7 +88,6 @@ const ContactTable = ({
 
   const handleStarClick = (id) => {
     setStarred((prevStarred) => ({
-      ...prevStarred,
       [id]: !prevStarred[id],
     }));
     ToggleFavoriteMutate(id);
@@ -111,14 +109,8 @@ const ContactTable = ({
     if (resetSelection) {
       setSelectedId([]);
       onSelectRows([]);
-      if (onResetComplete) onResetComplete();
     }
-  }, [resetSelection, onSelectRows, onResetComplete]);
-
-  const handleRowSelection = (newSelectedRows) => {
-    setSelectedId(newSelectedRows);
-    onSelectRows(newSelectedRows);
-  };
+  }, [resetSelection]);
 
   return (
     <>

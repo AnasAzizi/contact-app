@@ -15,7 +15,6 @@ const EditCompanies = async (formData) => {
   try {
     const endpoint = `/Companies`;
     const response = await axiosClient.put(`${endpoint}`, formData);
-    console.log("Edit User:", response.data);
     return response.data;
   } catch (error) {
     console.error("Error Edit contact:", error);

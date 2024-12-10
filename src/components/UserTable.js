@@ -83,9 +83,9 @@ const UserTable = ({
     if (resetSelection) {
       setSelectedId([]);
       onSelectRows([]);
-      if (onResetComplete) onResetComplete();
+      onResetComplete();
     }
-  }, [resetSelection, onSelectRows, onResetComplete]);
+  }, [resetSelection]);
 
   const handleRowSelection = (newSelectedRows) => {
     setSelectedId(newSelectedRows);

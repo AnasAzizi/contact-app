@@ -1,11 +1,13 @@
 import React, { useContext } from "react";
+import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
 import { GetCompanies } from "@/pages/api/companies";
-import Image from "next/image";
-import { useRouter } from "next/router";
 import { CurrnetUserContext } from "@/Context/Context";
+import Image from "next/image";
+import Head from "next/head";
 import SecondNavBar from "@/components/SecondNavBar";
 import CustomTextField from "@/components/CustomTextField";
+import Loader from "@/components/Loader";
 import {
   Container,
   Typography,
@@ -15,7 +17,7 @@ import {
   Card,
   Select,
   Box,
-  MenuItem
+  MenuItem,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import EditOffOutlinedIcon from "@mui/icons-material/EditOffOutlined";
@@ -25,17 +27,18 @@ const CompanyProfile = () => {
   const currentUser = useContext(CurrnetUserContext);
   const userRole = currentUser.currentUser.role;
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["companies"],
     queryFn: GetCompanies,
   });
 
-  if (!data) {
-    return <div>No data available.</div>;
-  }
-
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <>
+      <Head>
+        <title>Company Profile</title>
+      </Head>
       <Container maxWidth="xl">
         <SecondNavBar path="Home / Company Profile" />
         <Card

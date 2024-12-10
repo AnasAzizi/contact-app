@@ -4,9 +4,6 @@ const RegisterUser = async (formData) => {
   try {
     const endpoint = "/register";
     const response = await axiosClient.post(`${endpoint}`, formData);
-    if (response.status === 200) {
-      console.log("Registration successful:", response);
-    }
     return response;
   } catch (error) {
     console.error("Error:", error);
@@ -34,10 +31,6 @@ const ResetPassword = async (email) => {
     const endpoint = "/forgot-password";
     const payload = { Email: email };
     const response = await axiosClient.post(`${endpoint}`, payload);
-    if (response.status === 200) {
-      console.log("Sending email successful:", response);
-    }
-
     return response;
   } catch (error) {
     console.error("Error:", error.response?.data || error.message);
@@ -57,10 +50,6 @@ const SetNewPassword = async (password, router) => {
       code: code,
     };
     const response = await axiosClient.post(`${endpoint}`, payload);
-    if (response.status === 200) {
-      console.log("Reset password successful:", response);
-    }
-
     return response;
   } catch (error) {
     console.error("Error:", error.response.data || error.message);

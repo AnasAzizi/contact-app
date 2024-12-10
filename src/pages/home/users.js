@@ -2,10 +2,12 @@ import React, { useState, useContext } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ShowUsers, UserDelete } from "@/pages/api/user";
 import { CurrnetUserContext } from "@/Context/Context";
+import { useRouter } from "next/router";
+import Head from "next/head";
 import UserTable from "@/components/UserTable";
 import SecondNavBar from "@/components/SecondNavBar";
 import SnackbarAlert from "@/components/SnackbarAlert";
-import { useRouter } from "next/router";
+import Loader from "@/components/Loader";
 import {
   Container,
   FormControl,
@@ -35,7 +37,7 @@ const Users = () => {
     setSelectedIds(newSelected);
   };
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["getUsers"],
     queryFn: ShowUsers,
   });
@@ -66,12 +68,13 @@ const Users = () => {
     }
   };
 
-  if (!data || data.length === 0) {
-    return <div>No data available.</div>;
-  }
-
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <>
+      <Head>
+        <title>Users</title>
+      </Head>
       <Container maxWidth="xl">
         <SecondNavBar path="Home / Users" />
         <Grid container size={12} direction="row" mb={{ xs: 0, md: "18px" }}>

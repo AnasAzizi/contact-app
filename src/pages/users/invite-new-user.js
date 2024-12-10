@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { useMutation } from "@tanstack/react-query";
 import { AddUser } from "@/pages/api/user";
+import Head from "next/head";
 import SecondNavBar from "@/components/SecondNavBar";
 import SnackbarAlert from "@/components/SnackbarAlert";
 import FormValidator from "@/components/FormValidator";
@@ -85,6 +86,9 @@ const InviteNewUser = () => {
 
   return (
     <>
+      <Head>
+        <title>Invite New User</title>
+      </Head>
       <Container maxWidth="xl">
         <SecondNavBar path="Home / Users / Invite new user" />
         <Card

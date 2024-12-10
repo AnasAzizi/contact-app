@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { ViewContact, EditContact } from "@/pages/api/contact";
+import { useRouter } from "next/router";
+import Head from "next/head";
 import SecondNavBar from "@/components/SecondNavBar";
 import SnackbarAlert from "@/components/SnackbarAlert";
 import FormValidator from "@/components/FormValidator";
 import CustomTextField from "@/components/CustomTextField";
+import Loader from "@/components/Loader";
 import {
   Card,
   Container,
@@ -49,7 +51,7 @@ const Edit = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const { data: contact } = useQuery({
+  const { data: contact, isLoading } = useQuery({
     queryKey: ["contact"],
     queryFn: () => ViewContact(id),
   });
@@ -96,8 +98,13 @@ const Edit = () => {
     EditContactMutate(formData);
   };
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <>
+      <Head>
+        <title>Edit Contact</title>
+      </Head>
       <Container maxWidth="xl">
         <SecondNavBar
           path={`Home / Contacts /${formData.firstName} ${formData.lastName}`}
@@ -106,7 +113,7 @@ const Edit = () => {
           sx={{
             height: "72px",
             bgcolor: "#F7F7F7",
-            boxShadow: 3,
+            boxShadow: 2,
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
@@ -129,7 +136,7 @@ const Edit = () => {
               mr: "40px",
             }}
           >
-            <Typography fontSize="20px">
+            <Typography fontSize="20px" sx={{ pr: "18px" }}>
               {formData.status === "Active" ? "Active" : "Inactive"}
             </Typography>
             <Switch

@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { GetCompanies, EditCompanies } from "@/pages/api/companies";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import Head from "next/head";
 import SecondNavBar from "@/components/SecondNavBar";
 import FormValidator from "@/components/FormValidator";
 import SnackbarAlert from "@/components/SnackbarAlert";
 import CustomTextField from "@/components/CustomTextField";
+import Loader from "@/components/Loader";
+
 import {
   Container,
   Typography,
@@ -15,8 +20,6 @@ import {
   Box,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { useQuery, useMutation } from "@tanstack/react-query";
-import { GetCompanies, EditCompanies } from "@/pages/api/companies";
 
 const CompanyProfileEdit = () => {
   const router = useRouter();
@@ -43,7 +46,7 @@ const CompanyProfileEdit = () => {
     formData,
   });
 
-  const { data: Company } = useQuery({
+  const { data: Company, isLoading } = useQuery({
     queryKey: ["Company"],
     queryFn: GetCompanies,
   });
@@ -91,12 +94,16 @@ const CompanyProfileEdit = () => {
       setSnackbarMessage("Please fill all fields.");
       return;
     }
-
     EditCompaniesMutate(formData);
   };
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <>
+      <Head>
+        <title>Edit Company</title>
+      </Head>
       <Container maxWidth="xl">
         <SecondNavBar path="Home / Company Profile" />
         <Card

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { useMutation } from "@tanstack/react-query";
 import { AddContact } from "@/pages/api/contact";
+import Head from "next/head";
 import SecondNavBar from "@/components/SecondNavBar";
 import SnackbarAlert from "@/components/SnackbarAlert";
 import CustomTextField from "@/components/CustomTextField";
@@ -85,6 +86,9 @@ const CreateNew = () => {
 
   return (
     <>
+      <Head>
+        <title>Create New</title>
+      </Head>
       <Container maxWidth="xl">
         <SecondNavBar path="Home / Contacts / Create new" />
         <Card

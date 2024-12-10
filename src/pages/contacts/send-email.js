@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { useMutation } from "@tanstack/react-query";
 import { EmailSend } from "@/pages/api/contact";
+import Head from "next/head";
 import SecondNavBar from "@/components/SecondNavBar";
 import SnackbarAlert from "@/components/SnackbarAlert";
 import FormValidator from "@/components/FormValidator";
@@ -70,6 +71,9 @@ const SendEmail = () => {
 
   return (
     <>
+      <Head>
+        <title>Send Email</title>
+      </Head>
       <Container maxWidth="xl">
         <SecondNavBar path="Home / Contact / Send email" />
         <Box component="form" onSubmit={handleSubmit}>

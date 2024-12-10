@@ -1,6 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useMutation } from "@tanstack/react-query";
 import { CurrnetUserContext } from "@/Context/Context";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/router";
+import { UserView } from "@/pages/api/user";
+import Head from "next/head";
 import {
   Container,
   Typography,
@@ -16,9 +19,8 @@ import {
 import Grid from "@mui/material/Grid2";
 import SecondNavBar from "@/components/SecondNavBar";
 import CustomTextField from "@/components/CustomTextField";
+import Loader from "@/components/Loader";
 import EditOffOutlinedIcon from "@mui/icons-material/EditOffOutlined";
-import { useRouter } from "next/router";
-import { UserView } from "@/pages/api/user";
 
 const ViewUser = () => {
   const router = useRouter();
@@ -27,27 +29,27 @@ const ViewUser = () => {
   const userRole = currentUser.currentUser.role;
   const [contact, setContact] = useState(null);
 
-  const { mutateAsync: UserViewMutate } = useMutation({
+  const { mutateAsync: UserViewMutate, isPending } = useMutation({
     mutationFn: () => UserView(id),
   });
 
   useEffect(() => {
     const fetchContact = async () => {
-      try {
-        const data = await UserViewMutate();
-        setContact(data);
-      } catch (err) {
-        console.error("Error fetching contact:", err);
-      }
+      const data = await UserViewMutate();
+      setContact(data);
     };
-
     if (id) {
       fetchContact();
     }
-  }, [id, UserViewMutate]);
+  }, [id]);
 
-  return (
+  return isPending ? (
+    <Loader />
+  ) : (
     <>
+      <Head>
+        <title>View User</title>
+      </Head>
       {contact && (
         <Container maxWidth="xl">
           <SecondNavBar

@@ -1,7 +1,4 @@
-import React, { useContext } from "react";
-import { Activities } from "@/pages/api/contact";
-import { useQuery } from "@tanstack/react-query";
-import { CurrnetUserContext } from "@/Context/Context";
+import React from "react";
 import {
   TableBody,
   TableCell,
@@ -11,29 +8,9 @@ import {
   Box,
 } from "@mui/material";
 
-const ActiveTable = ({ line, data, rowLimit }) => {
-
-  const { currentUser: userRole, userIsLoading } = useContext(CurrnetUserContext);
-
-  const { data: activeData, isLoading: activitiesIsLoading } = useQuery({
-    queryKey: ["activities"],
-    queryFn: Activities,
-    enabled: userRole.role === "Owner" || userRole.role === "Admin",
-  });
-
-  const tableData = data || activeData;
-
-  if (!tableData || activitiesIsLoading) {
-    return null;
-  }
-
-  const reversedData = [...tableData].reverse();
-  const displayedData = rowLimit
-    ? reversedData.slice(0, rowLimit)
-    : reversedData;
-
+const ActiveTable = ({ data }) => {
   const formatDate = (timestamp) => {
-    return new Date(timestamp).toISOString().split("T")[0]; 
+    return new Date(timestamp).toISOString().split("T")[0];
   };
   const getStatusColor = (status) => {
     switch (status) {
@@ -54,12 +31,12 @@ const ActiveTable = ({ line, data, rowLimit }) => {
 
   return (
     <TableBody>
-      {displayedData.map((item, index) => (
+      {data.map((item, index) => (
         <TableRow key={index}>
           <TableCell
             scope="row"
             sx={{
-              borderBottom: line ? "1px solid #F5F5F5" : "none",
+              borderBottom: "1px solid #F5F5F5",
               fontSize: { xs: "14px", md: "13px", lg: "20px" },
               py: 0,
               px: 0,
@@ -88,7 +65,7 @@ const ActiveTable = ({ line, data, rowLimit }) => {
             sx={{
               px: 0,
               width: "115px",
-              borderBottom: line ? "1px solid #F5F5F5" : "none",
+              borderBottom: "1px solid #F5F5F5",
             }}
           >
             <Typography
@@ -142,7 +119,7 @@ const ActiveTable = ({ line, data, rowLimit }) => {
             sx={{
               display: { xs: "none", md: "table-cell" },
               px: 0,
-              borderBottom: line ? "1px solid #F5F5F5" : "none",
+              borderBottom: "1px solid #F5F5F5",
               width: "85px",
             }}
           >
@@ -170,7 +147,7 @@ const ActiveTable = ({ line, data, rowLimit }) => {
             align="right"
             sx={{
               display: { xs: "none", md: "table-cell" },
-              borderBottom: line ? "1px solid #F5F5F5" : "none",
+              borderBottom: "1px solid #F5F5F5",
               width: "85px",
               pr: { xs: 2, md: 0 },
             }}
