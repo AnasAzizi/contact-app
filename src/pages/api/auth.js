@@ -31,6 +31,7 @@ const ResetPassword = async (email) => {
     const endpoint = "/forgot-password";
     const payload = { Email: email };
     const response = await axiosClient.post(`${endpoint}`, payload);
+    console.log("Reset Password Response:", response);
     return response;
   } catch (error) {
     console.error("Error:", error.response?.data || error.message);
@@ -50,6 +51,7 @@ const SetNewPassword = async (password, router) => {
       code: code,
     };
     const response = await axiosClient.post(`${endpoint}`, payload);
+    console.log("Set New Password Response:", response);
     return response;
   } catch (error) {
     console.error("Error:", error.response.data || error.message);

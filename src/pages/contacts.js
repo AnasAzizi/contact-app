@@ -19,7 +19,6 @@ const Contacts = () => {
   const [search, setSearch] = useState("");
   const [selectedIds, setSelectedIds] = useState([]);
   const [resetSelection, setResetSelection] = useState(false);
-  console.log("router",router.pathname)
 
   const handleSelectedId = (newSelected) => {
     setSelectedIds(newSelected);

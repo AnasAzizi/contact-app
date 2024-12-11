@@ -18,6 +18,7 @@ import {
   ListItemIcon,
   ListItemText,
   Drawer,
+  ListItemButton,
 } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import CloseIcon from "@mui/icons-material/Close";
@@ -50,9 +51,17 @@ const NavBar = () => {
       icon: <PersonIcon sx={{ fontSize: "24px", mr: "8px" }} />,
     },
     { name: "My Profile", path: `/users/view/${currentUser.id}` },
-    { name: "Log Out", path: "/home/logout" },
+    { name: "Log Out", path: "/auth/sign-in" },
   ];
   const settings = ["My Profile", "Log out"];
+
+  const handleLogout = () => {
+    router.push("/auth/sign-in");
+    setToken("");
+    Cookies.remove("jwtToken");
+    Cookies.remove("userRole", { path: "/" });
+    setCurrentUser("");
+  };
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -101,33 +110,48 @@ const NavBar = () => {
       {NavbarPages.map(({ name, path, icon }) => (
         <List sx={{ py: "20px", borderBottom: "1px solid #CED4DA" }} key={name}>
           <ListItem sx={{ p: 0 }}>
-            <Link href={path}>
-              <ListItemText
-                primaryTypographyProps={{
-                  style: {
-                    fontSize: "18px",
-                    opacity: router.pathname === path ? "100%" : "70%",
-                    marginLeft:
-                      name === "My Profile" || name === "Log Out"
-                        ? "20px"
-                        : "none",
-                  },
-                }}
-                primary={
-                  <>
-                    <Box
-                      sx={{
-                        display: "flex",
-                      }}
-                    >
+            {name === "Log Out" ? (
+              <ListItemButton onClick={handleLogout}>
+                <ListItemText
+                  primaryTypographyProps={{
+                    style: {
+                      fontSize: "18px",
+                      opacity: router.pathname === path ? "100%" : "70%",
+                      marginLeft: "20px",
+                    },
+                  }}
+                  primary={
+                    <Box sx={{ display: "flex" }}>
                       {name}
                       {icon}
                     </Box>
-                  </>
-                }
-                sx={{ pl: "29px" }}
-              />
-            </Link>
+                  }
+                  sx={{ pl: "29px" }}
+                />
+              </ListItemButton>
+            ) : (
+              <Link href={path}>
+                <ListItemText
+                  primaryTypographyProps={{
+                    style: {
+                      fontSize: "18px",
+                      opacity: router.pathname === path ? "100%" : "70%",
+                      marginLeft:
+                        name === "My Profile" || name === "Log Out"
+                          ? "20px"
+                          : "none",
+                    },
+                  }}
+                  primary={
+                    <Box sx={{ display: "flex" }}>
+                      {name}
+                      {icon}
+                    </Box>
+                  }
+                  sx={{ pl: "29px" }}
+                />
+              </Link>
+            )}
           </ListItem>
         </List>
       ))}
@@ -267,11 +291,7 @@ const NavBar = () => {
                   onClick={() => {
                     handleCloseUserMenu();
                     if (setting === "Log out") {
-                      router.push("/auth/sign-in");
-                      setToken("");
-                      Cookies.remove("jwtToken");
-                      Cookies.remove("userRole", { path: "/" });
-                      setCurrentUser("");
+                      handleLogout();
                     }
                     if (setting === "My Profile") {
                       router.push(`/users/view/${currentUser.id}`);
