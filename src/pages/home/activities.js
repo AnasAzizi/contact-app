@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Activities } from "@/pages/api/contact";
+import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
 import Head from "next/head";
 import Loader from "@/components/Loader";
@@ -18,6 +19,7 @@ import {
 
 const ActivitiesPage = () => {
   const [page, setPage] = useState(1);
+  const router = useRouter();
 
   const { data } = useQuery({
     queryKey: ["activities"],
@@ -40,7 +42,7 @@ const ActivitiesPage = () => {
         <title>Activities</title>
       </Head>
       <Container maxWidth="xl">
-        <SecondNavBar path="Home / Activities" />
+        <SecondNavBar path={router.pathname} />
         <TableContainer
           component={Paper}
           sx={{

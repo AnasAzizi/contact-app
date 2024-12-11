@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ContactTable from "@/components/ContactTable";
 import userData from "@/data/userData.json";
 import SecondNavBar from "@/components/SecondNavBar";
+import {useRouter} from "next/router";
 
 import {
   Container,
@@ -14,10 +15,11 @@ import Grid from "@mui/material/Grid2";
 
 const ExportViaEmail = () => {
   const [search, setSearch] = useState("");
+  const router = useRouter();
   return (
     <>
       <Container maxWidth="xl">
-        <SecondNavBar path="Home / Contacts / Export via email" />
+        <SecondNavBar path={router.pathname} />
         <Grid
           alignItems="center"
           container

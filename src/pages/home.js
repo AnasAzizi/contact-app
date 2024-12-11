@@ -14,7 +14,7 @@ import Grid from "@mui/material/Grid2";
 const HomePage = () => {
   const { currentUser: userRole } = useContext(CurrnetUserContext);
 
-  const { data: activeData, isLoading: activitiesIsLoading } = useQuery({
+  const { data: activeData } = useQuery({
     queryKey: ["activities"],
     queryFn: Activities,
     enabled: userRole.role === "Owner" || userRole.role === "Admin",
@@ -67,7 +67,7 @@ const HomePage = () => {
         >
           <Grid
             container
-            size={{ xs: 12, md: 6 }}
+            size={{ xs: 12, md: userRole.role === "User" ? 12 : 6 }}
             direction={{ xs: "column", md: "row" }}
             columnSpacing="72px"
             rowSpacing="68px"
@@ -77,7 +77,7 @@ const HomePage = () => {
                 bgColor="#1ABC9C"
                 imageSrc="/homePageIcons/arrow-down-circle-fill.svg"
                 text="Active"
-                count={counts.emailTwo}
+                count={counts.Active}
               />
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>

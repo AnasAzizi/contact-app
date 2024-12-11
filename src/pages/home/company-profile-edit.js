@@ -73,7 +73,7 @@ const CompanyProfileEdit = () => {
       setOpenSnackbar(true);
       setSnackbarSeverity("success");
       setSnackbarMessage("company profile updated successful!");
-      router.push("/home/home-page");
+      router.push("/home");
     },
     onError: (error) => {
       console.error("Error company profile contact:", error);
@@ -105,7 +105,7 @@ const CompanyProfileEdit = () => {
         <title>Edit Company</title>
       </Head>
       <Container maxWidth="xl">
-        <SecondNavBar path="Home / Company Profile" />
+        <SecondNavBar path={router.pathname} />
         <Card
           sx={{
             height: "72px",

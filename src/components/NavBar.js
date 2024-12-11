@@ -26,10 +26,10 @@ import { CurrnetUserContext } from "@/Context/Context";
 import Cookies from "js-cookie";
 
 const pages = [
-  { name: "Home", path: "/home/home-page" },
-  { name: "Contacts", path: "/home/contacts" },
+  { name: "Home", path: "/home" },
+  { name: "Contacts", path: "/contacts" },
   { name: "Company Profile", path: "/home/company-profile" },
-  { name: "Users", path: "/home/users" },
+  { name: "Users", path: "/users" },
 ];
 
 const NavBar = () => {
@@ -40,10 +40,10 @@ const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
 
   const NavbarPages = [
-    { name: "Home", path: "/home/home-page" },
-    { name: "Contact", path: "/home/contacts" },
+    { name: "Home", path: "/home" },
+    { name: "Contact", path: "/contacts" },
     { name: "Company Profile", path: "/home/company-profile" },
-    { name: "Users", path: "/home/users" },
+    { name: "Users", path: "/users" },
     {
       name: `${currentUser.firstName}`,
       path: `/users/view/${currentUser.id}`,
@@ -182,7 +182,7 @@ const NavBar = () => {
               flexGrow: { xs: 1, md: 0 },
             }}
           >
-            <Link href="/home/home-page">
+            <Link href="/home">
               <Image
                 src="/Logo_White.svg"
                 width={168}

@@ -53,7 +53,7 @@ const InviteNewUser = () => {
       setOpenSnackbar(true);
       setSnackbarSeverity("success");
       setSnackbarMessage("Invited user successful!");
-      router.push("/home/users");
+      router.push("/users");
     },
     onError: (error) => {
       console.error("Error Invite user:", error);
@@ -90,7 +90,7 @@ const InviteNewUser = () => {
         <title>Invite New User</title>
       </Head>
       <Container maxWidth="xl">
-        <SecondNavBar path="Home / Users / Invite new user" />
+        <SecondNavBar path={router.pathname} />
         <Card
           sx={{
             height: "72px",
@@ -204,7 +204,7 @@ const InviteNewUser = () => {
               </Grid>
               <Grid item="true" size={{ xs: 6, md: 2 }}>
                 <Button
-                  onClick={() => router.push("/home/users")}
+                  onClick={() => router.push("/users")}
                   fullWidth
                   variant="outlined"
                   bgcolor="#4E73DF"

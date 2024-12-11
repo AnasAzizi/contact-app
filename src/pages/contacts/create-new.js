@@ -40,6 +40,7 @@ const CreateNew = () => {
 
   const emptyFields = FormValidator({
     formData,
+    excludedFields: ["mobileNumber","AddressTwo","EmailTwo"],
   });
 
   const handleChange = (e) => {
@@ -53,7 +54,7 @@ const CreateNew = () => {
       setOpenSnackbar(true);
       setSnackbarSeverity("success");
       setSnackbarMessage("User added successful!");
-      router.push("/home/contacts");
+      router.push("/contacts");
     },
     onError: (error) => {
       console.error("Error registering:", error);
@@ -78,7 +79,7 @@ const CreateNew = () => {
     if (emptyFields.length > 0) {
       setOpenSnackbar(true);
       setSnackbarSeverity("error");
-      setSnackbarMessage("Please fill all fields.");
+      setSnackbarMessage("Please fill the following required fields.");
       return;
     }
     ContactAddMutate(formData);
@@ -90,7 +91,7 @@ const CreateNew = () => {
         <title>Create New</title>
       </Head>
       <Container maxWidth="xl">
-        <SecondNavBar path="Home / Contacts / Create new" />
+        <SecondNavBar  path={router.pathname} />
         <Card
           sx={{
             height: "72px",
@@ -195,7 +196,7 @@ const CreateNew = () => {
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                   <Typography mb="12px" color="black" fontSize="20px">
-                    Email
+                    Email <span style={{ color: "#C70000" }}>*</span>
                   </Typography>
                   <CustomTextField
                     fullWidth
@@ -243,7 +244,7 @@ const CreateNew = () => {
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
                   <Typography mb="12px" color="black" fontSize="20px">
-                    Address
+                    Address <span style={{ color: "#C70000" }}>*</span>
                   </Typography>
                   <CustomTextField
                     fullWidth
@@ -295,7 +296,7 @@ const CreateNew = () => {
                 </Grid>
                 <Grid item="true" size={{ xs: 12, sm: 5, md: 2 }}>
                   <Button
-                    onClick={() => router.push("/home/contacts")}
+                    onClick={() => router.push("/contacts")}
                     fullWidth
                     variant="outlined"
                     bgcolor="#4E73DF"

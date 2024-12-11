@@ -51,13 +51,13 @@ export default function SignInForm() {
   };
 
   const { mutateAsync: LoginUserMutate } = useMutation({
-    mutationFn: (data) => LoginUser(data, router),
+    mutationFn: (data) => LoginUser(data),
     onSuccess: (data) => {
       setToken(data);
       setOpenSnackbar(true);
       setSnackbarSeverity("success");
       setSnackbarMessage("Registration successful!");
-      router.push("/home/home-page");
+      router.push("/home");
     },
     onError: (error) => {
       console.error("Error registering:", error);

@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useRouter } from "next/router";
-import { useMutation } from "@tanstack/react-query";
-import { ToggleFavorite } from "@/pages/api/contact";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CurrnetUserContext } from "@/Context/Context";
+import { ToggleFavorite } from "@/pages/api/contact";
+import { useRouter } from "next/router";
 import TablePagination from "./TablePagination";
 import StatusChip from "./StatusChip";
 import {
@@ -30,18 +30,12 @@ import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
 import FileCopyOutlinedIcon from "@mui/icons-material/FileCopyOutlined";
 
-const ContactTable = ({
-  data,
-  onSelectRows,
-  search,
-  resetSelection,
-}) => {
+const ContactTable = ({ data, onSelectRows, search, resetSelection }) => {
   const router = useRouter();
   const currentUser = useContext(CurrnetUserContext);
   const userRole = currentUser.currentUser.role;
-
+  const queryClient = useQueryClient();
   const [selectedId, setSelectedId] = useState([]);
-  const [starred, setStarred] = useState({});
   const [tooltipText, setTooltipText] = useState("Copy");
 
   // for Pagination
@@ -69,7 +63,14 @@ const ContactTable = ({
 
   const { mutateAsync: ToggleFavoriteMutate } = useMutation({
     mutationFn: (id) => ToggleFavorite(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["contacts"]);
+    },
   });
+
+  const handleStarClick = (id) => {
+    ToggleFavoriteMutate(id);
+  };
 
   const handleCheckboxClick = (event, id) => {
     event.stopPropagation();
@@ -84,13 +85,6 @@ const ContactTable = ({
   const handleClickIcon = () => {
     setTooltipText("Copied!");
     setTimeout(() => setTooltipText("Copy"), 1000);
-  };
-
-  const handleStarClick = (id) => {
-    setStarred((prevStarred) => ({
-      [id]: !prevStarred[id],
-    }));
-    ToggleFavoriteMutate(id);
   };
 
   const headCells = [
@@ -123,11 +117,13 @@ const ContactTable = ({
           const isItemSelected = selectedId.includes(row.id);
           return (
             <Card
+              onClick={() => router.push(`/contacts/view/${row.id}`)}
               key={index}
               sx={{
                 display: { xs: "block", lg: "none" },
                 mb: "19px",
                 minHeight: "274px",
+                cursor: "pointer",
               }}
             >
               <CardContent sx={{ px: "0px", pt: "13px" }}>
@@ -150,7 +146,7 @@ const ContactTable = ({
                       </Grid>
                       <Grid item="true">
                         <Button onClick={() => handleStarClick(row.id)}>
-                          {starred[row.id] ? (
+                          {row.isFavorite ? (
                             <StarOutlinedIcon sx={{ fontSize: "35px" }} />
                           ) : (
                             <StarBorderOutlinedIcon
@@ -251,7 +247,6 @@ const ContactTable = ({
               ))}
             </TableRow>
           </TableHead>
-
           <TableBody>
             {paginatedData
               .filter((item) => {
@@ -281,7 +276,7 @@ const ContactTable = ({
                     {userRole !== "User" && (
                       <TableCell>
                         <Button onClick={() => handleStarClick(row.id)}>
-                          {starred[row.id] ? (
+                          {row.isFavorite ? (
                             <StarOutlinedIcon sx={{ fontSize: "35px" }} />
                           ) : (
                             <StarBorderOutlinedIcon

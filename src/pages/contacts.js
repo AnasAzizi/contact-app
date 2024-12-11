@@ -19,6 +19,7 @@ const Contacts = () => {
   const [search, setSearch] = useState("");
   const [selectedIds, setSelectedIds] = useState([]);
   const [resetSelection, setResetSelection] = useState(false);
+  console.log("router",router.pathname)
 
   const handleSelectedId = (newSelected) => {
     setSelectedIds(newSelected);
@@ -39,18 +40,12 @@ const Contacts = () => {
       setOpenSnackbar(true);
       setSnackbarSeverity("success");
       setSnackbarMessage("Deleted contact successfully!");
+      setResetSelection(true);
     },
   });
 
   const handleDelete = () => {
-    if (selectedIds.length === 0) {
-      setOpenSnackbar(true);
-      setSnackbarSeverity("error");
-      setSnackbarMessage("Please select at least one contact to delete.");
-      return;
-    }
     selectedIds.forEach((id) => DeleteContactMutate(id));
-    setResetSelection(true);
   };
 
   const { data, isLoading } = useQuery({
@@ -66,8 +61,7 @@ const Contacts = () => {
         <title>Contact</title>
       </Head>
       <Container maxWidth="xl">
-        <SecondNavBar path="Home / Contacts" />
-
+        <SecondNavBar path={router.pathname} />
         <Grid
           alignItems="center"
           container
@@ -89,12 +83,18 @@ const Contacts = () => {
                 <Button
                   onClick={handleDelete}
                   fullWidth
+                  disabled={ selectedIds.length === 0}
                   sx={{
                     fontSize: "18px",
                     textTransform: "none",
                     boxShadow: 0,
+                    bgcolor: "#DC3545",
+                    color: "white",
+                    "&.Mui-disabled": {
+                      bgcolor: "#F1B0B7",
+                      color: "white",
+                    },
                   }}
-                  color="error"
                   variant="contained"
                 >
                   Delete
@@ -172,6 +172,7 @@ const Contacts = () => {
         <ContactTable
           data={data}
           onSelectRows={handleSelectedId}
+          onResetComplete={() => setResetSelection(false)}
           search={search}
           resetSelection={resetSelection}
         />

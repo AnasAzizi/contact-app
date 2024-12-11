@@ -40,7 +40,7 @@ const CompanyProfile = () => {
         <title>Company Profile</title>
       </Head>
       <Container maxWidth="xl">
-        <SecondNavBar path="Home / Company Profile" />
+        <SecondNavBar path={router.pathname} />
         <Card
           sx={{
             height: "72px",
@@ -181,7 +181,7 @@ const CompanyProfile = () => {
               {userRole !== "User" && (
                 <Button
                   onClick={() =>
-                    router.push("/company-profile/company-profile-edit")
+                    router.push("/home/company-profile-edit")
                   }
                   fullWidth
                   sx={{

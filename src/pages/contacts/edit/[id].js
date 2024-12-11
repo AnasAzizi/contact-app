@@ -78,7 +78,7 @@ const Edit = () => {
       setOpenSnackbar(true);
       setSnackbarSeverity("success");
       setSnackbarMessage("Contact updated successful!");
-      router.push("/home/contacts");
+      router.push("/contacts");
     },
     onError: (error) => {
       console.error("Error updating contact:", error);
@@ -107,7 +107,8 @@ const Edit = () => {
       </Head>
       <Container maxWidth="xl">
         <SecondNavBar
-          path={`Home / Contacts /${formData.firstName} ${formData.lastName}`}
+          path={router.pathname}
+          name={`${formData.firstName} ${formData.lastName}`}
         />
         <Card
           sx={{

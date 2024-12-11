@@ -54,18 +54,8 @@ const Users = () => {
     },
   });
 
-  const handleDelete = async () => {
-    if (selectedIds.length === 0) {
-      setOpenSnackbar(true);
-      setSnackbarSeverity("error");
-      setSnackbarMessage("Please select at least one user to delete.");
-      return;
-    }
-    try {
-      await Promise.all(selectedIds.map((id) => UserDeleteMutate(id)));
-    } catch (error) {
-      console.error("Error deleting users:", error);
-    }
+  const handleDelete = () => {
+    selectedIds.forEach((id) => UserDeleteMutate(id));
   };
 
   return isLoading ? (
@@ -76,7 +66,7 @@ const Users = () => {
         <title>Users</title>
       </Head>
       <Container maxWidth="xl">
-        <SecondNavBar path="Home / Users" />
+        <SecondNavBar path={router.pathname} />
         <Grid container size={12} direction="row" mb={{ xs: 0, md: "18px" }}>
           <Grid item="true" size={{ xs: 12, md: 3.5, lg: 2.5 }}>
             <FormControl
@@ -123,10 +113,17 @@ const Users = () => {
                   onClick={handleDelete}
                   color="error"
                   variant="contained"
+                  disabled={selectedIds.length === 0}
                   sx={{
                     fontSize: "18px",
                     textTransform: "none",
-                    boxShadow: "none",
+                    boxShadow: 0,
+                    bgcolor: "#DC3545",
+                    color: "white",
+                    "&.Mui-disabled": {
+                      bgcolor: "#F1B0B7",
+                      color: "white",
+                    },
                   }}
                 >
                   Delete

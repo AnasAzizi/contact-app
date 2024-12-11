@@ -36,8 +36,6 @@ const UserTable = ({
   const router = useRouter();
   const currentUser = useContext(CurrnetUserContext);
   const userRole = currentUser.currentUser.role;
-
-  const [selected, setSelected] = useState([]);
   const [selectedId, setSelectedId] = useState([]);
   const [tooltipText, setTooltipText] = useState("Copy");
 
@@ -87,11 +85,6 @@ const UserTable = ({
     }
   }, [resetSelection]);
 
-  const handleRowSelection = (newSelectedRows) => {
-    setSelectedId(newSelectedRows);
-    onSelectRows(newSelectedRows);
-  };
-
   const headCells = [
     { id: "id", label: "ID" },
     { id: "firstName", label: "First Name" },
@@ -105,13 +98,14 @@ const UserTable = ({
   return (
     <>
       {paginatedData
-        .filter((item, index) => {
+        .filter((item) => {
           return item.firstName.includes(search);
         })
         .map((row, index) => {
           const isItemSelected = selectedId.includes(row.id);
           return (
             <Card
+              onClick={() => router.push(`/users/view/${row.id}`)}
               key={index}
               sx={{
                 display: { xs: "block", lg: "none" },
@@ -207,9 +201,11 @@ const UserTable = ({
         <Table>
           <TableHead>
             <TableRow sx={{ borderBottom: "2px #343A40 solid" }}>
-              <TableCell padding="checkbox">
-                <Checkbox color="primary" />
-              </TableCell>
+              {userRole !== "User" && (
+                <TableCell padding="checkbox">
+                  <Checkbox color="primary" />
+                </TableCell>
+              )}
               {headCells.map((headCell) => {
                 return (
                   <TableCell key={headCell.id}>
@@ -230,19 +226,23 @@ const UserTable = ({
                 return item.firstName.includes(search);
               })
               .map((row, index) => {
-                const isItemSelected = selected.includes(row.id);
+                const isItemSelected = selectedId.includes(row.id);
                 return (
                   <TableRow
                     key={row.id}
                     selected={isItemSelected}
                     sx={{ borderBottom: "1px #DDE1E6 solid" }}
                   >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={selectedId.includes(row.id)}
-                        onClick={(event) => handleCheckboxClick(event, row.id)}
-                      />
-                    </TableCell>
+                    {userRole !== "User" && (
+                      <TableCell padding="checkbox">
+                        <Checkbox
+                          checked={isItemSelected}
+                          onClick={(event) =>
+                            handleCheckboxClick(event, row.id)
+                          }
+                        />
+                      </TableCell>
+                    )}
                     <TableCell sx={{ fontSize: "21px", fontWeight: "bold" }}>
                       000{index + 1}
                     </TableCell>

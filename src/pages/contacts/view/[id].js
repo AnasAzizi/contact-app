@@ -55,7 +55,7 @@ const View = () => {
       {contact && (
         <Container maxWidth="xl">
           <SecondNavBar
-            path={`Home / Contacts /${contact.firstName} ${contact.lastName}`}
+            path={router.pathname} name={`${contact.firstName} ${contact.lastName}`}
           />
           <Card
             sx={{
@@ -255,7 +255,7 @@ const View = () => {
                 )}
                 <Grid item="true" size={{ xs: 12, sm: 5.7, md: 2 }}>
                   <Button
-                    onClick={() => router.push("/home/contacts")}
+                    onClick={() => router.push("/contacts")}
                     fullWidth
                     variant="outlined"
                     bgcolor="#4E73DF"
