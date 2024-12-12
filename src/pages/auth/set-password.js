@@ -1,16 +1,16 @@
 import React from "react";
 import Image from "next/image";
 import Box from "@mui/material/Box";
-import ForgotPassForm from "@/components/ForgotPassForm";
+import SetPasswordForm from "@/components/SetPasswordForm";
 import Head from "next/head";
 import Grid from "@mui/material/Grid2";
 import AuthFooter from "@/components/AuthFooter";
 
-const ForgotPassword = () => {
+const SetPassword = () => {
   return (
     <>
       <Head>
-        <title>Reset password</title>
+        <title>Set Password</title>
       </Head>
       <Grid container sx={{ bgcolor: "#ffffff" }}>
         {/* background image */}
@@ -33,14 +33,14 @@ const ForgotPassword = () => {
             />
           </Box>
         </Grid>
-        {/* forget pass form */}
+        {/* sign in form */}
         <Grid
           item="true"
           size={{ xs: 12, md: 5.5, lg: 4.5 }}
           display="flex"
           justifyContent="center"
         >
-          <ForgotPassForm />
+          <SetPasswordForm />
         </Grid>
       </Grid>
       <AuthFooter show={true} width="60%" />
@@ -48,4 +48,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default SetPassword;

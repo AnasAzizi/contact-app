@@ -26,7 +26,7 @@ const LoginUser = async (formData) => {
   }
 };
 
-const ResetPassword = async (email) => {
+const forgotPassword = async (email) => {
   try {
     const endpoint = "/forgot-password";
     const payload = { Email: email };
@@ -43,7 +43,7 @@ const SetNewPassword = async (password, router) => {
   const id = router.query.id;
   const code = router.query.code;
   try {
-    const endpoint = `/reset-password?id=${id}&code=${code}`;
+    const endpoint = `/set-password?id=${id}&code=${code}`;
     const payload = {
       setPassword: true,
       password,
@@ -59,4 +59,30 @@ const SetNewPassword = async (password, router) => {
   }
 };
 
-export { RegisterUser, LoginUser, ResetPassword, SetNewPassword };
+const ResetPassword = async (password, router) => {
+  const id = router.query.id;
+  const code = router.query.code;
+  try {
+    const endpoint = `/reset-password?id=${id}&code=${code}`;
+    const payload = {
+      setPassword: true,
+      password,
+      id: id,
+      code: code,
+    };
+    const response = await axiosClient.post(`${endpoint}`, payload);
+    console.log("Reset New Password Response:", response);
+    return response;
+  } catch (error) {
+    console.error("Error:", error.response.data || error.message);
+    throw error;
+  }
+};
+
+export {
+  RegisterUser,
+  LoginUser,
+  forgotPassword,
+  SetNewPassword,
+  ResetPassword,
+};

@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useMutation } from "@tanstack/react-query";
-import { ResetPassword } from "@/pages/api/auth";
+import { forgotPassword } from "@/pages/api/auth";
 import SnackbarAlert from "@/components/SnackbarAlert";
 import {
   Box,
@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
-const ResetPassForm = () => {
+const ForgotPassForm = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [error, setError] = useState({});
@@ -40,8 +40,8 @@ const ResetPassForm = () => {
     return true;
   };
 
-  const { mutateAsync: ResetPasswordMutate } = useMutation({
-    mutationFn: (email) => ResetPassword(email),
+  const { mutateAsync: forgotPasswordMutate } = useMutation({
+    mutationFn: (email) => forgotPassword(email),
     onSuccess: () => {
       setOpenSnackbar(true);
       setSnackbarSeverity("success");
@@ -63,7 +63,7 @@ const ResetPassForm = () => {
     if (!validateEmail()) return;
 
     try {
-      await ResetPasswordMutate(email);
+      await forgotPasswordMutate(email);
     } catch (e) {
       console.error(e);
     }
@@ -178,4 +178,4 @@ const ResetPassForm = () => {
   );
 };
 
-export default ResetPassForm;
+export default ForgotPassForm;
