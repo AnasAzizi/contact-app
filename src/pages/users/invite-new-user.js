@@ -3,10 +3,11 @@ import { useRouter } from "next/router";
 import { useMutation } from "@tanstack/react-query";
 import { AddUser } from "@/pages/api/user";
 import Head from "next/head";
-import SecondNavBar from "@/components/SecondNavBar";
-import SnackbarAlert from "@/components/SnackbarAlert";
-import FormValidator from "@/components/FormValidator";
-import CustomTextField from "@/components/CustomTextField";
+import PageTitle from "@/components/serveries/PageTitle";
+import Breadcrumbs from "@/components/layouts/Breadcrumbs";
+import SnackbarAlert from "@/components/layouts/SnackbarAlert";
+import FormValidator from "@/components/serveries/FormValidator";
+import CustomTextField from "@/components/serveries/CustomTextField";
 import {
   Container,
   Typography,
@@ -90,24 +91,8 @@ const InviteNewUser = () => {
         <title>Invite New User</title>
       </Head>
       <Container maxWidth="xl">
-        <SecondNavBar path={router.pathname} />
-        <Card
-          sx={{
-            height: "72px",
-            bgcolor: "#F7F7F7",
-            boxShadow: 3,
-          }}
-        >
-          <Typography
-            sx={{
-              fontSize: "23px",
-              mt: "20px",
-              ml: "40px",
-            }}
-          >
-            User details
-          </Typography>
-        </Card>
+        <Breadcrumbs path={router.pathname} />
+        <PageTitle path="" title="User details" />
         <Box component="form" onSubmit={handleSubmit}>
           <Grid
             container

@@ -3,10 +3,10 @@ import { Activities } from "@/pages/api/contact";
 import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
 import Head from "next/head";
-import Loader from "@/components/Loader";
-import SecondNavBar from "@/components/SecondNavBar";
-import ActiveTable from "@/components/ActiveTable";
-import TablePagination from "@/components/TablePagination";
+import Loader from "@/components/layouts/Loader";
+import Breadcrumbs from "@/components/layouts/Breadcrumbs";
+import ActiveTable from "@/components/Tables/ActiveTable";
+import TablePagination from "@/components/Tables/TablePagination";
 import {
   Table,
   TableCell,
@@ -42,7 +42,7 @@ const ActivitiesPage = () => {
         <title>Activities</title>
       </Head>
       <Container maxWidth="xl">
-        <SecondNavBar path={router.pathname} />
+        <Breadcrumbs path={router.pathname} />
         <TableContainer
           component={Paper}
           sx={{

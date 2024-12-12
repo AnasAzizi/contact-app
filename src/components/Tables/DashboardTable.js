@@ -1,6 +1,6 @@
 import React from "react";
-import Loader from "@/components/Loader";
-import Link from "next/link";
+import Loader from "@/components/layouts/Loader";
+import PageTitle from "../serveries/PageTitle";
 import {
   TableBody,
   TableCell,
@@ -11,7 +11,6 @@ import {
   Table,
   TableContainer,
   Paper,
-  Card,
 } from "@mui/material";
 
 const DashboardTable = ({ data }) => {
@@ -44,26 +43,7 @@ const DashboardTable = ({ data }) => {
 
   return (
     <>
-      <Card
-        sx={{
-          height: "72px",
-          bgcolor: "#F7F7F7",
-          color: "#000000",
-          fontSize: "26px",
-        }}
-      >
-        <Link href="/home/activities">
-          <Typography
-            sx={{
-              fontSize: "26px",
-              ml: "40px",
-              mt: "18px",
-            }}
-          >
-            Latest activities
-          </Typography>
-        </Link>
-      </Card>
+      <PageTitle path="/home/activities" title="Latest activities" />
       <TableContainer
         component={Paper}
         sx={{

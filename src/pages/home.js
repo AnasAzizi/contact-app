@@ -4,10 +4,10 @@ import { ShowContact } from "@/pages/api/contact";
 import { Activities } from "@/pages/api/contact";
 import { useQuery } from "@tanstack/react-query";
 import Head from "next/head";
-import SecondNavBar from "@/components/SecondNavBar";
-import DashboardCard from "@/components/DashboardCard";
-import DashboardTable from "@/components/DashboardTable";
-import Loader from "@/components/Loader";
+import Breadcrumbs from "@/components/layouts/Breadcrumbs";
+import DashboardCard from "@/components/DashboardComponents/DashboardCard";
+import DashboardTable from "@/components/Tables/DashboardTable";
+import Loader from "@/components/layouts/Loader";
 import { Container } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
@@ -57,7 +57,7 @@ const HomePage = () => {
         <title>Home Page</title>
       </Head>
       <Container maxWidth="xl">
-        <SecondNavBar path="Statistical Dashboard" />
+        <Breadcrumbs path="Statistical Dashboard" />
         <Grid
           mt="50px"
           container

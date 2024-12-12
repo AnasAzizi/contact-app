@@ -3,10 +3,10 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/700.css";
 import Image from "next/image";
 import Box from "@mui/material/Box";
-import SignInForm from "@/components/SignInForm";
+import SignInForm from "@/components/AuthComponents/SignInForm";
 import Head from "next/head";
 import Grid from "@mui/material/Grid2";
-import AuthFooter from "@/components/AuthFooter";
+import AuthFooter from "@/components/AuthComponents/AuthFooter";
 
 const SignIn = () => {
   return (

@@ -3,8 +3,8 @@ import Image from "next/image";
 import Box from "@mui/material/Box";
 import Head from "next/head";
 import Grid from "@mui/material/Grid2";
-import RegisterForm from "@/components/RegisterForm";
-import AuthFooter from "@/components/AuthFooter";
+import RegisterForm from "@/components/AuthComponents/RegisterForm";
+import AuthFooter from "@/components/AuthComponents/AuthFooter";
 
 const register = () => {
   return (

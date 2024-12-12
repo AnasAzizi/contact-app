@@ -3,11 +3,12 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { UserView, UserEdit } from "@/pages/api/user";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import SecondNavBar from "@/components/SecondNavBar";
-import SnackbarAlert from "@/components/SnackbarAlert";
-import FormValidator from "@/components/FormValidator";
-import CustomTextField from "@/components/CustomTextField";
-import Loader from "@/components/Loader";
+import Breadcrumbs from "@/components/layouts/Breadcrumbs";
+import SaveButton from "@/components/Buttons/SaveButton";
+import SnackbarAlert from "@/components/layouts/SnackbarAlert";
+import FormValidator from "@/components/serveries/FormValidator";
+import CustomTextField from "@/components/serveries/CustomTextField";
+import Loader from "@/components/layouts/Loader";
 import {
   Container,
   Typography,
@@ -102,7 +103,7 @@ const EditUser = () => {
         <title>Edit User</title>
       </Head>
       <Container maxWidth="xl">
-        <SecondNavBar
+        <Breadcrumbs
           path={router.pathname}
           name={`${formData.firstName} ${formData.lastName}`}
         />
@@ -229,18 +230,7 @@ const EditUser = () => {
             </Grid>
             <Grid container item="true" direction="row" size={12} pt="30px">
               <Grid item="true" size={{ xs: 6, md: 2 }}>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{
-                    textTransform: "none",
-                    fontSize: "20px",
-                    bgcolor: "#4E73DF",
-                  }}
-                >
-                  Save
-                </Button>
+                <SaveButton />
               </Grid>
               <Grid item="true" size={{ xs: 6, md: 2 }}>
                 <Button

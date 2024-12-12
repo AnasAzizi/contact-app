@@ -4,10 +4,11 @@ import { ShowUsers, UserDelete } from "@/pages/api/user";
 import { CurrnetUserContext } from "@/Context/Context";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import UserTable from "@/components/UserTable";
-import SecondNavBar from "@/components/SecondNavBar";
-import SnackbarAlert from "@/components/SnackbarAlert";
-import Loader from "@/components/Loader";
+import SnackbarAlert from "@/components/layouts/SnackbarAlert";
+import DeleteButton from "@/components/Buttons/DeleteButton";
+import UserTable from "@/components/Tables/UserTable";
+import Breadcrumbs from "@/components/layouts/Breadcrumbs";
+import Loader from "@/components/layouts/Loader";
 import {
   Container,
   FormControl,
@@ -66,7 +67,7 @@ const Users = () => {
         <title>Users</title>
       </Head>
       <Container maxWidth="xl">
-        <SecondNavBar path={router.pathname} />
+        <Breadcrumbs path={router.pathname} />
         <Grid container size={12} direction="row" mb={{ xs: 0, md: "18px" }}>
           <Grid item="true" size={{ xs: 12, md: 3.5, lg: 2.5 }}>
             <FormControl
@@ -108,7 +109,7 @@ const Users = () => {
                 size={{ xs: 4.5, md: 1.5, lg: 1.5 }}
                 mb={{ xs: "10px", md: 0 }}
               >
-                <Button
+                {/* <Button
                   fullWidth
                   onClick={handleDelete}
                   color="error"
@@ -127,7 +128,9 @@ const Users = () => {
                   }}
                 >
                   Delete
-                </Button>
+                </Button> */}
+                <DeleteButton handleDelete={handleDelete} selectedIds={selectedIds} />
+
               </Grid>
               <Grid
                 item="true"

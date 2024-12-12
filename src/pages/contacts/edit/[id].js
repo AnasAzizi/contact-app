@@ -3,11 +3,13 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { ViewContact, EditContact } from "@/pages/api/contact";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import SecondNavBar from "@/components/SecondNavBar";
-import SnackbarAlert from "@/components/SnackbarAlert";
-import FormValidator from "@/components/FormValidator";
-import CustomTextField from "@/components/CustomTextField";
-import Loader from "@/components/Loader";
+import Breadcrumbs from "@/components/layouts/Breadcrumbs";
+import SnackbarAlert from "@/components/layouts/SnackbarAlert";
+import BackButton from "@/components/Buttons/BackButton";
+import SaveButton from "@/components/Buttons/SaveButton";
+import FormValidator from "@/components/serveries/FormValidator";
+import CustomTextField from "@/components/serveries/CustomTextField";
+import Loader from "@/components/layouts/Loader";
 import {
   Card,
   Container,
@@ -106,7 +108,7 @@ const Edit = () => {
         <title>Edit Contact</title>
       </Head>
       <Container maxWidth="xl">
-        <SecondNavBar
+        <Breadcrumbs
           path={router.pathname}
           name={`${formData.firstName} ${formData.lastName}`}
         />
@@ -333,34 +335,10 @@ const Edit = () => {
                 gap={{ xs: 3, md: 10 }}
               >
                 <Grid item="true" size={{ xs: 12, sm: 5.7, md: 2 }}>
-                  <Button
-                    type="submit"
-                    fullWidth
-                    sx={{
-                      textTransform: "none",
-                      fontSize: "20px",
-                      boxShadow: "none",
-                      bgcolor: "#4E73DF",
-                    }}
-                    variant="contained"
-                  >
-                    Save
-                  </Button>
+                  <SaveButton />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, sm: 5.7, md: 2 }}>
-                  <Button
-                    onClick={() => router.push(`/contacts/view/${id}`)}
-                    fullWidth
-                    variant="outlined"
-                    bgcolor="#4E73DF"
-                    sx={{
-                      textTransform: "none",
-                      fontSize: "20px",
-                      color: "#4E73DF",
-                    }}
-                  >
-                    Back
-                  </Button>
+                  <BackButton path={`/contacts/view/${id}`} />
                 </Grid>
               </Grid>
             </Grid>

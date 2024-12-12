@@ -3,10 +3,10 @@ import { useRouter } from "next/router";
 import { useMutation } from "@tanstack/react-query";
 import { EmailSend } from "@/pages/api/contact";
 import Head from "next/head";
-import SecondNavBar from "@/components/SecondNavBar";
-import SnackbarAlert from "@/components/SnackbarAlert";
-import FormValidator from "@/components/FormValidator";
-import CustomTextField from "@/components/CustomTextField";
+import Breadcrumbs from "@/components/layouts/Breadcrumbs";
+import SnackbarAlert from "@/components/layouts/SnackbarAlert";
+import FormValidator from "@/components/serveries/FormValidator";
+import CustomTextField from "@/components/serveries/CustomTextField";
 import { Container, Button, Box, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
@@ -75,7 +75,7 @@ const SendEmail = () => {
         <title>Send Email</title>
       </Head>
       <Container maxWidth="xl">
-        <SecondNavBar path={router.pathname} />
+        <Breadcrumbs path={router.pathname} />
         <Box component="form" onSubmit={handleSubmit}>
           <Grid container size={12} direction="row" mb={{ xs: 0, md: "18px" }}>
             <Grid

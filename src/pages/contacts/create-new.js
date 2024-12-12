@@ -3,18 +3,12 @@ import { useRouter } from "next/router";
 import { useMutation } from "@tanstack/react-query";
 import { AddContact } from "@/pages/api/contact";
 import Head from "next/head";
-import SecondNavBar from "@/components/SecondNavBar";
-import SnackbarAlert from "@/components/SnackbarAlert";
-import CustomTextField from "@/components/CustomTextField";
-import FormValidator from "@/components/FormValidator";
-import {
-  Card,
-  Container,
-  Typography,
-  Avatar,
-  Button,
-  Box,
-} from "@mui/material";
+import Breadcrumbs from "@/components/layouts/Breadcrumbs";
+import SnackbarAlert from "@/components/layouts/SnackbarAlert";
+import CustomTextField from "@/components/serveries/CustomTextField";
+import FormValidator from "@/components/serveries/FormValidator";
+import PageTitle from "@/components/serveries/PageTitle";
+import { Container, Typography, Avatar, Button, Box } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
 const CreateNew = () => {
@@ -40,7 +34,7 @@ const CreateNew = () => {
 
   const emptyFields = FormValidator({
     formData,
-    excludedFields: ["mobileNumber","AddressTwo","EmailTwo"],
+    excludedFields: ["mobileNumber", "AddressTwo", "EmailTwo"],
   });
 
   const handleChange = (e) => {
@@ -91,25 +85,8 @@ const CreateNew = () => {
         <title>Create New</title>
       </Head>
       <Container maxWidth="xl">
-        <SecondNavBar  path={router.pathname} />
-        <Card
-          sx={{
-            height: "72px",
-            bgcolor: "#F7F7F7",
-            mt: "31px",
-            boxShadow: 3,
-          }}
-        >
-          <Typography
-            sx={{
-              fontSize: "23px",
-              mt: "20px",
-              ml: "40px",
-            }}
-          >
-            Contact details
-          </Typography>
-        </Card>
+        <Breadcrumbs path={router.pathname} />
+        <PageTitle path="" title="Contact details" />
         <Box component="form" onSubmit={handleSubmit}>
           <Grid
             container

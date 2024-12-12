@@ -4,8 +4,8 @@ import Image from "next/image";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { LoginUser } from "@/pages/api/auth";
-import SnackbarAlert from "@/components/SnackbarAlert";
-import FormValidator from "@/components/FormValidator";
+import SnackbarAlert from "@/components/layouts/SnackbarAlert";
+import FormValidator from "@/components/serveries/FormValidator";
 import {
   Checkbox,
   Box,

@@ -4,17 +4,16 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Head from "next/head";
-import SecondNavBar from "@/components/SecondNavBar";
-import FormValidator from "@/components/FormValidator";
-import SnackbarAlert from "@/components/SnackbarAlert";
-import CustomTextField from "@/components/CustomTextField";
-import Loader from "@/components/Loader";
-
+import Breadcrumbs from "@/components/layouts/Breadcrumbs";
+import PageTitle from "@/components/serveries/PageTitle";
+import SaveButton from "@/components/Buttons/SaveButton";
+import FormValidator from "@/components/serveries/FormValidator";
+import SnackbarAlert from "@/components/layouts/SnackbarAlert";
+import CustomTextField from "@/components/serveries/CustomTextField";
+import Loader from "@/components/layouts/Loader";
 import {
   Container,
   Typography,
-  Button,
-  Card,
   Select,
   MenuItem,
   Box,
@@ -105,24 +104,8 @@ const CompanyProfileEdit = () => {
         <title>Edit Company</title>
       </Head>
       <Container maxWidth="xl">
-        <SecondNavBar path={router.pathname} />
-        <Card
-          sx={{
-            height: "72px",
-            bgcolor: "#F7F7F7",
-            boxShadow: 3,
-          }}
-        >
-          <Typography
-            sx={{
-              fontSize: "23px",
-              mt: "20px",
-              ml: "40px",
-            }}
-          >
-            My Profile
-          </Typography>
-        </Card>
+        <Breadcrumbs path={router.pathname} />
+        <PageTitle path="" title="My Profile" />
         <Box component="form" onSubmit={handleSubmit}>
           <Grid
             container
@@ -252,20 +235,12 @@ const CompanyProfileEdit = () => {
                   <MenuItem value={"Moroco"}>Moroco</MenuItem>
                 </Select>
               </Grid>
-              <Grid item="true" size={{ xs: 8, md: 5, lg: 3.1 }}>
-                <Button
-                  type="submit"
-                  fullWidth
-                  sx={{
-                    mt: "26px",
-                    textTransform: "none",
-                    fontSize: "20px",
-                    borderColor: "#4E73DF",
-                  }}
-                  variant="contained"
-                >
-                  Save
-                </Button>
+              <Grid
+                item="true"
+                size={{ xs: 8, md: 5, lg: 3.1 }}
+                sx={{ mt: "26px" }}
+              >
+                <SaveButton />
               </Grid>
             </Grid>
             <Grid item="true" size={4}>

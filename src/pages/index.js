@@ -17,7 +17,6 @@ export default function Home() {
       <Head>
         <title>Contact Management App</title>
       </Head>
-      <h1>Error</h1>
     </>
   );
 }

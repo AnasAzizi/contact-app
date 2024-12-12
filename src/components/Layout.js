@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
-import Footer from "./Footer";
-import Navbar from "@/components/NavBar";
+import Footer from "./layouts/Footer";
+import Navbar from "@/components/layouts/NavBar";
 import { Box } from "@mui/material";
 import TanstackProvider from "./providers/TanstackProvider";
 

@@ -4,20 +4,20 @@ import { useMutation } from "@tanstack/react-query";
 import { ViewContact } from "@/pages/api/contact";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import SecondNavBar from "@/components/SecondNavBar";
-import CustomTextField from "@/components/CustomTextField";
-import Loader from "@/components/Loader";
+import CustomTextField from "@/components/serveries/CustomTextField";
+import Breadcrumbs from "@/components/layouts/Breadcrumbs";
+import EditButton from "@/components/Buttons/EditButton";
+import BackButton from "@/components/Buttons/BackButton";
+import Loader from "@/components/layouts/Loader";
 import {
   Card,
   Container,
   Typography,
   Avatar,
-  Button,
   Box,
   Switch,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import EditOffOutlinedIcon from "@mui/icons-material/EditOffOutlined";
 
 const View = () => {
   const router = useRouter();
@@ -54,8 +54,9 @@ const View = () => {
       </Head>
       {contact && (
         <Container maxWidth="xl">
-          <SecondNavBar
-            path={router.pathname} name={`${contact.firstName} ${contact.lastName}`}
+          <Breadcrumbs
+            path={router.pathname}
+            name={`${contact.firstName} ${contact.lastName}`}
           />
           <Card
             sx={{
@@ -238,35 +239,11 @@ const View = () => {
               >
                 {userRole !== "User" && (
                   <Grid item="true" size={{ xs: 12, sm: 5.7, md: 2 }}>
-                    <Button
-                      onClick={() => router.push(`/contacts/edit/${id}`)}
-                      fullWidth
-                      sx={{
-                        textTransform: "none",
-                        fontSize: "20px",
-                        color: "#4E73DF",
-                      }}
-                      variant="outlined"
-                      startIcon={<EditOffOutlinedIcon />}
-                    >
-                      Edit
-                    </Button>
+                    <EditButton path={`/contacts/edit/${id}`} />
                   </Grid>
                 )}
                 <Grid item="true" size={{ xs: 12, sm: 5.7, md: 2 }}>
-                  <Button
-                    onClick={() => router.push("/contacts")}
-                    fullWidth
-                    variant="outlined"
-                    bgcolor="#4E73DF"
-                    sx={{
-                      textTransform: "none",
-                      fontSize: "20px",
-                      color: "#4E73DF",
-                    }}
-                  >
-                    Back
-                  </Button>
+                  <BackButton path="/contacts" />
                 </Grid>
               </Grid>
             </Grid>

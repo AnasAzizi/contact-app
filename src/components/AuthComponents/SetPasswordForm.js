@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useMutation } from "@tanstack/react-query";
-import { ResetPassword } from "@/pages/api/auth";
-import SnackbarAlert from "@/components/SnackbarAlert";
+import { SetNewPassword } from "@/pages/api/auth";
+import SnackbarAlert from "@/components/layouts/SnackbarAlert";
 import {
   Box,
   Button,
@@ -18,7 +18,7 @@ import Grid from "@mui/material/Grid2";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
-const ResetPassForm = () => {
+const SetPasswordForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -62,8 +62,8 @@ const ResetPassForm = () => {
     setOpenSnackbar(false);
   };
 
-  const { mutateAsync: ResetPasswordMutate } = useMutation({
-    mutationFn: (password) => ResetPassword(password, router),
+  const { mutateAsync: SetNewPasswordMutate } = useMutation({
+    mutationFn: (password) => SetNewPassword(password, router),
     onSuccess: () => {
       setOpenSnackbar(true);
       setSnackbarSeverity("success");
@@ -88,7 +88,7 @@ const ResetPassForm = () => {
     if (!validatePassword()) return;
 
     try {
-      await ResetPasswordMutate(password);
+      await SetNewPasswordMutate(password);
     } catch (e) {
       console.error(e);
     }
@@ -239,4 +239,4 @@ const ResetPassForm = () => {
   );
 };
 
-export default ResetPassForm;
+export default SetPasswordForm;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import ContactTable from "@/components/ContactTable";
+import ContactTable from "@/components/Tables/ContactTable";
 import userData from "@/data/userData.json";
-import SecondNavBar from "@/components/SecondNavBar";
+import Breadcrumbs from "@/components/layouts/Breadcrumbs";
 import {useRouter} from "next/router";
 
 import {
@@ -19,7 +19,7 @@ const ExportViaEmail = () => {
   return (
     <>
       <Container maxWidth="xl">
-        <SecondNavBar path={router.pathname} />
+        <Breadcrumbs path={router.pathname} />
         <Grid
           alignItems="center"
           container

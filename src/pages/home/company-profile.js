@@ -5,22 +5,21 @@ import { GetCompanies } from "@/pages/api/companies";
 import { CurrnetUserContext } from "@/Context/Context";
 import Image from "next/image";
 import Head from "next/head";
-import SecondNavBar from "@/components/SecondNavBar";
-import CustomTextField from "@/components/CustomTextField";
-import Loader from "@/components/Loader";
+import Breadcrumbs from "@/components/layouts/Breadcrumbs";
+import EditButton from "@/components/Buttons/EditButton";
+import PageTitle from "@/components/serveries/PageTitle";
+import CustomTextField from "@/components/serveries/CustomTextField";
+import Loader from "@/components/layouts/Loader";
 import {
   Container,
   Typography,
-  Button,
   FormControl,
   InputLabel,
-  Card,
   Select,
   Box,
   MenuItem,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import EditOffOutlinedIcon from "@mui/icons-material/EditOffOutlined";
 
 const CompanyProfile = () => {
   const router = useRouter();
@@ -40,24 +39,8 @@ const CompanyProfile = () => {
         <title>Company Profile</title>
       </Head>
       <Container maxWidth="xl">
-        <SecondNavBar path={router.pathname} />
-        <Card
-          sx={{
-            height: "72px",
-            bgcolor: "#F7F7F7",
-            boxShadow: 3,
-          }}
-        >
-          <Typography
-            sx={{
-              fontSize: "23px",
-              mt: "20px",
-              ml: "40px",
-            }}
-          >
-            My Profile
-          </Typography>
-        </Card>
+        <Breadcrumbs path={router.pathname} />
+        <PageTitle path="" title="My Profile" />
 
         <Grid
           container
@@ -179,23 +162,7 @@ const CompanyProfile = () => {
             </Grid>
             <Grid item="true" size={{ xs: 8, md: 5, lg: 3.1 }}>
               {userRole !== "User" && (
-                <Button
-                  onClick={() =>
-                    router.push("/home/company-profile-edit")
-                  }
-                  fullWidth
-                  sx={{
-                    mt: "26px",
-                    textTransform: "none",
-                    fontSize: "20px",
-                    color: "#4E73DF",
-                    borderColor: "#4E73DF",
-                  }}
-                  variant="outlined"
-                  startIcon={<EditOffOutlinedIcon />}
-                >
-                  Edit
-                </Button>
+                <EditButton path="/home/company-profile-edit" />
               )}
             </Grid>
           </Grid>

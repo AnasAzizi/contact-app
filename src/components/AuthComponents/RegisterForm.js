@@ -3,8 +3,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useMutation } from "@tanstack/react-query";
 import { RegisterUser } from "@/pages/api/auth";
-import SnackbarAlert from "@/components/SnackbarAlert";
-import FormValidator from "@/components/FormValidator";
+import SnackbarAlert from "@/components/layouts/SnackbarAlert";
+import FormValidator from "@/components/serveries/FormValidator";
 import {
   Box,
   Typography,

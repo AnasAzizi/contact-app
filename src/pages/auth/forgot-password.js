@@ -1,10 +1,10 @@
 import React from "react";
 import Image from "next/image";
 import Box from "@mui/material/Box";
-import ForgotPassForm from "@/components/ForgotPassForm";
+import ForgotPassForm from "@/components/AuthComponents/ForgotPassForm";
 import Head from "next/head";
 import Grid from "@mui/material/Grid2";
-import AuthFooter from "@/components/AuthFooter";
+import AuthFooter from "@/components/AuthComponents/AuthFooter";
 
 const ForgotPassword = () => {
   return (

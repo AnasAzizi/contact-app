@@ -1,7 +1,7 @@
 import React from "react";
 import { Breadcrumbs, Divider, Typography, Link } from "@mui/material";
 
-const SecondNavBar = ({ path, name }) => {
+const Breadcrumb = ({ path, name }) => {
   const pathSegments = path
     .split("/")
     .filter((segment) => segment && !["view", "edit", "[id]"].includes(segment)); // Filter out 'view', 'edit', and '[id]'
@@ -50,4 +50,4 @@ const SecondNavBar = ({ path, name }) => {
   );
 };
 
-export default SecondNavBar;
+export default Breadcrumb;

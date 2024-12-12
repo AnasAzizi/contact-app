@@ -1,15 +1,16 @@
 import React, { useState, useContext } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { ShowContact, DeleteContact } from "@/pages/api/contact";
 import { CurrnetUserContext } from "@/Context/Context";
 import { useRouter } from "next/router";
-import ContactTable from "@/components/ContactTable";
-import SecondNavBar from "@/components/SecondNavBar";
-import SnackbarAlert from "@/components/SnackbarAlert";
-import Loader from "@/components/Loader";
 import Head from "next/head";
+import ContactTable from "@/components/Tables/ContactTable";
+import Breadcrumbs from "@/components/layouts/Breadcrumbs";
+import SnackbarAlert from "@/components/layouts/SnackbarAlert";
+import DeleteButton from "@/components/Buttons/DeleteButton";
+import Loader from "@/components/layouts/Loader";
 import { Container, FormControl, Button, TextField } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { ShowContact, DeleteContact } from "@/pages/api/contact";
 
 const Contacts = () => {
   const currentUser = useContext(CurrnetUserContext);
@@ -60,7 +61,7 @@ const Contacts = () => {
         <title>Contact</title>
       </Head>
       <Container maxWidth="xl">
-        <SecondNavBar path={router.pathname} />
+        <Breadcrumbs path={router.pathname} />
         <Grid
           alignItems="center"
           container
@@ -79,10 +80,10 @@ const Contacts = () => {
           >
             {userRole !== "User" && (
               <Grid item="true" size={{ xs: 6, md: 1.2, lg: 1 }}>
-                <Button
+                {/* <Button
                   onClick={handleDelete}
                   fullWidth
-                  disabled={ selectedIds.length === 0}
+                  disabled={selectedIds.length === 0}
                   sx={{
                     fontSize: "18px",
                     textTransform: "none",
@@ -97,7 +98,8 @@ const Contacts = () => {
                   variant="contained"
                 >
                   Delete
-                </Button>
+                </Button> */}
+                <DeleteButton handleDelete={handleDelete} selectedIds={selectedIds} />
               </Grid>
             )}
 

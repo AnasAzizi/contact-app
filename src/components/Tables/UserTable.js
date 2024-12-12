@@ -1,10 +1,10 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CurrnetUserContext } from "@/Context/Context";
-import { ToggleFavorite } from "@/pages/api/contact";
 import { useRouter } from "next/router";
+import ViewButton from "../Buttons/ViewButton";
+import EmailCopy from "../serveries/EmailCopy";
 import TablePagination from "./TablePagination";
-import StatusChip from "./StatusChip";
+import StatusChip from "../serveries/StatusChip";
 import {
   Table,
   TableBody,
@@ -12,7 +12,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Button,
   Checkbox,
   Paper,
   Box,
@@ -22,21 +21,21 @@ import {
   CardContent,
   Divider,
   Typography,
-  Tooltip,
-  IconButton,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
-import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
-import FileCopyOutlinedIcon from "@mui/icons-material/FileCopyOutlined";
 
-const ContactTable = ({ data, onSelectRows, search, resetSelection }) => {
+
+const UserTable = ({
+  data,
+  onSelectRows,
+  search,
+  resetSelection,
+  onResetComplete,
+}) => {
   const router = useRouter();
   const currentUser = useContext(CurrnetUserContext);
   const userRole = currentUser.currentUser.role;
-  const queryClient = useQueryClient();
   const [selectedId, setSelectedId] = useState([]);
-  const [tooltipText, setTooltipText] = useState("Copy");
 
   // for Pagination
   const [page, setPage] = useState(1);
@@ -61,17 +60,6 @@ const ContactTable = ({ data, onSelectRows, search, resetSelection }) => {
     }
   };
 
-  const { mutateAsync: ToggleFavoriteMutate } = useMutation({
-    mutationFn: (id) => ToggleFavorite(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["contacts"]);
-    },
-  });
-
-  const handleStarClick = (id) => {
-    ToggleFavoriteMutate(id);
-  };
-
   const handleCheckboxClick = (event, id) => {
     event.stopPropagation();
     const newSelected = selectedId.includes(id)
@@ -82,15 +70,16 @@ const ContactTable = ({ data, onSelectRows, search, resetSelection }) => {
     onSelectRows(newSelected);
   };
 
-  const handleClickIcon = () => {
-    setTooltipText("Copied!");
-    setTimeout(() => setTooltipText("Copy"), 1000);
-  };
+  useEffect(() => {
+    if (resetSelection) {
+      setSelectedId([]);
+      onSelectRows([]);
+      onResetComplete();
+    }
+  }, [resetSelection]);
 
   const headCells = [
     { id: "id", label: "ID" },
-    ...(userRole !== "User" ? [{ id: "favorite", label: "Favorite" }] : []),
-    { id: "image", label: "Image" },
     { id: "firstName", label: "First Name" },
     { id: "lastName", label: "Last Name" },
     { id: "email", label: "Email" },
@@ -99,16 +88,8 @@ const ContactTable = ({ data, onSelectRows, search, resetSelection }) => {
     { id: "action", label: "Action" },
   ];
 
-  useEffect(() => {
-    if (resetSelection) {
-      setSelectedId([]);
-      onSelectRows([]);
-    }
-  }, [resetSelection]);
-
   return (
     <>
-      {/* for mobile version */}
       {paginatedData
         .filter((item) => {
           return item.firstName.includes(search);
@@ -117,13 +98,12 @@ const ContactTable = ({ data, onSelectRows, search, resetSelection }) => {
           const isItemSelected = selectedId.includes(row.id);
           return (
             <Card
-              onClick={() => router.push(`/contacts/view/${row.id}`)}
+              onClick={() => router.push(`/users/view/${row.id}`)}
               key={index}
               sx={{
                 display: { xs: "block", lg: "none" },
                 mb: "19px",
                 minHeight: "274px",
-                cursor: "pointer",
               }}
             >
               <CardContent sx={{ px: "0px", pt: "13px" }}>
@@ -144,17 +124,6 @@ const ContactTable = ({ data, onSelectRows, search, resetSelection }) => {
                           }
                         />
                       </Grid>
-                      <Grid item="true">
-                        <Button onClick={() => handleStarClick(row.id)}>
-                          {row.isFavorite ? (
-                            <StarOutlinedIcon sx={{ fontSize: "35px" }} />
-                          ) : (
-                            <StarBorderOutlinedIcon
-                              sx={{ fontSize: "35px", color: "black" }}
-                            />
-                          )}
-                        </Button>
-                      </Grid>
                     </Grid>
                     <Divider />
                   </>
@@ -169,7 +138,7 @@ const ContactTable = ({ data, onSelectRows, search, resetSelection }) => {
                   mt="20px"
                 >
                   <Grid item="true">
-                    <StatusChip label={`#${row.id}`} />
+                    <StatusChip label={1 + index} />
                   </Grid>
                   <Grid item="true">
                     <Avatar
@@ -194,7 +163,8 @@ const ContactTable = ({ data, onSelectRows, search, resetSelection }) => {
                 >
                   <Grid item="true">
                     <Typography fontSize="24px" fontWeight="bold">
-                      {row.firstName} {row.lastName}
+                      {row.firstName}
+                      {row.lastName}
                     </Typography>
                   </Grid>
                   <Grid item="true" size={12}>
@@ -229,30 +199,26 @@ const ContactTable = ({ data, onSelectRows, search, resetSelection }) => {
                   <Checkbox color="primary" />
                 </TableCell>
               )}
-              {headCells.map((headCell) => (
-                <TableCell
-                  key={headCell.id}
-                  align={
-                    headCell.id === "email"
-                      ? "center"
-                      : userRole !== "User"
-                      ? "center"
-                      : "left"
-                  }
-                >
-                  <TableSortLabel sx={{ fontSize: "20px", fontWeight: "bold" }}>
-                    {headCell.label}
-                  </TableSortLabel>
-                </TableCell>
-              ))}
+              {headCells.map((headCell) => {
+                return (
+                  <TableCell key={headCell.id}>
+                    <TableSortLabel
+                      sx={{ fontSize: "20px", fontWeight: "bold" }}
+                    >
+                      {headCell.label}
+                    </TableSortLabel>
+                  </TableCell>
+                );
+              })}
             </TableRow>
           </TableHead>
+
           <TableBody>
             {paginatedData
               .filter((item) => {
                 return item.firstName.includes(search);
               })
-              .map((row) => {
+              .map((row, index) => {
                 const isItemSelected = selectedId.includes(row.id);
                 return (
                   <TableRow
@@ -271,27 +237,7 @@ const ContactTable = ({ data, onSelectRows, search, resetSelection }) => {
                       </TableCell>
                     )}
                     <TableCell sx={{ fontSize: "21px", fontWeight: "bold" }}>
-                      {row.id}
-                    </TableCell>
-                    {userRole !== "User" && (
-                      <TableCell>
-                        <Button onClick={() => handleStarClick(row.id)}>
-                          {row.isFavorite ? (
-                            <StarOutlinedIcon sx={{ fontSize: "35px" }} />
-                          ) : (
-                            <StarBorderOutlinedIcon
-                              sx={{ fontSize: "35px", color: "black" }}
-                            />
-                          )}
-                        </Button>
-                      </TableCell>
-                    )}
-                    <TableCell>
-                      <Avatar
-                        alt={`${row.firstName} ${row.lastName}`}
-                        src={row.imageUrl}
-                        sx={{ width: 58, height: 58 }}
-                      />
+                      000{index + 1}
                     </TableCell>
                     <TableCell sx={{ fontSize: "19px" }}>
                       {row.firstName}
@@ -309,36 +255,9 @@ const ContactTable = ({ data, onSelectRows, search, resetSelection }) => {
                         }}
                       >
                         {row.email}
-                        <Tooltip
-                          slotProps={{
-                            tooltip: {
-                              sx: {
-                                bgcolor: "white",
-                                color: "black",
-                                fontSize: "16px",
-                              },
-                            },
-                          }}
-                          title={tooltipText}
-                          placement="top"
-                        >
-                          <IconButton
-                            onClick={() => {
-                              navigator.clipboard.writeText(row.email);
-                              handleClickIcon();
-                            }}
-                          >
-                            <FileCopyOutlinedIcon
-                              sx={{
-                                cursor: "pointer",
-                                fontSize: "18px",
-                              }}
-                            />
-                          </IconButton>
-                        </Tooltip>
+                        <EmailCopy email={row.email} />
                       </Box>
                     </TableCell>
-
                     <TableCell sx={{ fontSize: "19px" }}>
                       {row.phoneNumber}
                     </TableCell>
@@ -349,19 +268,7 @@ const ContactTable = ({ data, onSelectRows, search, resetSelection }) => {
                       />
                     </TableCell>
                     <TableCell>
-                      <Button
-                        onClick={() => router.push(`/contacts/view/${row.id}`)}
-                        variant="contained"
-                        sx={{
-                          bgcolor: "#4E73DF",
-                          borderRadius: "5px",
-                          textTransform: "none",
-                          fontSize: "16px",
-                          boxShadow: 0,
-                        }}
-                      >
-                        View
-                      </Button>
+                      <ViewButton path={`/users/view/${row.id}`} />
                     </TableCell>
                   </TableRow>
                 );
@@ -369,6 +276,7 @@ const ContactTable = ({ data, onSelectRows, search, resetSelection }) => {
           </TableBody>
         </Table>
       </TableContainer>
+      {/* Pagination Component */}
       <TablePagination
         data={data}
         rowsPerPage={rowsPerPage}
@@ -379,4 +287,4 @@ const ContactTable = ({ data, onSelectRows, search, resetSelection }) => {
   );
 };
 
-export default ContactTable;
+export default UserTable;

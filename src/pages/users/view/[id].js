@@ -17,9 +17,11 @@ import {
   MenuItem,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import SecondNavBar from "@/components/SecondNavBar";
-import CustomTextField from "@/components/CustomTextField";
-import Loader from "@/components/Loader";
+import Breadcrumbs from "@/components/layouts/Breadcrumbs";
+import EditButton from "@/components/Buttons/EditButton";
+import BackButton from "@/components/Buttons/BackButton";
+import CustomTextField from "@/components/serveries/CustomTextField";
+import Loader from "@/components/layouts/Loader";
 import EditOffOutlinedIcon from "@mui/icons-material/EditOffOutlined";
 
 const ViewUser = () => {
@@ -52,7 +54,7 @@ const ViewUser = () => {
       </Head>
       {contact && (
         <Container maxWidth="xl">
-          <SecondNavBar
+          <Breadcrumbs
             path={router.pathname}
             name={`${contact.firstName} ${contact.lastName}`}
           />
@@ -169,37 +171,11 @@ const ViewUser = () => {
             <Grid container item="true" direction="row" size={12} pt="30px">
               {userRole !== "User" && (
                 <Grid item="true" size={{ xs: 6, md: 2 }}>
-                  <Button
-                    onClick={() => router.push(`/users/edit/${id}`)}
-                    fullWidth
-                    sx={{
-                      textTransform: "none",
-                      fontSize: "20px",
-                      color: "#4E73DF",
-                      borderColor: "#4E73DF",
-                    }}
-                    variant="outlined"
-                    startIcon={<EditOffOutlinedIcon />}
-                  >
-                    Edit
-                  </Button>
+                  <EditButton path={`/users/edit/${id}`} />
                 </Grid>
               )}
               <Grid item="true" size={{ xs: 6, md: 2 }}>
-                <Button
-                  onClick={() => router.push("/users")}
-                  fullWidth
-                  bgcolor="#4E73DF"
-                  variant="outlined"
-                  sx={{
-                    textTransform: "none",
-                    borderColor: "#4E73DF",
-                    color: "#4E73DF",
-                    fontSize: "20px",
-                  }}
-                >
-                  Back
-                </Button>
+                <BackButton path="/users" />
               </Grid>
             </Grid>
           </Grid>

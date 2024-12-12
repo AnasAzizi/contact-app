@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useMutation } from "@tanstack/react-query";
 import { forgotPassword } from "@/pages/api/auth";
-import SnackbarAlert from "@/components/SnackbarAlert";
+import SnackbarAlert from "@/components/layouts/SnackbarAlert";
 import {
   Box,
   Button,
