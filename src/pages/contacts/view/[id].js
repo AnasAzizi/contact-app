@@ -4,11 +4,10 @@ import { useMutation } from "@tanstack/react-query";
 import { ViewContact } from "@/pages/api/contact";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import CustomTextField from "@/components/serveries/CustomTextField";
+import ContactFromGrid from "@/components/ContactFromGrid";
 import Breadcrumbs from "@/components/layouts/Breadcrumbs";
 import EditButton from "@/components/Buttons/EditButton";
 import BackButton from "@/components/Buttons/BackButton";
-import Label from "@/components/serveries/Label";
 import Loader from "@/components/layouts/Loader";
 import {
   Card,
@@ -45,6 +44,45 @@ const View = () => {
       fetchContact();
     }
   }, [id]);
+
+  const fields = contact ? (
+    [
+      { label: "First name", name: "firstName", value: contact.firstName },
+      { label: "Last name", name: "lastName", value: contact.lastName },
+      { label: "Email", name: "email", value: contact.email },
+      {
+        label: "Phone",
+        name: "phoneNumber",
+        value: contact.phoneNumber,
+      },
+      {
+        label: "Email 2",
+        name: "emailTwo",
+        value: contact.emailTwo,
+      },
+      {
+        label: "Mobile",
+        name: "mobileNumber",
+        value: contact.mobileNumber,
+      },
+      {
+        label: "Address",
+        name: "address",
+        value: contact.address,
+        multiline: true,
+        rows: 4,
+      },
+      {
+        label: "Address 2",
+        name: "addressTwo",
+        value: contact.addressTwo,
+        multiline: true,
+        rows: 4,
+      },
+    ]
+  ) : (
+    <Loader />
+  );
 
   return isPending ? (
     <Loader />
@@ -137,82 +175,17 @@ const View = () => {
                 rowSpacing="26px"
                 wrap="wrap"
               >
-                <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Label label="First name" />
-                  <CustomTextField
-                    fullWidth
-                    name="firstName"
-                    defaultValue={contact.firstName || ""}
+                {fields.map((field) => (
+                  <ContactFromGrid
+                    key={field.name}
+                    label={field.label}
+                    name={field.name}
+                    value={field.value || ""}
                     disabled
+                    multiline={field.multiline || false}
+                    rows={field.rows || 1}
                   />
-                </Grid>
-                <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Label label="Last name" />
-                  <CustomTextField
-                    fullWidth
-                    name="lastName"
-                    defaultValue={contact.lastName || ""}
-                    disabled
-                  />
-                </Grid>
-                <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Label label="Email" />
-                  <CustomTextField
-                    fullWidth
-                    name="email"
-                    defaultValue={contact.email || ""}
-                    disabled
-                  />
-                </Grid>
-                <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Label label="Phone" />
-                  <CustomTextField
-                    fullWidth
-                    name="phoneNumber"
-                    defaultValue={contact.phoneNumber || ""}
-                    disabled
-                  />
-                </Grid>
-                <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Label label="Email 2" />
-                  <CustomTextField
-                    fullWidth
-                    name="emailTwo"
-                    defaultValue={contact.emailTwo || ""}
-                    disabled
-                  />
-                </Grid>
-                <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Label label="Mobile" />
-                  <CustomTextField
-                    fullWidth
-                    name="mobileNumber"
-                    defaultValue={contact.mobileNumber || ""}
-                    disabled
-                  />
-                </Grid>
-                <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Label label="Address" />
-                  <CustomTextField
-                    fullWidth
-                    multiline
-                    rows={4}
-                    name="address"
-                    disabled
-                    value={contact.address || ""}
-                  />
-                </Grid>
-                <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Label label="Address 2" />
-                  <CustomTextField
-                    fullWidth
-                    multiline
-                    rows={4}
-                    name="addressTwo"
-                    disabled
-                    value={contact.addressTwo || ""}
-                  />
-                </Grid>
+                ))}
               </Grid>
               <Grid
                 container

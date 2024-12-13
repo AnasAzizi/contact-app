@@ -7,9 +7,8 @@ import Breadcrumbs from "@/components/layouts/Breadcrumbs";
 import SnackbarAlert from "@/components/layouts/SnackbarAlert";
 import BackButton from "@/components/Buttons/BackButton";
 import SubmitButton from "@/components/Buttons/SubmitButton";
-import Label from "@/components/serveries/Label";
 import FormValidator from "@/components/serveries/FormValidator";
-import CustomTextField from "@/components/serveries/CustomTextField";
+import ContactFromGrid from "@/components/ContactFromGrid";
 import Loader from "@/components/layouts/Loader";
 import {
   Card,
@@ -100,6 +99,61 @@ const Edit = () => {
     }
     EditContactMutate(formData);
   };
+
+  const fields = [
+    {
+      label: "First name",
+      name: "firstName",
+      type: "text",
+      placeholder: "Enter your first name",
+    },
+    {
+      label: "Last name",
+      name: "lastName",
+      type: "text",
+      placeholder: "Enter your last name",
+    },
+    {
+      label: "Email",
+      name: "email",
+      type: "email",
+      placeholder: "Enter your email",
+    },
+    {
+      label: "Phone",
+      name: "phoneNumber",
+      type: "number",
+      placeholder: "Enter your phoneNumber",
+    },
+    {
+      label: "Email 2",
+      name: "emailTwo",
+      type: "email",
+      placeholder: "abc@gmail.com",
+    },
+    {
+      label: "Mobile",
+      name: "mobileNumber",
+      type: "number",
+      placeholder: "123-456-789-01",
+    },
+    {
+      label: "Address",
+      name: "address",
+      type: "text",
+      placeholder: "Address",
+      multiline: true,
+      rows: 4,
+    },
+    {
+      label: "Address 2",
+      name: "addressTwo",
+      type: "text",
+      placeholder: "address 2",
+      multiline: true,
+      rows: 4,
+    },
+  ];
 
   return isLoading ? (
     <Loader />
@@ -220,96 +274,19 @@ const Edit = () => {
                 rowSpacing="26px"
                 wrap="wrap"
               >
-                <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Label label="First name" />
-                  <CustomTextField
-                    fullWidth
-                    name="firstName"
-                    value={formData.firstName}
+                {fields.map((field) => (
+                  <ContactFromGrid
+                    key={field.name}
+                    label={field.label}
+                    name={field.name}
+                    value={formData[field.name]}
                     onChange={handleChange}
-                    placeholder="Enter your first name"
+                    placeholder={field.placeholder}
+                    type={field.type}
+                    multiline={field.multiline || false}
+                    rows={field.rows || 1}
                   />
-                </Grid>
-                <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Label label="Last name" />
-                  <CustomTextField
-                    fullWidth
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    placeholder="Enter your first name"
-                  />
-                </Grid>
-                <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Label label="Email" />
-                  <CustomTextField
-                    fullWidth
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="Enter your email"
-                    type="email"
-                  />
-                </Grid>
-                <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Label label="Phone" />
-                  <CustomTextField
-                    fullWidth
-                    name="phoneNumber"
-                    value={formData.phoneNumber}
-                    onChange={handleChange}
-                    placeholder="Enter your phoneNumber"
-                    type="number"
-                  />
-                </Grid>
-                <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Label label="Email 2" />
-                  <CustomTextField
-                    fullWidth
-                    name="emailTwo"
-                    value={formData.emailTwo}
-                    onChange={handleChange}
-                    placeholder="abc@gmail.com"
-                    type="email"
-                  />
-                </Grid>
-                <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Label label="Mobile" />
-                  <CustomTextField
-                    fullWidth
-                    name="mobileNumber"
-                    value={formData.mobileNumber}
-                    onChange={handleChange}
-                    placeholder="123-456-789-01"
-                    type="number"
-                  />
-                </Grid>
-                <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Label label="Address" />
-                  <CustomTextField
-                    fullWidth
-                    multiline
-                    rows={4}
-                    name="address"
-                    placeholder="Address  "
-                    value={formData.address}
-                    onChange={handleChange}
-                    type="text"
-                  />
-                </Grid>
-                <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Label label="Address 2" />
-                  <CustomTextField
-                    fullWidth
-                    multiline
-                    rows={4}
-                    placeholder="Address 2"
-                    name="addressTwo"
-                    value={formData.addressTwo}
-                    onChange={handleChange}
-                    type="text"
-                  />
-                </Grid>
+                ))}
               </Grid>
               <Grid
                 container
