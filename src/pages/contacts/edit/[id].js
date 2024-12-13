@@ -6,7 +6,8 @@ import Head from "next/head";
 import Breadcrumbs from "@/components/layouts/Breadcrumbs";
 import SnackbarAlert from "@/components/layouts/SnackbarAlert";
 import BackButton from "@/components/Buttons/BackButton";
-import SaveButton from "@/components/Buttons/SaveButton";
+import SubmitButton from "@/components/Buttons/SubmitButton";
+import Label from "@/components/serveries/Label";
 import FormValidator from "@/components/serveries/FormValidator";
 import CustomTextField from "@/components/serveries/CustomTextField";
 import Loader from "@/components/layouts/Loader";
@@ -220,9 +221,7 @@ const Edit = () => {
                 wrap="wrap"
               >
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Typography mb="12px" color="black" fontSize="20px">
-                    First name
-                  </Typography>
+                  <Label label="First name" />
                   <CustomTextField
                     fullWidth
                     name="firstName"
@@ -232,9 +231,7 @@ const Edit = () => {
                   />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Typography mb="12px" color="black" fontSize="20px">
-                    Last name
-                  </Typography>
+                  <Label label="Last name" />
                   <CustomTextField
                     fullWidth
                     name="lastName"
@@ -244,9 +241,7 @@ const Edit = () => {
                   />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Typography mb="12px" color="black" fontSize="20px">
-                    Email
-                  </Typography>
+                  <Label label="Email" />
                   <CustomTextField
                     fullWidth
                     name="email"
@@ -257,9 +252,7 @@ const Edit = () => {
                   />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Typography mb="12px" color="black" fontSize="20px">
-                    Phone
-                  </Typography>
+                  <Label label="Phone" />
                   <CustomTextField
                     fullWidth
                     name="phoneNumber"
@@ -270,9 +263,7 @@ const Edit = () => {
                   />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Typography mb="12px" color="black" fontSize="20px">
-                    Email 2
-                  </Typography>
+                  <Label label="Email 2" />
                   <CustomTextField
                     fullWidth
                     name="emailTwo"
@@ -283,9 +274,7 @@ const Edit = () => {
                   />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Typography mb="12px" color="black" fontSize="20px">
-                    Mobile
-                  </Typography>
+                  <Label label="Mobile" />
                   <CustomTextField
                     fullWidth
                     name="mobileNumber"
@@ -296,9 +285,7 @@ const Edit = () => {
                   />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Typography mb="12px" color="black" fontSize="20px">
-                    Address
-                  </Typography>
+                  <Label label="Address" />
                   <CustomTextField
                     fullWidth
                     multiline
@@ -311,9 +298,7 @@ const Edit = () => {
                   />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Typography mb="12px" color="black" fontSize="20px">
-                    Address 2
-                  </Typography>
+                  <Label label="Address 2" />
                   <CustomTextField
                     fullWidth
                     multiline
@@ -335,7 +320,7 @@ const Edit = () => {
                 gap={{ xs: 3, md: 10 }}
               >
                 <Grid item="true" size={{ xs: 12, sm: 5.7, md: 2 }}>
-                  <SaveButton />
+                  <SubmitButton text="Save" />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, sm: 5.7, md: 2 }}>
                   <BackButton path={`/contacts/view/${id}`} />

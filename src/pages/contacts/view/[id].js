@@ -8,6 +8,7 @@ import CustomTextField from "@/components/serveries/CustomTextField";
 import Breadcrumbs from "@/components/layouts/Breadcrumbs";
 import EditButton from "@/components/Buttons/EditButton";
 import BackButton from "@/components/Buttons/BackButton";
+import Label from "@/components/serveries/Label";
 import Loader from "@/components/layouts/Loader";
 import {
   Card,
@@ -137,9 +138,7 @@ const View = () => {
                 wrap="wrap"
               >
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Typography mb="12px" color="black" fontSize="20px">
-                    First name
-                  </Typography>
+                  <Label label="First name" />
                   <CustomTextField
                     fullWidth
                     name="firstName"
@@ -148,9 +147,7 @@ const View = () => {
                   />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Typography mb="12px" color="black" fontSize="20px">
-                    Last name
-                  </Typography>
+                  <Label label="Last name" />
                   <CustomTextField
                     fullWidth
                     name="lastName"
@@ -159,9 +156,7 @@ const View = () => {
                   />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Typography mb="12px" color="black" fontSize="20px">
-                    Email
-                  </Typography>
+                  <Label label="Email" />
                   <CustomTextField
                     fullWidth
                     name="email"
@@ -170,9 +165,7 @@ const View = () => {
                   />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Typography mb="12px" color="black" fontSize="20px">
-                    Phone
-                  </Typography>
+                  <Label label="Phone" />
                   <CustomTextField
                     fullWidth
                     name="phoneNumber"
@@ -181,9 +174,7 @@ const View = () => {
                   />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Typography mb="12px" color="black" fontSize="20px">
-                    Email 2
-                  </Typography>
+                  <Label label="Email 2" />
                   <CustomTextField
                     fullWidth
                     name="emailTwo"
@@ -192,9 +183,7 @@ const View = () => {
                   />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Typography mb="12px" color="black" fontSize="20px">
-                    Mobile
-                  </Typography>
+                  <Label label="Mobile" />
                   <CustomTextField
                     fullWidth
                     name="mobileNumber"
@@ -203,9 +192,7 @@ const View = () => {
                   />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Typography mb="12px" color="black" fontSize="20px">
-                    Address
-                  </Typography>
+                  <Label label="Address" />
                   <CustomTextField
                     fullWidth
                     multiline
@@ -216,9 +203,7 @@ const View = () => {
                   />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Typography mb="12px" color="black" fontSize="20px">
-                    Address 2
-                  </Typography>
+                  <Label label="Address 2" />
                   <CustomTextField
                     fullWidth
                     multiline

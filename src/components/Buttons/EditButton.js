@@ -16,6 +16,7 @@ const EditButton = ({ path }) => {
           textTransform: "none",
           fontSize: "20px",
           color: "#4E73DF",
+          borderColor: "#4E73DF",
         }}
         variant="outlined"
         startIcon={<EditOffOutlinedIcon />}

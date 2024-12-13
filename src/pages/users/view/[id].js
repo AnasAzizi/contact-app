@@ -9,7 +9,6 @@ import {
   Typography,
   FormControl,
   InputLabel,
-  Button,
   Card,
   Select,
   Switch,
@@ -17,12 +16,12 @@ import {
   MenuItem,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
+import Label from "@/components/serveries/Label";
 import Breadcrumbs from "@/components/layouts/Breadcrumbs";
 import EditButton from "@/components/Buttons/EditButton";
 import BackButton from "@/components/Buttons/BackButton";
 import CustomTextField from "@/components/serveries/CustomTextField";
 import Loader from "@/components/layouts/Loader";
-import EditOffOutlinedIcon from "@mui/icons-material/EditOffOutlined";
 
 const ViewUser = () => {
   const router = useRouter();
@@ -108,9 +107,7 @@ const ViewUser = () => {
             columnSpacing="50px"
           >
             <Grid item="true" size={{ xs: 12, md: 6 }}>
-              <Typography mb="12px" color="black" fontSize="20px">
-                First name
-              </Typography>
+              <Label label="First name" />
               <CustomTextField
                 fullWidth
                 name="firstName"
@@ -120,9 +117,7 @@ const ViewUser = () => {
               />
             </Grid>
             <Grid item="true" size={{ xs: 12, md: 6 }}>
-              <Typography mb="12px" color="black" fontSize="20px">
-                Last name
-              </Typography>
+              <Label label="Last name" />
               <CustomTextField
                 fullWidth
                 name="lastName"
@@ -132,9 +127,7 @@ const ViewUser = () => {
               />
             </Grid>
             <Grid item="true" size={{ xs: 12, md: 4 }}>
-              <Typography mb="12px" color="black" fontSize="20px">
-                Email
-              </Typography>
+              <Label label="Email" />
               <CustomTextField
                 fullWidth
                 name="email"
@@ -144,9 +137,7 @@ const ViewUser = () => {
               />
             </Grid>
             <Grid item="true" size={{ xs: 12, md: 4 }}>
-              <Typography mb="12px" color="black" fontSize="20px">
-                Phone
-              </Typography>
+              <Label label="Phone" />
               <CustomTextField
                 fullWidth
                 name="phoneNumber"
@@ -156,9 +147,7 @@ const ViewUser = () => {
               />
             </Grid>
             <Grid item="true" size={{ xs: 12, md: 4 }}>
-              <Typography mb="12px" color="black" fontSize="20px">
-                User Type
-              </Typography>
+              <Label label="User Type" />
               <FormControl size="small" variant="outlined" fullWidth disabled>
                 <InputLabel>{contact.role}</InputLabel>
                 <Select>

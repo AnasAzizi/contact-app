@@ -6,18 +6,13 @@ import Image from "next/image";
 import Head from "next/head";
 import Breadcrumbs from "@/components/layouts/Breadcrumbs";
 import PageTitle from "@/components/serveries/PageTitle";
-import SaveButton from "@/components/Buttons/SaveButton";
+import SubmitButton from "@/components/Buttons/SubmitButton";
 import FormValidator from "@/components/serveries/FormValidator";
 import SnackbarAlert from "@/components/layouts/SnackbarAlert";
 import CustomTextField from "@/components/serveries/CustomTextField";
 import Loader from "@/components/layouts/Loader";
-import {
-  Container,
-  Typography,
-  Select,
-  MenuItem,
-  Box,
-} from "@mui/material";
+import Label from "@/components/serveries/Label";
+import { Container, Typography, Select, MenuItem, Box } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
 const CompanyProfileEdit = () => {
@@ -129,9 +124,7 @@ const CompanyProfileEdit = () => {
               wrap="wrap"
             >
               <Grid size={{ xs: 12, md: 6 }}>
-                <Typography mb="12px" color="black" fontSize="20px">
-                  Company name
-                </Typography>
+                <Label label="Company name" />
                 <CustomTextField
                   fullWidth
                   name="companyName"
@@ -142,9 +135,7 @@ const CompanyProfileEdit = () => {
               </Grid>
 
               <Grid size={{ xs: 12, md: 6 }}>
-                <Typography mb="12px" color="black" fontSize="20px">
-                  VAT Number
-                </Typography>
+                <Label label="VAT Number" />
                 <CustomTextField
                   fullWidth
                   name="vatNumber"
@@ -155,9 +146,7 @@ const CompanyProfileEdit = () => {
               </Grid>
 
               <Grid size={{ xs: 12, md: 6 }}>
-                <Typography mb="12px" color="black" fontSize="20px">
-                  Street
-                </Typography>
+                <Label label="Street" />
                 <CustomTextField
                   fullWidth
                   name="streetOne"
@@ -168,9 +157,7 @@ const CompanyProfileEdit = () => {
               </Grid>
 
               <Grid size={{ xs: 12, md: 6 }}>
-                <Typography mb="12px" color="black" fontSize="20px">
-                  Street 2
-                </Typography>
+                <Label label="Street 2" />
                 <CustomTextField
                   fullWidth
                   name="streetTwo"
@@ -181,9 +168,7 @@ const CompanyProfileEdit = () => {
               </Grid>
 
               <Grid size={{ xs: 12, md: 6 }}>
-                <Typography mb="12px" color="black" fontSize="20px">
-                  City
-                </Typography>
+                <Label label="City" />
                 <CustomTextField
                   fullWidth
                   name="city"
@@ -194,9 +179,7 @@ const CompanyProfileEdit = () => {
               </Grid>
 
               <Grid size={{ xs: 12, md: 6 }}>
-                <Typography mb="12px" color="black" fontSize="20px">
-                  State
-                </Typography>
+                <Label label="State" />
                 <CustomTextField
                   fullWidth
                   name="state"
@@ -207,9 +190,7 @@ const CompanyProfileEdit = () => {
               </Grid>
 
               <Grid size={{ xs: 12, md: 6 }}>
-                <Typography mb="12px" color="black" fontSize="20px">
-                  Zip
-                </Typography>
+                <Label label="Zip" />
                 <CustomTextField
                   fullWidth
                   name="zip"
@@ -220,9 +201,7 @@ const CompanyProfileEdit = () => {
               </Grid>
 
               <Grid size={{ xs: 12, md: 6 }}>
-                <Typography mb="12px" color="black" fontSize="20px">
-                  Country
-                </Typography>
+                <Label label="Country" />
                 <Select
                   fullWidth
                   size="small"
@@ -240,7 +219,7 @@ const CompanyProfileEdit = () => {
                 size={{ xs: 8, md: 5, lg: 3.1 }}
                 sx={{ mt: "26px" }}
               >
-                <SaveButton />
+                <SubmitButton text="Save" />
               </Grid>
             </Grid>
             <Grid item="true" size={4}>

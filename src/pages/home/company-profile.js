@@ -10,9 +10,9 @@ import EditButton from "@/components/Buttons/EditButton";
 import PageTitle from "@/components/serveries/PageTitle";
 import CustomTextField from "@/components/serveries/CustomTextField";
 import Loader from "@/components/layouts/Loader";
+import Label from "@/components/serveries/Label";
 import {
   Container,
-  Typography,
   FormControl,
   InputLabel,
   Select,
@@ -64,9 +64,7 @@ const CompanyProfile = () => {
             wrap="wrap"
           >
             <Grid size={{ xs: 12, md: 6 }}>
-              <Typography mb="12px" color="black" fontSize="20px">
-                Company name
-              </Typography>
+              <Label label="Company name" />
               <CustomTextField
                 fullWidth
                 name="companyName"
@@ -76,9 +74,7 @@ const CompanyProfile = () => {
             </Grid>
 
             <Grid size={{ xs: 12, md: 6 }}>
-              <Typography mb="12px" color="black" fontSize="20px">
-                VAT Number
-              </Typography>
+              <Label label="VAT Number" />
               <CustomTextField
                 fullWidth
                 name="vatNumber"
@@ -88,9 +84,7 @@ const CompanyProfile = () => {
             </Grid>
 
             <Grid size={{ xs: 12, md: 6 }}>
-              <Typography mb="12px" color="black" fontSize="20px">
-                Street
-              </Typography>
+              <Label label="Street" />
               <CustomTextField
                 fullWidth
                 name="streetOne"
@@ -100,9 +94,7 @@ const CompanyProfile = () => {
             </Grid>
 
             <Grid size={{ xs: 12, md: 6 }}>
-              <Typography mb="12px" color="black" fontSize="20px">
-                Street 2
-              </Typography>
+              <Label label="Street 2" />
               <CustomTextField
                 fullWidth
                 name="streetTwo"
@@ -112,9 +104,7 @@ const CompanyProfile = () => {
             </Grid>
 
             <Grid size={{ xs: 12, md: 6 }}>
-              <Typography mb="12px" color="black" fontSize="20px">
-                City
-              </Typography>
+              <Label label="City" />
               <CustomTextField
                 fullWidth
                 name="city"
@@ -124,9 +114,7 @@ const CompanyProfile = () => {
             </Grid>
 
             <Grid size={{ xs: 12, md: 6 }}>
-              <Typography mb="12px" color="black" fontSize="20px">
-                State
-              </Typography>
+              <Label label="State" />
               <CustomTextField
                 fullWidth
                 name="state"
@@ -136,9 +124,7 @@ const CompanyProfile = () => {
             </Grid>
 
             <Grid size={{ xs: 12, md: 6 }}>
-              <Typography mb="12px" color="black" fontSize="20px">
-                Zip
-              </Typography>
+              <Label label="Zip" />
               <CustomTextField
                 fullWidth
                 name="zip"
@@ -148,9 +134,7 @@ const CompanyProfile = () => {
             </Grid>
 
             <Grid size={{ xs: 12, md: 6 }}>
-              <Typography mb="12px" color="black" fontSize="20px">
-                Country
-              </Typography>
+              <Label label="Country" />
               <FormControl size="small" fullWidth disabled>
                 <InputLabel>{data.country}</InputLabel>
                 <Select>

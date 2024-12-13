@@ -8,6 +8,9 @@ import SnackbarAlert from "@/components/layouts/SnackbarAlert";
 import CustomTextField from "@/components/serveries/CustomTextField";
 import FormValidator from "@/components/serveries/FormValidator";
 import PageTitle from "@/components/serveries/PageTitle";
+import Label from "@/components/serveries/Label";
+import BackButton from "@/components/Buttons/BackButton";
+import SubmitButton from "@/components/Buttons/SubmitButton";
 import { Container, Typography, Avatar, Button, Box } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
@@ -124,8 +127,11 @@ const CreateNew = () => {
                   component="label"
                   size="large"
                   variant="contained"
-                  bgcolor="#4E73DF"
-                  sx={{ textTransform: "none", boxShadow: "none" }}
+                  sx={{
+                    textTransform: "none",
+                    boxShadow: "none",
+                    bgcolor: "#4E73DF",
+                  }}
                 >
                   Upload new image
                   <input type="file" accept="image/png, image/jpeg" hidden />
@@ -150,9 +156,7 @@ const CreateNew = () => {
                 wrap="wrap"
               >
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Typography mb="12px" color="black" fontSize="20px">
-                    First name <span style={{ color: "#C70000" }}>*</span>
-                  </Typography>
+                  <Label label="First name" withStar={true} />
                   <CustomTextField
                     fullWidth
                     name="FirstName"
@@ -161,9 +165,7 @@ const CreateNew = () => {
                   />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Typography mb="12px" color="black" fontSize="20px">
-                    Last name <span style={{ color: "#C70000" }}>*</span>
-                  </Typography>
+                  <Label label="Last name" withStar={true} />
                   <CustomTextField
                     fullWidth
                     name="LastName"
@@ -172,9 +174,7 @@ const CreateNew = () => {
                   />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Typography mb="12px" color="black" fontSize="20px">
-                    Email <span style={{ color: "#C70000" }}>*</span>
-                  </Typography>
+                  <Label label="Email" withStar={true} />
                   <CustomTextField
                     fullWidth
                     name="Email"
@@ -184,9 +184,7 @@ const CreateNew = () => {
                   />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Typography mb="12px" color="black" fontSize="20px">
-                    Phone <span style={{ color: "#C70000" }}>*</span>
-                  </Typography>
+                  <Label label="Phone" withStar={true} />
                   <CustomTextField
                     fullWidth
                     name="phoneNumber"
@@ -196,9 +194,7 @@ const CreateNew = () => {
                   />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Typography mb="12px" color="black" fontSize="20px">
-                    Email 2
-                  </Typography>
+                  <Label label="Email 2" />
                   <CustomTextField
                     fullWidth
                     name="EmailTwo"
@@ -208,9 +204,7 @@ const CreateNew = () => {
                   />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Typography mb="12px" color="black" fontSize="20px">
-                    Mobile
-                  </Typography>
+                  <Label label="Mobile" />
                   <CustomTextField
                     fullWidth
                     name="mobileNumber"
@@ -220,9 +214,7 @@ const CreateNew = () => {
                   />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Typography mb="12px" color="black" fontSize="20px">
-                    Address <span style={{ color: "#C70000" }}>*</span>
-                  </Typography>
+                  <Label label="Address" withStar={true} />
                   <CustomTextField
                     fullWidth
                     multiline
@@ -234,9 +226,7 @@ const CreateNew = () => {
                   />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, md: 5.7 }}>
-                  <Typography mb="12px" color="black" fontSize="20px">
-                    Address 2
-                  </Typography>
+                  <Label label="Address 2" />
                   <CustomTextField
                     fullWidth
                     multiline
@@ -257,30 +247,10 @@ const CreateNew = () => {
                 gap={{ xs: 3, md: 10 }}
               >
                 <Grid item="true" size={{ xs: 12, sm: 5, md: 2 }}>
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    bgcolor="#4E73DF"
-                    sx={{
-                      textTransform: "none",
-                      fontSize: "20px",
-                      boxShadow: "none",
-                    }}
-                  >
-                    Create
-                  </Button>
+                  <SubmitButton text="Create" />
                 </Grid>
                 <Grid item="true" size={{ xs: 12, sm: 5, md: 2 }}>
-                  <Button
-                    onClick={() => router.push("/contacts")}
-                    fullWidth
-                    variant="outlined"
-                    bgcolor="#4E73DF"
-                    sx={{ textTransform: "none", fontSize: "20px" }}
-                  >
-                    Back
-                  </Button>
+                  <BackButton path="/contacts" />
                 </Grid>
               </Grid>
             </Grid>

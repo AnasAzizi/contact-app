@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useMutation } from "@tanstack/react-query";
 import { AddUser } from "@/pages/api/user";
 import Head from "next/head";
+import Label from "@/components/serveries/Label";
 import PageTitle from "@/components/serveries/PageTitle";
 import Breadcrumbs from "@/components/layouts/Breadcrumbs";
 import SnackbarAlert from "@/components/layouts/SnackbarAlert";
@@ -14,7 +15,6 @@ import {
   FormControl,
   InputLabel,
   Button,
-  Card,
   Select,
   MenuItem,
   Box,
@@ -107,9 +107,7 @@ const InviteNewUser = () => {
             columnSpacing="50px"
           >
             <Grid item="true" size={{ xs: 12, md: 6 }}>
-              <Typography mb="12px" color="black" fontSize="20px">
-                First name <span style={{ color: "#C70000" }}>*</span>
-              </Typography>
+              <Label label="First name" withStar={true} />
               <CustomTextField
                 fullWidth
                 name="firstName"
@@ -118,9 +116,7 @@ const InviteNewUser = () => {
               />
             </Grid>
             <Grid item="true" size={{ xs: 12, md: 6 }}>
-              <Typography mb="12px" color="black" fontSize="20px">
-                Last name <span style={{ color: "#C70000" }}>*</span>
-              </Typography>
+              <Label label="Last name" withStar={true} />
               <CustomTextField
                 fullWidth
                 name="lastName"
@@ -129,9 +125,7 @@ const InviteNewUser = () => {
               />
             </Grid>
             <Grid item="true" size={{ xs: 12, md: 4 }}>
-              <Typography mb="12px" color="black" fontSize="20px">
-                Email <span style={{ color: "#C70000" }}>*</span>
-              </Typography>
+              <Label label="Email" withStar={true} />
               <CustomTextField
                 fullWidth
                 name="email"
@@ -141,9 +135,7 @@ const InviteNewUser = () => {
               />
             </Grid>
             <Grid item="true" size={{ xs: 12, md: 4 }}>
-              <Typography mb="12px" color="black" fontSize="20px">
-                Phone <span style={{ color: "#C70000" }}>*</span>
-              </Typography>
+              <Label label="Phone" withStar={true} />
               <CustomTextField
                 fullWidth
                 name="phoneNumber"
@@ -153,9 +145,7 @@ const InviteNewUser = () => {
               />
             </Grid>
             <Grid item="true" size={{ xs: 12, md: 4 }}>
-              <Typography mb="12px" color="black" fontSize="20px">
-                User Type <span style={{ color: "#C70000" }}>*</span>
-              </Typography>
+              <Label label="User Type" withStar={true} />
               <FormControl fullWidth size="small">
                 <InputLabel>Select user type</InputLabel>
                 <Select

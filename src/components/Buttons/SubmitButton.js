@@ -1,10 +1,7 @@
 import React from "react";
-// import { useRouter } from "next/router";
 import { Button } from "@mui/material";
 
-const SaveButton = () => {
-  // const router = useRouter();
-
+const SaveButton = ({text}) => {
   return (
     <>
       <Button
@@ -18,7 +15,7 @@ const SaveButton = () => {
         }}
         variant="contained"
       >
-        Save
+        {text}
       </Button>
     </>
   );

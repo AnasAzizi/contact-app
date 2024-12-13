@@ -11,11 +11,11 @@ const BackButton = ({ path }) => {
         onClick={() => router.push(path)}
         fullWidth
         variant="outlined"
-        bgcolor="#4E73DF"
         sx={{
           textTransform: "none",
           fontSize: "20px",
           color: "#4E73DF",
+          borderColor: "#4E73DF",
         }}
       >
         Back

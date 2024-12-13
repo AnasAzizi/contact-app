@@ -4,10 +4,11 @@ import { UserView, UserEdit } from "@/pages/api/user";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Breadcrumbs from "@/components/layouts/Breadcrumbs";
-import SaveButton from "@/components/Buttons/SaveButton";
+import SubmitButton from "@/components/Buttons/SubmitButton";
 import SnackbarAlert from "@/components/layouts/SnackbarAlert";
 import FormValidator from "@/components/serveries/FormValidator";
 import CustomTextField from "@/components/serveries/CustomTextField";
+import Label from "@/components/serveries/Label";
 import Loader from "@/components/layouts/Loader";
 import {
   Container,
@@ -165,9 +166,7 @@ const EditUser = () => {
             columnSpacing="50px"
           >
             <Grid item="true" size={{ xs: 12, md: 6 }}>
-              <Typography mb="12px" color="black" fontSize="20px">
-                First name
-              </Typography>
+              <Label label="First name" />
               <CustomTextField
                 fullWidth
                 name="firstName"
@@ -177,9 +176,7 @@ const EditUser = () => {
               />
             </Grid>
             <Grid item="true" size={{ xs: 12, md: 6 }}>
-              <Typography mb="12px" color="black" fontSize="20px">
-                Last name
-              </Typography>
+              <Label label="Last name" />
               <CustomTextField
                 fullWidth
                 name="lastName"
@@ -189,9 +186,7 @@ const EditUser = () => {
               />
             </Grid>
             <Grid item="true" size={{ xs: 12, md: 4 }}>
-              <Typography mb="12px" color="black" fontSize="20px">
-                Email
-              </Typography>
+              <Label label="Email" />
               <CustomTextField
                 fullWidth
                 name="email"
@@ -201,9 +196,7 @@ const EditUser = () => {
               />
             </Grid>
             <Grid item="true" size={{ xs: 12, md: 4 }}>
-              <Typography mb="12px" color="black" fontSize="20px">
-                Phone
-              </Typography>
+              <Label label="Phone" />
               <CustomTextField
                 fullWidth
                 name="phoneNumber"
@@ -213,9 +206,7 @@ const EditUser = () => {
               />
             </Grid>
             <Grid item="true" size={{ xs: 12, md: 4 }}>
-              <Typography mb="12px" color="black" fontSize="20px">
-                User Type
-              </Typography>
+              <Label label="User Type" />
               <Select
                 size="small"
                 fullWidth
@@ -230,7 +221,7 @@ const EditUser = () => {
             </Grid>
             <Grid container item="true" direction="row" size={12} pt="30px">
               <Grid item="true" size={{ xs: 6, md: 2 }}>
-                <SaveButton />
+                <SubmitButton text="Save" />
               </Grid>
               <Grid item="true" size={{ xs: 6, md: 2 }}>
                 <Button
