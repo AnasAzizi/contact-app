@@ -1,29 +1,32 @@
-import React, { useState, useEffect } from "react";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import React, { useState, useContext, useEffect } from "react";
+import { CurrnetUserContext } from "@/Context/Context";
 import { ViewContact, EditContact } from "@/pages/api/contact";
+import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import Breadcrumbs from "@/components/layouts/Breadcrumbs";
+import ContactFromGrid from "@/components/ContactFromGrid";
 import SnackbarAlert from "@/components/layouts/SnackbarAlert";
-import BackButton from "@/components/Buttons/BackButton";
 import SubmitButton from "@/components/Buttons/SubmitButton";
 import FormValidator from "@/components/serveries/FormValidator";
-import ContactFromGrid from "@/components/ContactFromGrid";
+import Breadcrumbs from "@/components/layouts/Breadcrumbs";
+import EditButton from "@/components/Buttons/EditButton";
+import BackButton from "@/components/Buttons/BackButton";
 import Loader from "@/components/layouts/Loader";
 import {
   Card,
   Container,
   Typography,
   Avatar,
-  Button,
   Box,
   Switch,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
-const Edit = () => {
+const ContactAction = ({ mode, id }) => {
   const router = useRouter();
-  const { id } = router.query;
+  const currentUser = useContext(CurrnetUserContext);
+  const userRole = currentUser.currentUser.role;
+  const [contact, setContact] = useState({});
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarSeverity, setSnackbarSeverity] = useState("error");
   const [snackbarMessage, setSnackbarMessage] = useState("");
@@ -31,48 +34,39 @@ const Edit = () => {
     setOpenSnackbar(false);
   };
 
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    emailTwo: "",
-    phoneNumber: "",
-    mobileNumber: "",
-    address: "",
-    addressTwo: "",
-    status: "Active",
-  });
-
-  const emptyFields = FormValidator({
-    formData,
-    excludedFields: ["mobileNumber", "addressTwo", "emailTwo"],
-  });
+  const emptyFields = contact
+    ? FormValidator({
+        formData: contact,
+        excludedFields: [
+          "mobileNumber",
+          "addressTwo",
+          "emailTwo",
+          "image",
+          "imageUrl",
+        ],
+      })
+    : [];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setContact((prev) => ({ ...prev, [name]: value }));
   };
 
-  const { data: contact, isLoading } = useQuery({
-    queryKey: ["contact"],
-    queryFn: () => ViewContact(id),
+  const { mutateAsync: ViewContactMutate, isPending } = useMutation({
+    mutationFn: () => ViewContact(id),
+    onSuccess: (data) => {
+      setContact(data);
+    },
+    onError: (err) => {
+      console.error("Error fetching contact:", err);
+    },
   });
 
   useEffect(() => {
-    if (contact) {
-      setFormData({
-        firstName: contact.firstName || "",
-        lastName: contact.lastName || "",
-        email: contact.email || "",
-        emailTwo: contact.emailTwo || "",
-        phoneNumber: contact.phoneNumber || "",
-        mobileNumber: contact.mobileNumber || "",
-        address: contact.address || "",
-        addressTwo: contact.addressTwo || "",
-        status: contact.status || "Active",
-      });
+    if (id) {
+      ViewContactMutate();
     }
-  }, [contact]);
+  }, [id]);
 
   const { mutateAsync: EditContactMutate } = useMutation({
     mutationFn: (updatedContact) => EditContact(updatedContact, id),
@@ -97,81 +91,63 @@ const Edit = () => {
       );
       return;
     }
-    EditContactMutate(formData);
+    EditContactMutate(contact);
   };
 
-  const fields = [
-    {
-      label: "First name",
-      name: "firstName",
-      type: "text",
-      placeholder: "Enter your first name",
-    },
-    {
-      label: "Last name",
-      name: "lastName",
-      type: "text",
-      placeholder: "Enter your last name",
-    },
-    {
-      label: "Email",
-      name: "email",
-      type: "email",
-      placeholder: "Enter your email",
-    },
-    {
-      label: "Phone",
-      name: "phoneNumber",
-      type: "number",
-      placeholder: "Enter your phoneNumber",
-    },
-    {
-      label: "Email 2",
-      name: "emailTwo",
-      type: "email",
-      placeholder: "abc@gmail.com",
-    },
-    {
-      label: "Mobile",
-      name: "mobileNumber",
-      type: "number",
-      placeholder: "123-456-789-01",
-    },
-    {
-      label: "Address",
-      name: "address",
-      type: "text",
-      placeholder: "Address",
-      multiline: true,
-      rows: 4,
-    },
-    {
-      label: "Address 2",
-      name: "addressTwo",
-      type: "text",
-      placeholder: "address 2",
-      multiline: true,
-      rows: 4,
-    },
-  ];
+  const fields = contact
+    ? [
+        { label: "First name", name: "firstName", value: contact.firstName },
+        { label: "Last name", name: "lastName", value: contact.lastName },
+        { label: "Email", name: "email", value: contact.email },
+        {
+          label: "Phone",
+          name: "phoneNumber",
+          value: contact.phoneNumber,
+        },
+        {
+          label: "Email 2",
+          name: "emailTwo",
+          value: contact.emailTwo,
+        },
+        {
+          label: "Mobile",
+          name: "mobileNumber",
+          value: contact.mobileNumber,
+        },
+        {
+          label: "Address",
+          name: "address",
+          value: contact.address,
+          multiline: true,
+          rows: 4,
+        },
+        {
+          label: "Address 2",
+          name: "addressTwo",
+          value: contact.addressTwo,
+          multiline: true,
+          rows: 4,
+        },
+      ]
+    : [];
 
-  return isLoading ? (
+  return !contact || isPending ? (
     <Loader />
   ) : (
     <>
       <Head>
-        <title>Edit Contact</title>
+        <title>{mode === "edit" ? "Edit Contact" : "View Contact"}</title>
       </Head>
       <Container maxWidth="xl">
         <Breadcrumbs
           path={router.pathname}
-          name={`${formData.firstName} ${formData.lastName}`}
+          name={`${contact.firstName} ${contact.lastName}`}
         />
         <Card
           sx={{
             height: "72px",
             bgcolor: "#F7F7F7",
-            boxShadow: 2,
+            boxShadow: 3,
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
@@ -183,7 +159,7 @@ const Edit = () => {
               ml: "40px",
             }}
           >
-            User details
+            Contact Details
           </Typography>
           <Box
             component="div"
@@ -195,10 +171,12 @@ const Edit = () => {
             }}
           >
             <Typography fontSize="20px" sx={{ pr: "18px" }}>
-              {formData.status === "Active" ? "Active" : "Inactive"}
+              {contact.status === "Active" ? "Active" : "Inactive"}
             </Typography>
             <Switch
-              checked={formData.status === "Active"}
+              disabled={mode !== "edit"}
+              name="status"
+              checked={contact.status === "Active"}
               onChange={(e) =>
                 handleChange({
                   target: {
@@ -207,7 +185,6 @@ const Edit = () => {
                   },
                 })
               }
-              name="status"
             />
           </Box>
         </Card>
@@ -226,35 +203,14 @@ const Edit = () => {
               size={{ xs: 12, md: 12, lg: 3 }}
               direction="column"
               alignItems="center"
-              mb={5}
             >
               <Grid item="true" xs={12}>
-                <Avatar
-                  src={formData.imageUrl}
-                  sx={{ width: 202, height: 202 }}
-                />
+                <Avatar sx={{ width: 202, height: 202 }} />
               </Grid>
               <Grid item="true" xs={12}>
-                <Typography
-                  color="black"
-                  fontSize="18px"
-                  sx={{ opacity: "40%", my: "20px" }}
-                >
-                  JPG or PNG no larger than 5 MB
+                <Typography color="black" fontSize="24px" sx={{ my: "20px" }}>
+                  {contact.firstName} {contact.lastName}
                 </Typography>
-              </Grid>
-              <Grid item="true" xs={12}>
-                <Button
-                  size="large"
-                  variant="contained"
-                  sx={{
-                    textTransform: "none",
-                    boxShadow: "none",
-                    bgcolor: "#4E73DF",
-                  }}
-                >
-                  Upload new image
-                </Button>
               </Grid>
             </Grid>
             <Grid
@@ -279,12 +235,11 @@ const Edit = () => {
                     key={field.name}
                     label={field.label}
                     name={field.name}
-                    value={formData[field.name]}
-                    onChange={handleChange}
-                    placeholder={field.placeholder}
-                    type={field.type}
+                    value={field.value}
+                    disabled={mode !== "edit"}
                     multiline={field.multiline || false}
                     rows={field.rows || 1}
+                    onChange={handleChange}
                   />
                 ))}
               </Grid>
@@ -296,11 +251,18 @@ const Edit = () => {
                 ml={{ md: "27px" }}
                 gap={{ xs: 3, md: 10 }}
               >
+                {userRole !== "User" && mode !== "edit" && (
+                  <Grid item="true" size={{ xs: 12, sm: 5.7, md: 2 }}>
+                    <EditButton path={`/contacts/edit/${id}`} />
+                  </Grid>
+                )}
+                {userRole !== "User" && mode === "edit" && (
+                  <Grid item="true" size={{ xs: 12, sm: 5.7, md: 2 }}>
+                    <SubmitButton text="Save" />
+                  </Grid>
+                )}
                 <Grid item="true" size={{ xs: 12, sm: 5.7, md: 2 }}>
-                  <SubmitButton text="Save" />
-                </Grid>
-                <Grid item="true" size={{ xs: 12, sm: 5.7, md: 2 }}>
-                  <BackButton path={`/contacts/view/${id}`} />
+                  <BackButton path={`/contacts`} />
                 </Grid>
               </Grid>
             </Grid>
@@ -310,6 +272,7 @@ const Edit = () => {
       <SnackbarAlert
         open={openSnackbar}
         severity={snackbarSeverity}
+        onChange={handleChange}
         message={snackbarMessage}
         onClose={handleSnackbarClose}
       />
@@ -317,4 +280,4 @@ const Edit = () => {
   );
 };
 
-export default Edit;
+export default ContactAction;

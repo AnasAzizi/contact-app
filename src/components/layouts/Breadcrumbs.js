@@ -4,7 +4,9 @@ import { Breadcrumbs, Divider, Typography, Link } from "@mui/material";
 const Breadcrumb = ({ path, name }) => {
   const pathSegments = path
     .split("/")
-    .filter((segment) => segment && !["view", "edit", "[id]"].includes(segment)); // Filter out 'view', 'edit', and '[id]'
+    .filter(
+      (segment) => segment && !["view", "edit", "[...action]"].includes(segment)
+    );
 
   return (
     <>

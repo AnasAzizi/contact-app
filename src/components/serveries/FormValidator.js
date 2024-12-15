@@ -1,4 +1,4 @@
-const FormValidator = ({ formData, excludedFields = [] }) => {
+const FormValidator = ({ formData = {}, excludedFields = [] }) => {
   const emptyFields = Object.entries(formData)
     .filter(
       ([key, value]) =>
