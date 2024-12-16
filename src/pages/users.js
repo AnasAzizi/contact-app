@@ -1,7 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ShowUsers, UserDelete } from "@/pages/api/user";
-import { CurrnetUserContext } from "@/Context/Context";
+import { useCurrentUser } from "@/Context/Context";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import SnackbarAlert from "@/components/layouts/SnackbarAlert";
@@ -27,8 +27,8 @@ const Users = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarSeverity, setSnackbarSeverity] = useState("error");
   const [snackbarMessage, setSnackbarMessage] = useState("");
-  const currentUser = useContext(CurrnetUserContext);
-  const userRole = currentUser.currentUser.role;
+  const { currentUser } = useCurrentUser();
+  const userRole = currentUser.role;
 
   const handleSnackbarClose = () => {
     setOpenSnackbar(false);
@@ -129,8 +129,10 @@ const Users = () => {
                 >
                   Delete
                 </Button> */}
-                <DeleteButton handleDelete={handleDelete} selectedIds={selectedIds} />
-
+                <DeleteButton
+                  handleDelete={handleDelete}
+                  selectedIds={selectedIds}
+                />
               </Grid>
               <Grid
                 item="true"

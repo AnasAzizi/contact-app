@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { GetCompanies, EditCompanies } from "@/pages/api/companies";
 import { useQuery, useMutation } from "@tanstack/react-query";
+import { useCurrentUser } from "@/Context/Context";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Head from "next/head";
 import Breadcrumbs from "@/components/layouts/Breadcrumbs";
+import EditButton from "@/components/Buttons/EditButton";
 import PageTitle from "@/components/serveries/PageTitle";
+import CustomTextField from "@/components/serveries/CustomTextField";
 import SubmitButton from "@/components/Buttons/SubmitButton";
 import FormValidator from "@/components/serveries/FormValidator";
 import SnackbarAlert from "@/components/layouts/SnackbarAlert";
-import CustomTextField from "@/components/serveries/CustomTextField";
 import Loader from "@/components/layouts/Loader";
 import Label from "@/components/serveries/Label";
-import { Container, Typography, Select, MenuItem, Box } from "@mui/material";
+import { Container, FormControl, Select, Box, MenuItem } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
-const CompanyProfileEdit = () => {
+const CompanyProfile = ({ mode }) => {
   const router = useRouter();
+  const { currentUser } = useCurrentUser();
+  const userRole = currentUser.role;
+  const [company, setCompany] = useState({});
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarSeverity, setSnackbarSeverity] = useState("error");
   const [snackbarMessage, setSnackbarMessage] = useState("");
@@ -24,45 +29,30 @@ const CompanyProfileEdit = () => {
     setOpenSnackbar(false);
   };
 
-  const [formData, setFormData] = useState({
-    id: "",
-    companyName: "",
-    vatNumber: "",
-    streetOne: "",
-    streetTwo: "",
-    city: "",
-    state: "",
-    zip: "",
-    country: "",
-  });
+  const emptyFields = company
+    ? FormValidator({
+        formData: company,
+      })
+    : [];
 
-  const emptyFields = FormValidator({
-    formData,
-  });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setCompany((prev) => ({ ...prev, [name]: value }));
+  };
 
-  const { data: Company, isLoading } = useQuery({
-    queryKey: ["Company"],
+  const { data: CompanyData, isLoading } = useQuery({
+    queryKey: ["companies"],
     queryFn: GetCompanies,
   });
 
   useEffect(() => {
-    if (Company) {
-      setFormData({
-        id: Company.id || "",
-        companyName: Company.companyName || "",
-        vatNumber: Company.vatNumber || "",
-        streetOne: Company.streetOne || "",
-        streetTwo: Company.streetTwo || "",
-        city: Company.city || "",
-        state: Company.state || "",
-        zip: Company.zip || "",
-        country: Company.country || "",
-      });
+    if (CompanyData) {
+      setCompany(CompanyData);
     }
-  }, [Company]);
+  }, [CompanyData]);
 
   const { mutateAsync: EditCompaniesMutate } = useMutation({
-    mutationFn: (formData) => EditCompanies(formData),
+    mutationFn: (company) => EditCompanies(company),
     onSuccess: () => {
       setOpenSnackbar(true);
       setSnackbarSeverity("success");
@@ -74,11 +64,6 @@ const CompanyProfileEdit = () => {
     },
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -88,7 +73,7 @@ const CompanyProfileEdit = () => {
       setSnackbarMessage("Please fill all fields.");
       return;
     }
-    EditCompaniesMutate(formData);
+    EditCompaniesMutate(company);
   };
 
   return isLoading ? (
@@ -96,7 +81,7 @@ const CompanyProfileEdit = () => {
   ) : (
     <>
       <Head>
-        <title>Edit Company</title>
+        <title>Company Profile</title>
       </Head>
       <Container maxWidth="xl">
         <Breadcrumbs path={router.pathname} />
@@ -127,10 +112,10 @@ const CompanyProfileEdit = () => {
                 <Label label="Company name" />
                 <CustomTextField
                   fullWidth
-                  name="companyName"
-                  value={formData.companyName}
-                  type="text"
                   onChange={handleChange}
+                  name="companyName"
+                  defaultValue={CompanyData.companyName}
+                  disabled={mode !== "company-profile-edit"}
                 />
               </Grid>
 
@@ -138,10 +123,10 @@ const CompanyProfileEdit = () => {
                 <Label label="VAT Number" />
                 <CustomTextField
                   fullWidth
-                  name="vatNumber"
-                  value={formData.vatNumber}
-                  type="text"
                   onChange={handleChange}
+                  name="vatNumber"
+                  defaultValue={CompanyData.vatNumber}
+                  disabled={mode !== "company-profile-edit"}
                 />
               </Grid>
 
@@ -149,10 +134,10 @@ const CompanyProfileEdit = () => {
                 <Label label="Street" />
                 <CustomTextField
                   fullWidth
-                  name="streetOne"
-                  value={formData.streetOne}
-                  type="text"
                   onChange={handleChange}
+                  name="streetOne"
+                  defaultValue={CompanyData.streetOne}
+                  disabled={mode !== "company-profile-edit"}
                 />
               </Grid>
 
@@ -160,10 +145,10 @@ const CompanyProfileEdit = () => {
                 <Label label="Street 2" />
                 <CustomTextField
                   fullWidth
-                  name="streetTwo"
-                  value={formData.streetTwo}
-                  type="text"
                   onChange={handleChange}
+                  name="streetTwo"
+                  defaultValue={CompanyData.streetTwo}
+                  disabled={mode !== "company-profile-edit"}
                 />
               </Grid>
 
@@ -171,10 +156,10 @@ const CompanyProfileEdit = () => {
                 <Label label="City" />
                 <CustomTextField
                   fullWidth
-                  name="city"
-                  value={formData.city}
-                  type="text"
                   onChange={handleChange}
+                  name="city"
+                  defaultValue={CompanyData.city}
+                  disabled={mode !== "company-profile-edit"}
                 />
               </Grid>
 
@@ -182,10 +167,10 @@ const CompanyProfileEdit = () => {
                 <Label label="State" />
                 <CustomTextField
                   fullWidth
-                  name="state"
-                  value={formData.state}
-                  type="text"
                   onChange={handleChange}
+                  name="state"
+                  defaultValue={CompanyData.state}
+                  disabled={mode !== "company-profile-edit"}
                 />
               </Grid>
 
@@ -193,33 +178,50 @@ const CompanyProfileEdit = () => {
                 <Label label="Zip" />
                 <CustomTextField
                   fullWidth
-                  name="zip"
-                  value={formData.zip}
-                  type="text"
                   onChange={handleChange}
+                  name="zip"
+                  defaultValue={CompanyData.zip}
+                  disabled={mode !== "company-profile-edit"}
                 />
               </Grid>
 
               <Grid size={{ xs: 12, md: 6 }}>
                 <Label label="Country" />
-                <Select
-                  fullWidth
+                <FormControl
                   size="small"
-                  name="country"
+                  fullWidth
                   onChange={handleChange}
-                  value={formData.country}
+                  disabled={mode !== "company-profile-edit"}
                 >
-                  <MenuItem value={"Turkey"}>Turkey</MenuItem>
-                  <MenuItem value={"Syria"}>Syria</MenuItem>
-                  <MenuItem value={"Moroco"}>Moroco</MenuItem>
-                </Select>
+                  <Select
+                    fullWidth
+                    size="small"
+                    name="country"
+                    onChange={handleChange}
+                    value={CompanyData.country}
+                  >
+                    <MenuItem value={"Turkey"}>Turkey</MenuItem>
+                    <MenuItem value={"Syria"}>Syria</MenuItem>
+                    <MenuItem value={"Moroco"}>Moroco</MenuItem>
+                  </Select>
+                </FormControl>
               </Grid>
+              
               <Grid
                 item="true"
                 size={{ xs: 8, md: 5, lg: 3.1 }}
                 sx={{ mt: "26px" }}
               >
-                <SubmitButton text="Save" />
+                {userRole !== "User" && (
+                  <>
+                    {mode === "company-profile" && (
+                      <EditButton path="/home/company-profile-edit" />
+                    )}
+                    {mode === "company-profile-edit" && (
+                      <SubmitButton text="Save" />
+                    )}
+                  </>
+                )}
               </Grid>
             </Grid>
             <Grid item="true" size={4}>
@@ -239,8 +241,8 @@ const CompanyProfileEdit = () => {
                 <Image
                   src={"/map.png"}
                   alt="logo"
-                  layout="fill"
-                  objectFit="cover"
+                  fill={true}
+                  object-fit="cover"
                   priority={true}
                 />
               </Box>
@@ -258,4 +260,4 @@ const CompanyProfileEdit = () => {
   );
 };
 
-export default CompanyProfileEdit;
+export default CompanyProfile;

@@ -1,13 +1,13 @@
 import React from "react";
 import { useRouter } from "next/router";
-import ContactAction from "@/components/Actions/ContactAction";
+import AuthAction from "@/components/Actions/AuthAction";
 
-const DynamicContactPage = () => {
+const DynamicUserPage = () => {
   const router = useRouter();
   const { action } = router.query;
   const [mode, id] = Array.isArray(action) ? action : [];
 
-  return <ContactAction mode={mode} id={id} />;
+  return <AuthAction mode={mode} id={id} />;
 };
 
-export default DynamicContactPage;
+export default DynamicUserPage;

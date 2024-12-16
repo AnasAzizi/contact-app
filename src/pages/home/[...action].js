@@ -1,13 +1,13 @@
 import React from "react";
 import { useRouter } from "next/router";
-import ContactAction from "@/components/Actions/ContactAction";
+import CompanyAction from "@/components/Actions/CompanyAction";
 
-const DynamicContactPage = () => {
+const DynamicCompanyPage = () => {
   const router = useRouter();
   const { action } = router.query;
   const [mode, id] = Array.isArray(action) ? action : [];
 
-  return <ContactAction mode={mode} id={id} />;
+  return <CompanyAction mode={mode} id={id} />;
 };
 
-export default DynamicContactPage;
+export default DynamicCompanyPage;

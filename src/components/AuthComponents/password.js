@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useMutation } from "@tanstack/react-query";
-import { ResetPassword } from "@/pages/api/auth";
+import { ResetPassword, SetNewPassword } from "@/pages/api/auth";
 import SnackbarAlert from "@/components/layouts/SnackbarAlert";
 import {
   Box,
@@ -18,21 +18,22 @@ import Grid from "@mui/material/Grid2";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
-const ResetPassForm = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleClickShowConfirmPassword = () =>
-    setShowConfirmPassword((show) => !show);
-
+const Password = ({ mode }) => {
   const router = useRouter();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState({});
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarSeverity, setSnackbarSeverity] = useState("error");
   const [snackbarMessage, setSnackbarMessage] = useState("");
+  const handleSnackbarClose = () => {
+    setOpenSnackbar(false);
+  };
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleClickShowConfirmPassword = () =>
+    setShowConfirmPassword((show) => !show);
 
   const validatePassword = () => {
     const errors = {};
@@ -58,10 +59,6 @@ const ResetPassForm = () => {
     return isValid;
   };
 
-  const handleSnackbarClose = () => {
-    setOpenSnackbar(false);
-  };
-
   const { mutateAsync: ResetPasswordMutate } = useMutation({
     mutationFn: (password) => ResetPassword(password, router),
     onSuccess: () => {
@@ -83,14 +80,35 @@ const ResetPassForm = () => {
     },
   });
 
-  const handleSubmit = async (e) => {
+  const { mutateAsync: SetNewPasswordMutate } = useMutation({
+    mutationFn: (password) => SetNewPassword(password, router),
+    onSuccess: () => {
+      setOpenSnackbar(true);
+      setSnackbarSeverity("success");
+      setSnackbarMessage("Password reset successful!");
+      router.push("/auth/sign-in");
+    },
+    onError: (error) => {
+      console.error("Error resetting password:", error);
+      setOpenSnackbar(true);
+      if (error.response?.status === 404) {
+        setSnackbarSeverity("error");
+        setSnackbarMessage("An unexpected error.");
+      } else {
+        setSnackbarSeverity("error");
+        setSnackbarMessage("An unexpected error occurred. Please try again.");
+      }
+    },
+  });
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!validatePassword()) return;
 
-    try {
-      await ResetPasswordMutate(password);
-    } catch (e) {
-      console.error(e);
+    if (mode === "reset-password") {
+      ResetPasswordMutate(password);
+    } else if (mode === "set-password") {
+      SetNewPasswordMutate(password);
     }
   };
 
@@ -239,4 +257,4 @@ const ResetPassForm = () => {
   );
 };
 
-export default ResetPassForm;
+export default Password;

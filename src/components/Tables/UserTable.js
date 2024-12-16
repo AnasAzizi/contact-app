@@ -1,5 +1,5 @@
-import React, { useState, useContext, useEffect } from "react";
-import { CurrnetUserContext } from "@/Context/Context";
+import React, { useState, useEffect } from "react";
+import { useCurrentUser } from "@/Context/Context";
 import { useRouter } from "next/router";
 import ViewButton from "../Buttons/ViewButton";
 import EmailCopy from "../serveries/EmailCopy";
@@ -24,7 +24,6 @@ import {
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
-
 const UserTable = ({
   data,
   onSelectRows,
@@ -33,8 +32,8 @@ const UserTable = ({
   onResetComplete,
 }) => {
   const router = useRouter();
-  const currentUser = useContext(CurrnetUserContext);
-  const userRole = currentUser.currentUser.role;
+  const { currentUser } = useCurrentUser();
+  const userRole = currentUser.role;
   const [selectedId, setSelectedId] = useState([]);
 
   // for Pagination

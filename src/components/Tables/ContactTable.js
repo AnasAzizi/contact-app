@@ -1,6 +1,6 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { CurrnetUserContext } from "@/Context/Context";
+import { useCurrentUser } from "@/Context/Context";
 import { ToggleFavorite } from "@/pages/api/contact";
 import { useRouter } from "next/router";
 import ViewButton from "../Buttons/ViewButton";
@@ -31,8 +31,9 @@ import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
 
 const ContactTable = ({ data, onSelectRows, search, resetSelection }) => {
   const router = useRouter();
-  const currentUser = useContext(CurrnetUserContext);
-  const userRole = currentUser.currentUser.role;
+  const { currentUser } = useCurrentUser();
+
+  const userRole = currentUser.role;
   const queryClient = useQueryClient();
   const [selectedId, setSelectedId] = useState([]);
 

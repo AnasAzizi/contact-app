@@ -1,5 +1,5 @@
-import React, { useState, useContext, useEffect } from "react";
-import { CurrnetUserContext } from "@/Context/Context";
+import React, { useState, useEffect } from "react";
+import { useCurrentUser } from "@/Context/Context";
 import { ViewContact, EditContact } from "@/pages/api/contact";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
@@ -24,8 +24,8 @@ import Grid from "@mui/material/Grid2";
 
 const ContactAction = ({ mode, id }) => {
   const router = useRouter();
-  const currentUser = useContext(CurrnetUserContext);
-  const userRole = currentUser.currentUser.role;
+  const { currentUser } = useCurrentUser();
+  const userRole = currentUser.role;
   const [contact, setContact] = useState({});
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarSeverity, setSnackbarSeverity] = useState("error");

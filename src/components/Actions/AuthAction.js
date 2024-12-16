@@ -1,16 +1,18 @@
 import React from "react";
 import Image from "next/image";
 import Box from "@mui/material/Box";
-import SetPasswordForm from "@/components/AuthComponents/SetPasswordForm";
 import Head from "next/head";
 import Grid from "@mui/material/Grid2";
 import AuthFooter from "@/components/AuthComponents/AuthFooter";
+import Password from "@/components/AuthComponents/password";
 
-const SetPassword = () => {
+const AuthAction = ({ mode, id }) => {
   return (
     <>
       <Head>
-        <title>Set Password</title>
+        <title>
+          {mode === "reset-password" ? "Reset Password" : "Set Password"}
+        </title>
       </Head>
       <Grid container sx={{ bgcolor: "#ffffff" }}>
         {/* background image */}
@@ -40,7 +42,7 @@ const SetPassword = () => {
           display="flex"
           justifyContent="center"
         >
-          <SetPasswordForm />
+          <Password mode={mode} />
         </Grid>
       </Grid>
       <AuthFooter show={true} width="60%" />
@@ -48,4 +50,4 @@ const SetPassword = () => {
   );
 };
 
-export default SetPassword;
+export default AuthAction;

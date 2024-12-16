@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { CurrnetUserContext } from "@/Context/Context";
+import React from "react";
+import { useCurrentUser } from "@/Context/Context";
 import { ShowContact } from "@/pages/api/contact";
 import { Activities } from "@/pages/api/contact";
 import { useQuery } from "@tanstack/react-query";
@@ -12,7 +12,7 @@ import { Container } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
 const HomePage = () => {
-  const { currentUser: userRole } = useContext(CurrnetUserContext);
+  const { currentUser: userRole } = useCurrentUser();
 
   const { data: activeData } = useQuery({
     queryKey: ["activities"],

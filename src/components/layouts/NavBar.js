@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -23,7 +23,7 @@ import {
 import PersonIcon from "@mui/icons-material/Person";
 import CloseIcon from "@mui/icons-material/Close";
 import ReorderIcon from "@mui/icons-material/Reorder";
-import { CurrnetUserContext } from "@/Context/Context";
+import { useCurrentUser } from "@/Context/Context";
 import Cookies from "js-cookie";
 
 const pages = [
@@ -35,8 +35,7 @@ const pages = [
 
 const NavBar = () => {
   const router = useRouter();
-  const { currentUser, setToken, setCurrentUser } =
-    useContext(CurrnetUserContext);
+    const { currentUser, setCurrentUser, setToken } = useCurrentUser();
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [anchorElNav, setAnchorElNav] = useState(null);
 

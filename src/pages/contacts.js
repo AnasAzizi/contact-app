@@ -1,7 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ShowContact, DeleteContact } from "@/pages/api/contact";
-import { CurrnetUserContext } from "@/Context/Context";
+import { useCurrentUser } from "@/Context/Context";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import ContactTable from "@/components/Tables/ContactTable";
@@ -13,10 +13,11 @@ import { Container, FormControl, Button, TextField } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
 const Contacts = () => {
-  const currentUser = useContext(CurrnetUserContext);
+    const { currentUser } = useCurrentUser();
+  
   const router = useRouter();
   const queryClient = useQueryClient();
-  const userRole = currentUser.currentUser.role;
+  const userRole = currentUser.role;
   const [search, setSearch] = useState("");
   const [selectedIds, setSelectedIds] = useState([]);
   const [resetSelection, setResetSelection] = useState(false);
@@ -80,26 +81,10 @@ const Contacts = () => {
           >
             {userRole !== "User" && (
               <Grid item="true" size={{ xs: 6, md: 1.2, lg: 1 }}>
-                {/* <Button
-                  onClick={handleDelete}
-                  fullWidth
-                  disabled={selectedIds.length === 0}
-                  sx={{
-                    fontSize: "18px",
-                    textTransform: "none",
-                    boxShadow: 0,
-                    bgcolor: "#DC3545",
-                    color: "white",
-                    "&.Mui-disabled": {
-                      bgcolor: "#F1B0B7",
-                      color: "white",
-                    },
-                  }}
-                  variant="contained"
-                >
-                  Delete
-                </Button> */}
-                <DeleteButton handleDelete={handleDelete} selectedIds={selectedIds} />
+                <DeleteButton
+                  handleDelete={handleDelete}
+                  selectedIds={selectedIds}
+                />
               </Grid>
             )}
 
