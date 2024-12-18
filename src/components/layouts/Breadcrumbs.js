@@ -52,4 +52,4 @@ const Breadcrumb = ({ path, name }) => {
   );
 };
 
-export default Breadcrumb;
+export default React.memo(Breadcrumb);

@@ -111,7 +111,6 @@ const ContactTable = ({ data, onSelectRows, search, resetSelection }) => {
           const isItemSelected = selectedId.includes(row.id);
           return (
             <Card
-              onClick={() => router.push(`/contacts/view/${row.id}`)}
               key={index}
               sx={{
                 display: { xs: "block", lg: "none" },
@@ -153,32 +152,34 @@ const ContactTable = ({ data, onSelectRows, search, resetSelection }) => {
                     <Divider />
                   </>
                 )}
-                <Grid
-                  container
-                  size={12}
-                  display="flex"
-                  direction="row"
-                  justifyContent="space-between"
-                  sx={{ mx: "10px" }}
-                  mt="20px"
-                >
-                  <Grid item="true">
-                    <StatusChip label={`#${row.id}`} />
+                <Box onClick={() => router.push(`/contacts/view/${row.id}`)}>
+                  <Grid
+                    container
+                    size={12}
+                    display="flex"
+                    direction="row"
+                    justifyContent="space-between"
+                    sx={{ mx: "10px" }}
+                    mt="20px"
+                  >
+                    <Grid item="true">
+                      <StatusChip label={`#${row.id}`} />
+                    </Grid>
+                    <Grid item="true">
+                      <Avatar
+                        alt={`${row.firstName} ${row.lastName}`}
+                        src={row.imageUrl}
+                        sx={{ width: 80, height: 80, mb: "9px" }}
+                      />
+                    </Grid>
+                    <Grid item="true">
+                      <StatusChip
+                        label={row.status}
+                        statuscolor={getStatusColor(row.status)}
+                      />
+                    </Grid>
                   </Grid>
-                  <Grid item="true">
-                    <Avatar
-                      alt={`${row.firstName} ${row.lastName}`}
-                      src={row.imageUrl}
-                      sx={{ width: 80, height: 80, mb: "9px" }}
-                    />
-                  </Grid>
-                  <Grid item="true">
-                    <StatusChip
-                      label={row.status}
-                      statuscolor={getStatusColor(row.status)}
-                    />
-                  </Grid>
-                </Grid>
+                </Box>
                 <Grid
                   container
                   direction="column"
