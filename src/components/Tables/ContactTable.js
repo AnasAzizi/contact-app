@@ -105,7 +105,7 @@ const ContactTable = ({ data, onSelectRows, search, resetSelection }) => {
       {/* for mobile version */}
       {paginatedData
         .filter((item) => {
-          return item.firstName.includes(search);
+          return item.firstName.toLowerCase().includes(search.toLowerCase());
         })
         .map((row, index) => {
           const isItemSelected = selectedId.includes(row.id);
@@ -245,7 +245,9 @@ const ContactTable = ({ data, onSelectRows, search, resetSelection }) => {
           <TableBody>
             {paginatedData
               .filter((item) => {
-                return item.firstName.includes(search);
+                return item.firstName
+                  .toLowerCase()
+                  .includes(search.toLowerCase());
               })
               .map((row) => {
                 const isItemSelected = selectedId.includes(row.id);
@@ -307,7 +309,6 @@ const ContactTable = ({ data, onSelectRows, search, resetSelection }) => {
                         <EmailCopy email={row.email} />
                       </Box>
                     </TableCell>
-
                     <TableCell sx={{ fontSize: "19px" }}>
                       {row.phoneNumber}
                     </TableCell>

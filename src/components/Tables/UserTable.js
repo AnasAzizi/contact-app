@@ -91,7 +91,7 @@ const UserTable = ({
     <>
       {paginatedData
         .filter((item) => {
-          return item.firstName.includes(search);
+          return item.firstName.toLowerCase().includes(search.toLowerCase());
         })
         .map((row, index) => {
           const isItemSelected = selectedId.includes(row.id);
@@ -215,7 +215,9 @@ const UserTable = ({
           <TableBody>
             {paginatedData
               .filter((item) => {
-                return item.firstName.includes(search);
+                return item.firstName
+                  .toLowerCase()
+                  .includes(search.toLowerCase());
               })
               .map((row, index) => {
                 const isItemSelected = selectedId.includes(row.id);
