@@ -9,7 +9,6 @@ import { useQuery } from "@tanstack/react-query";
 import { CurrentUser } from "@/pages/api/user";
 import Cookies from "js-cookie";
 
-// Create the context
 export const CurrentUserContext = createContext({
   currentUser: {},
   setCurrentUser: () => {},
@@ -18,17 +17,14 @@ export const CurrentUserContext = createContext({
   token: null,
 });
 
-// Custom hook to use the context
 export const useCurrentUser = () => useContext(CurrentUserContext);
 
 export default function CurrentUserProvider({ children }) {
   const [currentUser, setCurrentUser] = useState({});
   const [token, setToken] = useState(() => {
-    // Only get token from cookies once when the component is first mounted
     return Cookies.get("jwtToken") || null;
   });
 
-  // Set token in cookies when it changes
   useEffect(() => {
     if (token) {
       Cookies.set("jwtToken", token, { expires: 1, path: "/" });
@@ -37,14 +33,12 @@ export default function CurrentUserProvider({ children }) {
     }
   }, [token]);
 
-  // Fetch user data when token is available
   const { data: currentUserData, isLoading: userIsLoading } = useQuery({
     queryKey: ["currentuser", token],
     queryFn: () => (token ? CurrentUser() : null),
     enabled: !!token,
   });
 
-  // Update current user and set role cookie when user data is fetched
   useEffect(() => {
     if (currentUserData) {
       setCurrentUser(currentUserData);
@@ -52,7 +46,6 @@ export default function CurrentUserProvider({ children }) {
     }
   }, [currentUserData]);
 
-  // Memoize the context value to prevent unnecessary re-renders
   const contextValue = useMemo(
     () => ({
       currentUser,

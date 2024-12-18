@@ -1,6 +1,6 @@
 import React from "react";
 import Loader from "@/components/layouts/Loader";
-import PageTitle from "../serveries/PageTitle";
+import PageTitle from "@/components/serveries/PageTitle";
 import {
   TableBody,
   TableCell,

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { IconButton,Tooltip } from "@mui/material";
+import { IconButton, Tooltip } from "@mui/material";
 import FileCopyOutlinedIcon from "@mui/icons-material/FileCopyOutlined";
 
-const EmailCopy = ({email}) => {
+const EmailCopy = ({ email }) => {
   const [tooltipText, setTooltipText] = useState("Copy");
   const handleClickIcon = () => {
     setTooltipText("Copied!");

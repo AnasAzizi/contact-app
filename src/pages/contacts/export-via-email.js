@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ContactTable from "@/components/Tables/ContactTable";
 import userData from "@/data/userData.json";
 import Breadcrumbs from "@/components/layouts/Breadcrumbs";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 
 import {
   Container,
@@ -83,7 +83,7 @@ const ExportViaEmail = () => {
             </FormControl>
           </Grid>
         </Grid>
-        <ContactTable data={userData} search={search}  />
+        <ContactTable data={userData} search={search} />
       </Container>
     </>
   );

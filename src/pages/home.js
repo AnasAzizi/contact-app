@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useCurrentUser } from "@/Context/Context";
 import { ShowContact } from "@/pages/api/contact";
 import { Activities } from "@/pages/api/contact";
@@ -25,29 +25,53 @@ const HomePage = () => {
     queryFn: ShowContact,
   });
 
-  let counts = { Active: 0, Inactive: 0, email: 0, emailTwo: 0 };
-
-  if (Contact) {
-    counts = Contact.reduce(
+  const counts = useMemo(() => {
+    if (!Contact) return { Active: 0, Inactive: 0, email: 0, emailTwo: 0 };
+    return Contact.reduce(
       (acc, item) => {
         if (item.status === "Active") {
           acc.Active += 1;
         } else if (item.status === "Inactive") {
           acc.Inactive += 1;
         }
-
         if (item.email) {
           acc.email += 1;
         }
         if (item.emailTwo) {
           acc.emailTwo += 1;
         }
-
         return acc;
       },
       { Active: 0, Inactive: 0, email: 0, emailTwo: 0 }
     );
-  }
+  }, [Contact]);
+
+  const cardData = [
+    {
+      bgColor: "#1ABC9C",
+      imageSrc: "/homePageIcons/arrow-down-circle-fill.svg",
+      text: "Active",
+      count: counts.Active,
+    },
+    {
+      bgColor: "#FC766A",
+      imageSrc: "/homePageIcons/arrow-down-circle-fill.svg",
+      text: "Inactive",
+      count: counts.Inactive,
+    },
+    {
+      bgColor: "#2C3E50",
+      imageSrc: "/homePageIcons/email.svg",
+      text: "With email",
+      count: counts.email,
+    },
+    {
+      bgColor: "#5B84B1",
+      imageSrc: "/homePageIcons/x-circle-fill.svg",
+      text: "Without email",
+      count: counts.emailTwo,
+    },
+  ];
 
   return isLoading ? (
     <Loader />
@@ -72,38 +96,16 @@ const HomePage = () => {
             columnSpacing="72px"
             rowSpacing="68px"
           >
-            <Grid size={{ xs: 12, md: 6 }}>
-              <DashboardCard
-                bgColor="#1ABC9C"
-                imageSrc="/homePageIcons/arrow-down-circle-fill.svg"
-                text="Active"
-                count={counts.Active}
-              />
-            </Grid>
-            <Grid size={{ xs: 12, md: 6 }}>
-              <DashboardCard
-                bgColor="#FC766A"
-                imageSrc="/homePageIcons/arrow-down-circle-fill.svg"
-                text="Inactive"
-                count={counts.Inactive}
-              />
-            </Grid>
-            <Grid size={{ xs: 12, md: 6 }}>
-              <DashboardCard
-                bgColor="#2C3E50"
-                imageSrc="/homePageIcons/email.svg"
-                text="With email"
-                count={counts.email}
-              />
-            </Grid>
-            <Grid size={{ xs: 12, md: 6 }}>
-              <DashboardCard
-                bgColor="#5B84B1"
-                imageSrc="/homePageIcons/x-circle-fill.svg"
-                text="Without email"
-                count={counts.emailTwo}
-              />
-            </Grid>
+            {cardData.map((card, index) => (
+              <Grid key={index} size={{ xs: 12, md: 6 }}>
+                <DashboardCard
+                  bgColor={card.bgColor}
+                  imageSrc={card.imageSrc}
+                  text={card.text}
+                  count={card.count}
+                />
+              </Grid>
+            ))}
           </Grid>
           {userRole.role !== "User" && (
             <>

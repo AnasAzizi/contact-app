@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useCurrentUser } from "@/Context/Context";
 import { ToggleFavorite } from "@/pages/api/contact";
 import { useRouter } from "next/router";
-import ViewButton from "../Buttons/ViewButton";
+import ViewButton from "@/components/Buttons/ViewButton";
 import TablePagination from "./TablePagination";
-import EmailCopy from "../serveries/EmailCopy";
-import StatusChip from "../serveries/StatusChip";
+import EmailCopy from "@/components/serveries/EmailCopy";
+import StatusChip from "@/components/serveries/StatusChip";
 import {
   Table,
   TableBody,
@@ -45,7 +45,7 @@ const ContactTable = ({ data, onSelectRows, search, resetSelection }) => {
     page * rowsPerPage
   );
 
-  const getStatusColor = (status) => {
+  const getStatusColor = useCallback((status) => {
     switch (status) {
       case "Active":
         return "#D4EDDA";
@@ -58,7 +58,7 @@ const ContactTable = ({ data, onSelectRows, search, resetSelection }) => {
       default:
         return "#757575";
     }
-  };
+  }, []);
 
   const { mutateAsync: ToggleFavoriteMutate } = useMutation({
     mutationFn: (id) => ToggleFavorite(id),

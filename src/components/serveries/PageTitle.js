@@ -19,7 +19,7 @@ const PageTitle = ({ title, path }) => {
               fontSize: "26px",
               ml: "40px",
               mt: "18px",
-              cursor:"default"
+              cursor: "default",
             }}
           >
             {title}

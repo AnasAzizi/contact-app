@@ -3,7 +3,7 @@ import { Card, CardContent, Typography, Box } from "@mui/material";
 import Image from "next/image";
 import NorthIcon from "@mui/icons-material/North";
 
-const DashboardCard = ({ bgColor, imageSrc, text,count}) => {
+const DashboardCard = ({ bgColor, imageSrc, text, count }) => {
   return (
     <Card
       sx={{

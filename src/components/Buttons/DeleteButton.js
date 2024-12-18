@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@mui/material";
 
-const DeleteButton = ({handleDelete,selectedIds}) => {
+const DeleteButton = ({ handleDelete, selectedIds }) => {
   return (
     <>
       <Button

@@ -13,8 +13,8 @@ import { Container, FormControl, Button, TextField } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
 const Contacts = () => {
-    const { currentUser } = useCurrentUser();
-  
+  const { currentUser } = useCurrentUser();
+
   const router = useRouter();
   const queryClient = useQueryClient();
   const userRole = currentUser.role;

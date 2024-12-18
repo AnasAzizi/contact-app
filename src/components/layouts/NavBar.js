@@ -35,7 +35,7 @@ const pages = [
 
 const NavBar = () => {
   const router = useRouter();
-    const { currentUser, setCurrentUser, setToken } = useCurrentUser();
+  const { currentUser, setCurrentUser, setToken } = useCurrentUser();
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [anchorElNav, setAnchorElNav] = useState(null);
 

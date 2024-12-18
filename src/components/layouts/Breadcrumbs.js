@@ -5,7 +5,8 @@ const Breadcrumb = ({ path, name }) => {
   const pathSegments = path
     .split("/")
     .filter(
-      (segment) => segment && !["view", "edit", "[...action]","[id]"].includes(segment)
+      (segment) =>
+        segment && !["view", "edit", "[...action]", "[id]"].includes(segment)
     );
 
   return (

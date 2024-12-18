@@ -206,7 +206,7 @@ const CompanyProfile = ({ mode }) => {
                   </Select>
                 </FormControl>
               </Grid>
-              
+
               <Grid
                 item="true"
                 size={{ xs: 8, md: 5, lg: 3.1 }}

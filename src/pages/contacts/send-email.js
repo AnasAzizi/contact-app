@@ -224,7 +224,7 @@ const SendEmail = () => {
                 />
               </Grid>
             </Grid>
-            <Grid item="true" size={{xs:12,md:11}}>
+            <Grid item="true" size={{ xs: 12, md: 11 }}>
               <CustomTextField
                 name="body"
                 onChange={handleChange}

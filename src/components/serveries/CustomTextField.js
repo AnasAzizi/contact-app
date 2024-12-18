@@ -1,7 +1,13 @@
 import React from "react";
 import TextField from "@mui/material/TextField";
 
-const CustomTextField = ({ name, value, onChange, type = "text", ...props }) => {
+const CustomTextField = ({
+  name,
+  value,
+  onChange,
+  type = "text",
+  ...props
+}) => {
   return (
     <TextField
       size="small"
@@ -9,7 +15,7 @@ const CustomTextField = ({ name, value, onChange, type = "text", ...props }) => 
       value={value}
       onChange={onChange}
       type={type}
-      {...props} 
+      {...props}
     />
   );
 };

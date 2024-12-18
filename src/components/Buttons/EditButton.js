@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { Button } from "@mui/material";
 import EditOffOutlinedIcon from "@mui/icons-material/EditOffOutlined";
 
-
 const EditButton = ({ path }) => {
   const router = useRouter();
 

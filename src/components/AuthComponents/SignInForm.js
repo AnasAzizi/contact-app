@@ -25,7 +25,7 @@ import { useCurrentUser } from "@/Context/Context";
 
 export default function SignInForm() {
   const router = useRouter();
-  const {  setToken } = useCurrentUser();
+  const { setToken } = useCurrentUser();
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const [openSnackbar, setOpenSnackbar] = useState(false);

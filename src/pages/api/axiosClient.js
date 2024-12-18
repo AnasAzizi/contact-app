@@ -1,5 +1,5 @@
 import axios from "axios";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 const axiosClient = axios.create({
   baseURL: "https://ms.itmd-b1.com:5123/api",
@@ -10,7 +10,7 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(
   (config) => {
-    const token =  Cookies.get("jwtToken");
+    const token = Cookies.get("jwtToken");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

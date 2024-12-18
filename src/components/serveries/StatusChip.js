@@ -10,13 +10,7 @@ const StyledChip = styled(Chip)(({ statuscolor }) => ({
 }));
 
 const StatusChip = ({ label, statusColor, ...props }) => {
-  return (
-    <StyledChip
-      label={label}
-      statuscolor={statusColor}
-      {...props} 
-    />
-  );
+  return <StyledChip label={label} statuscolor={statusColor} {...props} />;
 };
 
 export default StatusChip;

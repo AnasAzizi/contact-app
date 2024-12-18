@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useCurrentUser } from "@/Context/Context";
 import { useRouter } from "next/router";
-import ViewButton from "../Buttons/ViewButton";
-import EmailCopy from "../serveries/EmailCopy";
+import ViewButton from "@/components/Buttons/ViewButton";
+import EmailCopy from "@/components/serveries/EmailCopy";
 import TablePagination from "./TablePagination";
-import StatusChip from "../serveries/StatusChip";
+import StatusChip from "@/components/serveries/StatusChip";
 import {
   Table,
   TableBody,

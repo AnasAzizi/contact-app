@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@mui/material";
 
-const SaveButton = ({text}) => {
+const SaveButton = ({ text }) => {
   return (
     <>
       <Button
